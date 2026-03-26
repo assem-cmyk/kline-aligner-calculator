@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K LINE — Aligner Price Comparison Calculator</title>
+<meta name="description" content="Compare dental aligner fulfillment costs. K LINE Europe — Europe's #1 OEM Clear Aligner Provider.">
+<link rel="icon" href="https://www.kline-europe.com/favicon.ico" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* K LINE brand palette — exact from kline-europe.com */
+    --teal: #06b0ae;
+    --teal-dark: #059290;
+    --teal-glow: rgba(6,176,174,0.15);
+    --teal-subtle: rgba(6,176,174,0.08);
+    --red: #c0392b;
+    --red-dark: #a93226;
+    --dark-900: #1a1a2e;
+    --dark-800: #212136;
+    --dark-700: #2a2a40;
+    --dark-600: #33334d;
+    --dark-500: #44446a;
+    --grey-400: #8888a8;
+    --grey-300: #aaaacc;
+    --white: #ffffff;
+    --white-90: rgba(255,255,255,0.9);
+    --white-70: rgba(255,255,255,0.7);
+    --white-50: rgba(255,255,255,0.5);
+    --white-20: rgba(255,255,255,0.2);
+    --white-10: rgba(255,255,255,0.1);
+    --white-05: rgba(255,255,255,0.05);
+    --green: #10b981;
+    --green-soft: rgba(16,185,129,0.12);
+    --orange: #f59e0b;
+    --orange-soft: rgba(245,158,11,0.12);
+    --red-soft: rgba(239,68,68,0.12);
+    --red-text: #ef4444;
+    --surface: #f8f9fb;
+    --surface-border: #e5e7eb;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
+    --transition: 0.2s ease;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--surface);
+    color: #374151;
+    line-height: 1.55;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== NAVBAR ===== */
+  .navbar {
+    background: var(--dark-900);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--white-10);
+  }
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none;
+  }
+  .navbar-brand .logo { height: 20px; width: auto; filter: brightness(0) invert(1); }
+  .logo-white { filter: brightness(0) invert(1); }
+  @media print { .logo-white, .navbar-brand .logo { filter: brightness(0) invert(1) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+  .navbar-brand .sep { width: 1px; height: 18px; background: var(--white-20); }
+  .navbar-brand .label { font-size: 0.78rem; font-weight: 500; color: var(--white-50); letter-spacing: 0.02em; }
+  .nav-right { display: flex; gap: 0.5rem; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: var(--dark-900);
+    color: var(--white);
+    padding: 3rem 2rem 2.75rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 100% at 30% 100%, var(--teal-glow) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 80% at 70% 0%, rgba(45,212,191,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-logo { margin-bottom: 1.25rem; position: relative; }
+  .hero-logo svg { height: 30px; }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    position: relative;
+  }
+  .hero h1 .accent { color: var(--teal); }
+  .hero p {
+    color: var(--white-50);
+    margin-top: 0.45rem;
+    font-size: 0.95rem;
+    position: relative;
+  }
+
+  /* ===== CONTAINER ===== */
+  .container { max-width: 1180px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+  /* ===== SECTION ===== */
+  .section { margin-bottom: 1.75rem; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+  }
+  .section-header h2 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .section-header .line { flex: 1; height: 1px; background: var(--surface-border); }
+
+  /* ===== PANEL ===== */
+  .panel {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+  }
+
+  /* ===== INPUT GRID ===== */
+  .input-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.1rem;
+  }
+  .field label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.35rem;
+  }
+  .field select,
+  .field input[type="number"],
+  .field input[type="text"],
+  .field input[type="email"] {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1.5px solid var(--surface-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-family: inherit;
+    color: #374151;
+    background: var(--white);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    appearance: none; -webkit-appearance: none;
+  }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M8 12l-6-6h12l-6 6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.65rem center;
+    padding-right: 2rem;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-glow);
+  }
+  .field .pre { position: relative; }
+  .field .pre::before {
+    content: '$';
+    position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%);
+    color: #9ca3af; font-weight: 700; font-size: 0.82rem; pointer-events: none;
+  }
+  .field .pre input { padding-left: 1.5rem; }
+  .field .hint { font-size: 0.65rem; color: #9ca3af; margin-top: 0.2rem; }
+  .divider-row {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; gap: 0.6rem; padding: 0.1rem 0;
+  }
+  .divider-row span {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #9ca3af; white-space: nowrap;
+  }
+  .divider-row::after { content: ''; flex: 1; height: 1px; background: var(--surface-border); }
+
+  /* ===== SUMMARY BAR (dark like the site hero) ===== */
+  .summary-bar {
+    background: var(--dark-900);
+    border-radius: var(--radius);
+    padding: 1.35rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    color: var(--white);
+    margin-bottom: 1.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .summary-bar::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-dark), var(--teal));
+    opacity: 0.6;
+  }
+  .s-item { text-align: center; flex: 1; min-width: 110px; }
+  .s-item .s-label {
+    font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--white-50); font-weight: 700;
+  }
+  .s-item .s-val {
+    font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-top: 0.1rem;
+  }
+  .s-item .s-val.teal { color: var(--teal); }
+  .s-item .s-note { font-size: 0.68rem; color: var(--white-50); }
+
+  /* ===== CARDS ===== */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition), box-shadow var(--transition);
+    position: relative;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+  /* Featured K LINE card — dark like the website */
+  .card.featured {
+    background: var(--dark-900);
+    color: var(--white);
+    box-shadow: 0 0 0 1px var(--teal-glow), var(--shadow);
+  }
+  .card.featured:hover {
+    box-shadow: 0 0 0 1px rgba(45,212,191,0.3), 0 16px 48px rgba(0,0,0,0.15);
+  }
+  .card.featured::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), rgba(45,212,191,0.4));
+  }
+  .card.featured .card-top { border-bottom-color: var(--white-10); }
+  .card.featured .card-top .sub { color: var(--white-50); }
+  .card.featured .price { color: var(--teal); }
+  .card.featured .row { border-top-color: var(--white-05); }
+  .card.featured .row .lbl { color: var(--white-50); }
+  .card.featured .row .val { color: var(--white-90); }
+
+  .card-top {
+    padding: 1.25rem 1.25rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .tag {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.07em; padding: 0.2rem 0.6rem;
+    border-radius: 999px; margin-bottom: 0.5rem;
+  }
+  .tag-kline { background: var(--teal); color: var(--dark-900); }
+  .tag-inhouse { background: var(--orange-soft); color: var(--orange); }
+  .tag-comp { background: var(--red-soft); color: var(--red-text); }
+  .card-top h3 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; }
+  .card-top .sub { font-size: 0.75rem; color: #9ca3af; margin-top: 0.1rem; }
+
+  .card-body {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .price-block { text-align: center; padding: 0.35rem 0; }
+  .price {
+    font-size: 2.25rem; font-weight: 900; color: #111827;
+    letter-spacing: -0.03em; line-height: 1;
+  }
+  .price-sub { font-size: 0.75rem; color: #9ca3af; margin-top: 0.25rem; }
+
+  .row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.45rem 0; border-top: 1px solid #f3f4f6; font-size: 0.8rem;
+  }
+  .row .lbl { color: #9ca3af; }
+  .row .val { font-weight: 700; }
+  .val.green { color: var(--green); }
+  .val.red { color: var(--red-text); }
+
+  .pill {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.3rem; padding: 0.55rem 0.75rem; border-radius: var(--radius-sm);
+    font-weight: 700; font-size: 0.78rem; margin-top: auto;
+  }
+  .pill-green { background: var(--green-soft); color: var(--green); }
+  .pill-red { background: var(--red-soft); color: var(--red-text); }
+
+  .roi-box {
+    background: var(--surface); border: 1px solid var(--surface-border);
+    border-radius: var(--radius-sm); padding: 0.7rem 0.8rem; margin-top: auto;
+  }
+  .roi-box .roi-h {
+    font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #9ca3af; margin-bottom: 0.35rem;
+  }
+  .roi-box .roi-row {
+    display: flex; justify-content: space-between; font-size: 0.78rem; padding: 0.2rem 0;
+  }
+  .roi-box .roi-row .rv { font-weight: 700; color: #374151; }
+  .roi-box .roi-row.bt {
+    border-top: 1px solid var(--surface-border);
+    padding-top: 0.35rem; margin-top: 0.15rem;
+  }
+  .roi-box .roi-row.bt .rv { color: var(--teal-dark); }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 0.4rem; padding: 0.6rem 1.15rem; border: none;
+    border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600;
+    font-family: inherit; cursor: pointer; transition: all var(--transition);
+    text-decoration: none; white-space: nowrap;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-teal { background: var(--teal); color: var(--dark-900); }
+  .btn-teal:hover { background: var(--teal-dark); }
+  .btn-dark { background: var(--dark-900); color: var(--white); }
+  .btn-dark:hover { background: var(--dark-700); }
+  .btn-outline { background: var(--white); color: #374151; border: 1.5px solid var(--surface-border); }
+  .btn-outline:hover { background: var(--surface); border-color: #d1d5db; }
+  .btn-sm { padding: 0.4rem 0.7rem; font-size: 0.75rem; }
+
+  .action-bar {
+    display: flex; gap: 0.65rem; justify-content: center;
+    flex-wrap: wrap; margin-top: 0.5rem;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--dark-900);
+    text-align: center;
+    padding: 1.75rem 1.5rem;
+    border-top: 3px solid var(--teal);
+  }
+  .footer-logo { margin-bottom: 0.4rem; }
+  .footer-logo svg { height: 18px; }
+  .footer-text { font-size: 0.72rem; color: var(--white-50); }
+  .footer-text a { color: var(--teal); text-decoration: none; }
+  .footer-text a:hover { text-decoration: underline; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px); z-index: 1000;
+    display: none; align-items: center; justify-content: center; padding: 1rem;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--white); border-radius: var(--radius);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2); width: 100%; max-width: 440px;
+    animation: modalIn 0.2s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .modal-head {
+    padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--surface-border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-head h3 { font-size: 0.95rem; font-weight: 700; }
+  .modal-x {
+    background: none; border: none; font-size: 1.2rem;
+    cursor: pointer; color: #9ca3af; line-height: 1; padding: 0.2rem;
+  }
+  .modal-x:hover { color: #374151; }
+  .modal-body { padding: 1.25rem; }
+  .modal-body .field + .field { margin-top: 0.85rem; }
+  .modal-foot {
+    padding: 0.85rem 1.25rem; border-top: 1px solid var(--surface-border);
+    display: flex; gap: 0.6rem; justify-content: flex-end;
+  }
+
+  .toast {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    background: var(--dark-900); color: var(--white);
+    padding: 0.7rem 1rem; border-radius: var(--radius-sm);
+    font-size: 0.8rem; font-weight: 600; box-shadow: var(--shadow-lg);
+    z-index: 2000; display: none; gap: 0.35rem; align-items: center;
+    animation: toastIn 0.2s ease; border-left: 3px solid var(--teal);
+  }
+  .toast.show { display: flex; }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .cards { grid-template-columns: 1fr; }
+    .input-grid { grid-template-columns: repeat(2, 1fr); }
+    .summary-bar { flex-direction: column; text-align: center; gap: 0.8rem; padding: 1.1rem; }
+    .s-item .s-val { font-size: 1.25rem; }
+    .hero h1 { font-size: 1.5rem; }
+  }
+  @media (max-width: 600px) {
+    .input-grid { grid-template-columns: 1fr; }
+    .navbar { padding: 0 1rem; }
+    .navbar-brand .label { display: none; }
+    .container { padding: 1.15rem 1rem 2.5rem; }
+    .hero { padding: 2rem 1.15rem 1.75rem; }
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: white !important; }
+    .topbar, .navbar, .action-bar, .modal-overlay, .toast, .no-print { display: none !important; }
+    .hero {
+      background: var(--dark-900) !important;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      padding: 1.25rem;
+    }
+    .container { padding: 1rem; }
+    .panel, .card { box-shadow: none; border: 1px solid #e5e7eb; }
+    .card:hover { transform: none; }
+    .cards { grid-template-columns: repeat(3, 1fr) !important; }
+    .card-top, .tag, .summary-bar, .pill, .roi-box, .card.featured, .footer {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .print-only { display: block !important; }
+  }
+  .print-only { display: none; }
+</style>
+</head>
+<body>
+
+<!-- Navbar — dark like kline-europe.com -->
+<nav class="navbar">
+  <a href="https://www.kline-europe.com" target="_blank" class="navbar-brand">
+    <img class="logo" alt="K LINE" style="height:22px;" src="data:image/png;base64,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">
+    <div class="sep"></div>
+    <span class="label">Price Calculator</span>
+  </a>
+  <div class="nav-right">
+    <button class="btn btn-outline btn-sm" style="color:var(--white-70);border-color:var(--white-20);background:transparent;" onclick="resetDefaults()">&#8634; Reset</button>
+  </div>
+</nav>
+
+<!-- Hero — dark with teal accents -->
+<div class="hero">
+  <div class="hero-logo">
+    <img alt="K LINE" class="logo-white" style="height:34px;" src="data:image/png;base64,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">
+  </div>
+  <h1>Aligner <span class="accent">Price Comparison</span> Calculator</h1>
+  <p>Compare fulfillment costs and discover the best value for your practice</p>
+</div>
+
+<div class="container">
+
+  <!-- Summary Bar -->
+  <div class="summary-bar" id="summaryBar"></div>
+
+  <!-- Configuration -->
+  <div class="section no-print">
+    <div class="section-header">
+      <h2>Configuration</h2>
+      <div class="line"></div>
+    </div>
+    <div class="panel">
+      <div class="input-grid">
+        <div class="field">
+          <label>Case Complexity</label>
+          <select id="complexity">
+            <option value="14">Mild (14 aligners)</option>
+            <option value="30" selected>Moderate (30 aligners)</option>
+            <option value="50">Complex (50 aligners)</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Aligner Count</label>
+          <input type="number" id="alignerCount" value="30" min="1" max="200">
+          <div class="hint">Manual override</div>
+        </div>
+        <div class="field">
+          <label>Patient Name</label>
+          <input type="text" id="patientName" placeholder="Optional — for quotes">
+        </div>
+        <div class="field">
+          <label>Clinic Name</label>
+          <input type="text" id="clinicName" placeholder="Your clinic name">
+        </div>
+
+        <div class="divider-row"><span>Price Per Aligner</span></div>
+
+        <div class="field">
+          <label>K Line</label>
+          <div class="pre"><input type="number" id="priceKLine" value="6.50" min="0" step="0.25"></div>
+          <div class="hint">Per aligner cost</div>
+        </div>
+        <div class="field">
+          <label>In-House</label>
+          <div class="pre"><input type="number" id="priceInHouse" value="4.00" min="0" step="0.25"></div>
+          <div class="hint">Total cost per aligner</div>
+        </div>
+        <div class="field">
+          <label>Competitor Lab</label>
+          <div class="pre"><input type="number" id="priceCompetitor" value="12.00" min="0" step="0.25"></div>
+          <div class="hint">External lab cost</div>
+        </div>
+        <div class="field">
+          <label>Equipment Investment</label>
+          <div class="pre"><input type="number" id="equipmentCost" value="15000" min="0" step="500"></div>
+          <div class="hint">In-House ROI calc</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Print-Only Header -->
+  <div class="print-only" id="printHeader" style="margin-bottom:1rem;padding:0.65rem 0;border-bottom:1px solid #e5e7eb;">
+    <div style="font-size:0.8rem;color:#9ca3af;">Prepared for: <strong id="printPatient" style="color:#111827;">—</strong></div>
+    <div style="font-size:0.8rem;color:#9ca3af;">Clinic: <strong id="printClinic" style="color:#111827;">—</strong></div>
+    <div style="font-size:0.7rem;color:#9ca3af;margin-top:0.25rem;" id="printDate"></div>
+  </div>
+
+  <!-- Comparison Cards -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Cost Comparison</h2>
+      <div class="line"></div>
+    </div>
+    <div class="cards" id="cardsGrid"></div>
+  </div>
+
+  <!-- Actions -->
+  <div class="action-bar no-print">
+    <button class="btn btn-teal" onclick="savePDF()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+      Save as PDF
+    </button>
+    <button class="btn btn-dark" onclick="openEmailModal()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+      Email Quote
+    </button>
+    <button class="btn btn-outline" onclick="copyLink()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+      Copy Shareable Link
+    </button>
+  </div>
+</div>
+
+<!-- Footer — dark with red top border like the site -->
+<div class="footer">
+  <div class="footer-logo"><img alt="K LINE" class="logo-white" style="height:16px;" src="data:image/png;base64,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"></div>
+  <div class="footer-text">
+    Europe's #1 OEM Clear Aligner Provider &mdash;
+    <a href="https://www.kline-europe.com" target="_blank">kline-europe.com</a>
+    &mdash; &copy; <span id="year"></span>
+  </div>
+</div>
+
+<!-- Email Modal -->
+<div class="modal-overlay" id="emailModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Email Quote</h3>
+      <button class="modal-x" onclick="closeEmailModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Recipient Email</label>
+        <input type="email" id="emailTo" placeholder="patient@example.com">
+      </div>
+      <div class="field">
+        <label>Your Name / Clinic</label>
+        <input type="text" id="emailFrom" placeholder="Dr. Smith — Bright Dental">
+      </div>
+      <div class="field">
+        <label>Message (optional)</label>
+        <textarea id="emailMsg" rows="3" style="width:100%;padding:0.55rem 0.7rem;border:1.5px solid var(--surface-border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.85rem;resize:vertical;color:#374151;" placeholder="Here's your aligner price comparison..."></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeEmailModal()">Cancel</button>
+      <button class="btn btn-teal" onclick="sendEmail()">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        Send
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+$('year').textContent = new Date().getFullYear();
+
+const defaults = { complexity:'30', alignerCount:30, priceKLine:6.50, priceInHouse:4.00, priceCompetitor:12.00, equipmentCost:15000 };
+
+function getValues() {
+  return {
+    count: Math.max(1, parseInt($('alignerCount').value) || 1),
+    kline: Math.max(0, parseFloat($('priceKLine').value) || 0),
+    inhouse: Math.max(0, parseFloat($('priceInHouse').value) || 0),
+    competitor: Math.max(0, parseFloat($('priceCompetitor').value) || 0),
+    equipment: Math.max(0, parseFloat($('equipmentCost').value) || 0),
+    patient: $('patientName').value.trim(),
+    clinic: $('clinicName').value.trim(),
+  };
+}
+
+function fmt(n) { return n.toLocaleString('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2}); }
+function pct(a,b) { return b===0?'0%':Math.round(((b-a)/b)*100)+'%'; }
+
+function render() {
+  const v = getValues();
+  const tK = v.count * v.kline;
+  const tI = v.count * v.inhouse;
+  const tC = v.count * v.competitor;
+  const save = tC - tK;
+  const diff = tK - tI;
+  const be = diff > 0 ? Math.ceil(v.equipment / diff) : null;
+
+  $('summaryBar').innerHTML = `
+    <div class="s-item"><div class="s-label">Aligners</div><div class="s-val">${v.count}</div></div>
+    <div class="s-item"><div class="s-label">K Line Total</div><div class="s-val teal">${fmt(tK)}</div><div class="s-note">Best value</div></div>
+    <div class="s-item"><div class="s-label">You Save vs Competitor</div><div class="s-val teal">${fmt(save)}</div><div class="s-note">${pct(tK,tC)} less per case</div></div>
+    <div class="s-item"><div class="s-label">${tC>=tK?'Competitor Premium':'Competitor Savings'}</div><div class="s-val">${tC>tK?'+':''}${fmt(tC-tK)}</div><div class="s-note">${tC>tK?'Overpaying':'Saving'} per case</div></div>
+  `;
+
+  $('cardsGrid').innerHTML = `
+    <div class="card featured">
+      <div class="card-top">
+        <div class="tag tag-kline">&#9733; Best Value</div>
+        <h3>K Line</h3>
+        <div class="sub">Our Brand &mdash; Premium Quality</div>
+      </div>
+      <div class="card-body">
+        <div class="price-block"><div class="price">${fmt(tK)}</div><div class="price-sub" style="color:var(--white-50)">Total for ${v.count} aligners</div></div>
+        <div class="row"><span class="lbl">Price per aligner</span><span class="val">${fmt(v.kline)}</span></div>
+        <div class="row"><span class="lbl">vs Competitor</span><span class="val green">${fmt(save)} saved</span></div>
+        <div class="row"><span class="lbl">Savings rate</span><span class="val green">${pct(tK,tC)}</span></div>
+        <div class="pill pill-green" style="background:var(--teal-subtle);color:var(--teal);">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          Save ${fmt(save)} per case with K Line
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="tag tag-inhouse">In-House</div>
+        <h3>In-House</h3>
+        <div class="sub">Total Aligner Cost</div>
+      </div>
+      <div class="card-body">
+        <div class="price-block"><div class="price">${fmt(tI)}</div><div class="price-sub">Total for ${v.count} aligners</div></div>
+        <div class="row"><span class="lbl">Price per aligner</span><span class="val">${fmt(v.inhouse)}</span></div>
+        <div class="row"><span class="lbl">vs Competitor</span><span class="val green">${fmt(tC-tI)} saved</span></div>
+        <div class="row"><span class="lbl">vs K Line</span><span class="val">${tI<tK?fmt(tK-tI)+' less':fmt(tI-tK)+' more'}</span></div>
+        <div class="roi-box">
+          <div class="roi-h">ROI Breakdown</div>
+          <div class="roi-row"><span>Equipment investment</span><span class="rv">${fmt(v.equipment)}</span></div>
+          <div class="roi-row"><span>Savings/case vs K Line</span><span class="rv">${diff>0?fmt(diff):'—'}</span></div>
+          <div class="roi-row bt"><span><strong>Break-even point</strong></span><span class="rv">${be!==null?be+' cases':'N/A'}</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="tag tag-comp">Competitor</div>
+        <h3>External Lab</h3>
+        <div class="sub">${fmt(v.competitor)} per aligner</div>
+      </div>
+      <div class="card-body">
+        <div class="price-block"><div class="price">${fmt(tC)}</div><div class="price-sub">Total for ${v.count} aligners</div></div>
+        <div class="row"><span class="lbl">Price per aligner</span><span class="val">${fmt(v.competitor)}</span></div>
+        <div class="row"><span class="lbl">${tC>=tK?'Premium over':'Savings vs'} K Line</span><span class="val ${tC>tK?'red':'green'}">${tC>tK?'+':''}${fmt(tC-tK)}</span></div>
+        <div class="row"><span class="lbl">${tC>=tK?'Premium':'Savings'} rate</span><span class="val ${tC>tK?'red':'green'}">${tC>tK?'+':''}${pct(tK,tC)}</span></div>
+        ${tC>tK?`<div class="pill pill-red">Overpaying ${fmt(tC-tK)} per case vs K Line</div>`
+        :tC<tK?`<div class="pill pill-green">Saving ${fmt(tK-tC)} per case vs K Line</div>`
+        :`<div class="pill" style="background:var(--grey-50);color:var(--grey-500);border:1px solid var(--surface-border);">Same price as K Line</div>`}
+      </div>
+    </div>
+  `;
+
+  $('printPatient').textContent = v.patient || '—';
+  $('printClinic').textContent = v.clinic || '—';
+  $('printDate').textContent = 'Generated: ' + new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  updateURL();
+}
+
+function updateURL() {
+  const v = getValues();
+  const p = new URLSearchParams();
+  p.set('n',v.count); p.set('k',v.kline); p.set('i',v.inhouse); p.set('c',v.competitor); p.set('e',v.equipment);
+  if(v.patient) p.set('p',v.patient);
+  if(v.clinic) p.set('cl',v.clinic);
+  history.replaceState(null,'',location.pathname+'?'+p.toString());
+}
+
+function loadFromURL() {
+  const p = new URLSearchParams(location.search);
+  if(p.has('n')) $('alignerCount').value=p.get('n');
+  if(p.has('k')) $('priceKLine').value=p.get('k');
+  if(p.has('i')) $('priceInHouse').value=p.get('i');
+  if(p.has('c')) $('priceCompetitor').value=p.get('c');
+  if(p.has('e')) $('equipmentCost').value=p.get('e');
+  if(p.has('p')) $('patientName').value=p.get('p');
+  if(p.has('cl')) $('clinicName').value=p.get('cl');
+  const c=parseInt($('alignerCount').value);
+  $('complexity').value=c===14?'14':c===30?'30':c===50?'50':'custom';
+}
+
+$('complexity').addEventListener('change',function(){
+  if(this.value!=='custom') $('alignerCount').value=this.value;
+  render();
+});
+$('alignerCount').addEventListener('input',function(){
+  const v=parseInt(this.value);
+  $('complexity').value=v===14?'14':v===30?'30':v===50?'50':'custom';
+  render();
+});
+['priceKLine','priceInHouse','priceCompetitor','equipmentCost','patientName','clinicName'].forEach(id=>{
+  $(id).addEventListener('input',render);
+});
+
+function savePDF(){ window.print(); }
+
+function openEmailModal(){
+  $('emailModal').classList.add('active');
+  const v=getValues();
+  if(v.clinic) $('emailFrom').value=v.clinic;
+  $('emailTo').focus();
+}
+function closeEmailModal(){ $('emailModal').classList.remove('active'); }
+
+function sendEmail(){
+  const v=getValues();
+  const tK=v.count*v.kline, tI=v.count*v.inhouse, tC=v.count*v.competitor;
+  const to=$('emailTo').value.trim(), from=$('emailFrom').value.trim(), msg=$('emailMsg').value.trim();
+  const subj=encodeURIComponent('Aligner Price Comparison'+(v.patient?' — '+v.patient:''));
+  let b='';
+  if(msg) b+=msg+'\n\n---\n\n';
+  b+='ALIGNER PRICE COMPARISON\n========================\n';
+  if(v.patient) b+='Patient: '+v.patient+'\n';
+  if(from) b+='Prepared by: '+from+'\n';
+  b+='Date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})+'\n';
+  b+='Aligners: '+v.count+'\n\n';
+  b+='K Line:        '+fmt(tK)+'  ('+fmt(v.kline)+'/aligner)\n';
+  b+='In-House:      '+fmt(tI)+'  ('+fmt(v.inhouse)+'/aligner)\n';
+  b+='Competitor:    '+fmt(tC)+'  ('+fmt(v.competitor)+'/aligner)\n\n';
+  b+='SAVINGS WITH K LINE: '+fmt(tC-tK)+' per case\n\n';
+  b+='---\nK Line Europe | kline-europe.com\n';
+  location.href='mailto:'+encodeURIComponent(to)+'?subject='+subj+'&body='+encodeURIComponent(b);
+  closeEmailModal();
+  showToast('Email client opened');
+}
+
+function copyLink(){
+  navigator.clipboard.writeText(location.href).then(()=>showToast('Link copied!')).catch(()=>{
+    const t=document.createElement('textarea'); t.value=location.href;
+    document.body.appendChild(t); t.select(); document.execCommand('copy');
+    document.body.removeChild(t); showToast('Link copied!');
+  });
+}
+
+function resetDefaults(){
+  $('complexity').value=defaults.complexity;
+  $('alignerCount').value=defaults.alignerCount;
+  $('priceKLine').value=defaults.priceKLine;
+  $('priceInHouse').value=defaults.priceInHouse;
+  $('priceCompetitor').value=defaults.priceCompetitor;
+  $('equipmentCost').value=defaults.equipmentCost;
+  $('patientName').value=''; $('clinicName').value='';
+  render(); showToast('Reset to defaults');
+}
+
+function showToast(m){
+  const t=$('toast');
+  t.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> '+m;
+  t.classList.add('show');
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+loadFromURL(); render();
+$('emailModal').addEventListener('click',function(e){if(e.target===this)closeEmailModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeEmailModal();});
+</script>
+</body>
+</html>
