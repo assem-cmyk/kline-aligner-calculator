@@ -823,7 +823,7 @@ function render() {
     '<div class="s-item"><div class="s-label">K Line Total</div><div class="s-val teal">' + fmt(tK) + '</div><div class="s-note">' + (kIsBest ? 'Best value' : 'Per case') + '</div></div>' +
     '<div class="s-item"><div class="s-label">' + (saveVsComp >= 0 ? 'You Save vs ' + compName : 'K Line Premium') + '</div><div class="s-val' + (saveVsComp >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(saveVsComp)) + '</div><div class="s-note">' + (saveVsComp >= 0 ? pct(tK, tC) + ' less' : 'more') + ' per case</div></div>' +
     '<div class="s-item"><div class="s-label">Best Option</div><div class="s-val teal">' + cheapest.name + '</div><div class="s-note">' + fmt(cheapest.total) + ' total</div></div>' +
-    '<div class="s-item"><div class="s-label">' + (annualSavings >= 0 ? 'Annual Savings' : 'Annual Extra Cost') + '</div><div class="s-val' + (annualSavings >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(annualSavings)) + '</div><div class="s-note">' + v.monthlyCases + ' cases/mo vs ' + esc(compName) + '</div></div>';
+    '<div class="s-item"><div class="s-label">' + (annualSavings >= 0 ? 'Annual Savings' : 'Annual Extra Cost') + '</div><div class="s-val' + (annualSavings >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(annualSavings)) + '</div><div class="s-note">' + v.monthlyCases + ' cases/mo vs ' + compName + '</div></div>';
 
   /* K Line card — dynamic Best Value tag */
   var kTag = kIsBest
@@ -1077,7 +1077,8 @@ function sendEmail() {
   b += 'Aligners: ' + v.count + '\n\n';
   b += 'K Line:        ' + fmt(tK) + '  (' + fmt(v.kline) + '/aligner)\n';
   b += 'In-House:      ' + fmt(tI) + '  (' + fmt(v.inhouse) + '/aligner)\n';
-  b += v.compName + ':    ' + fmt(tC) + '  (' + fmt(v.competitor) + '/aligner)\n\n';
+  var rawCompName = $('competitorName').value.trim().substring(0, 40) || 'External Lab';
+  b += rawCompName + ':    ' + fmt(tC) + '  (' + fmt(v.competitor) + '/aligner)\n\n';
   b += 'SAVINGS WITH K LINE: ' + fmt(Math.abs(roundCurrency(tC - tK))) + ' per case\n\n';
   b += '---\nK Line Europe | kline-europe.com\n';
   location.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + subj + '&body=' + encodeURIComponent(b);
