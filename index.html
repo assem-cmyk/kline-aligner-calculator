@@ -651,18 +651,14 @@
       <!-- TAB 1: Cost Calculator -->
       <div class="tab-content active" id="tabCalc" role="tabpanel" aria-labelledby="tabBtnCalc">
 
-        <!-- Location & Labor -->
+        <!-- Labor Costs -->
         <section>
           <div class="section-header">
-            <h2>Location &amp; Labor</h2>
+            <h2>Labor Costs</h2>
             <div class="line"></div>
           </div>
           <div class="panel">
             <div class="input-grid">
-              <div class="field" style="grid-column:1/-1;">
-                <label for="country">Country / Region</label>
-                <select id="country"></select>
-              </div>
               <div class="field">
                 <label for="doctorRate">Doctor Hourly Rate</label>
                 <div class="rate-display">
@@ -1062,23 +1058,7 @@ $('footerLogo').src = LOGO_BASE64;
 $('year').textContent = new Date().getFullYear();
 
 /* ===== DATABASES ===== */
-var COUNTRIES = {
-  'Germany': { currency: 'EUR', doctorRate: 120, assistantRate: 22 },
-  'USA': { currency: 'USD', doctorRate: 150, assistantRate: 25 },
-  'UK': { currency: 'GBP', doctorRate: 130, assistantRate: 20 },
-  'Spain': { currency: 'EUR', doctorRate: 80, assistantRate: 15 },
-  'France': { currency: 'EUR', doctorRate: 100, assistantRate: 18 },
-  'Italy': { currency: 'EUR', doctorRate: 90, assistantRate: 17 },
-  'Netherlands': { currency: 'EUR', doctorRate: 110, assistantRate: 20 },
-  'Switzerland': { currency: 'CHF', doctorRate: 200, assistantRate: 35 },
-  'Brazil': { currency: 'USD', doctorRate: 40, assistantRate: 8 },
-  'Mexico': { currency: 'USD', doctorRate: 35, assistantRate: 7 },
-  'UAE': { currency: 'USD', doctorRate: 120, assistantRate: 20 },
-  'Saudi Arabia': { currency: 'USD', doctorRate: 100, assistantRate: 18 },
-  'Turkey': { currency: 'EUR', doctorRate: 30, assistantRate: 6 },
-  'Poland': { currency: 'EUR', doctorRate: 50, assistantRate: 10 },
-  'India': { currency: 'USD', doctorRate: 25, assistantRate: 5 }
-};
+/* Country database removed — currency selector is in the navbar */
 
 var MATERIALS = [
   { name: 'DCA Resin (LuxCreo)', type: 'Resin', costPerLiter: 299, mlPerAligner: 100, desc: 'Direct clear aligner resin' },
@@ -1145,14 +1125,6 @@ $('currency').addEventListener('change', function() {
 
 /* ===== Populate dropdowns ===== */
 function populateDropdowns() {
-  var countrySelect = $('country');
-  Object.keys(COUNTRIES).forEach(function(name) {
-    var opt = document.createElement('option');
-    opt.value = name;
-    opt.textContent = name + ' (' + COUNTRIES[name].currency + ')';
-    countrySelect.appendChild(opt);
-  });
-
   var matSelect = $('material');
   MATERIALS.forEach(function(m, i) {
     var opt = document.createElement('option');
@@ -1220,19 +1192,6 @@ function switchTab(tab) {
   $('tabCalc').classList.toggle('active', isCalc);
   $('tabCompare').classList.toggle('active', !isCalc);
 }
-
-/* ===== Country change ===== */
-$('country').addEventListener('change', function() {
-  var c = COUNTRIES[this.value];
-  if (c) {
-    $('doctorRate').value = c.doctorRate;
-    $('assistantRate').value = c.assistantRate;
-    curCurrency = currencies[c.currency] || currencies.EUR;
-    $('currency').value = curCurrency.code;
-    updateCurrencySymbols();
-    renderAll();
-  }
-});
 
 /* ===== Material change ===== */
 $('material').addEventListener('change', function() {
@@ -1570,7 +1529,6 @@ function updateURL() {
   p.set('cur', curCurrency.code);
   p.set('cn', v.compName);
   p.set('mc', v.monthlyCases);
-  p.set('country', $('country').value);
   p.set('mat', $('material').value);
   p.set('printer', $('printer').value);
   p.set('sw', $('software').value);
@@ -1593,9 +1551,6 @@ function updateURL() {
 
 function loadFromURL() {
   var p = new URLSearchParams(location.search);
-  if (p.has('country') && COUNTRIES[p.get('country')]) {
-    $('country').value = p.get('country');
-  }
   if (p.has('mat')) { $('material').value = p.get('mat'); }
   if (p.has('printer')) { $('printer').value = p.get('printer'); }
   if (p.has('sw')) { $('software').value = p.get('sw'); }
@@ -1775,7 +1730,6 @@ function resetDefaults() {
   $('currency').value = 'EUR';
   curCurrency = currencies.EUR;
   /* Reset Tab 1 fields */
-  $('country').value = 'Germany';
   $('doctorRate').value = 120;
   $('assistantRate').value = 22;
   $('doctorMinutes').value = 30;
