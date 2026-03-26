@@ -7,7 +7,6 @@
 <meta name="description" content="Compare dental aligner fulfillment costs across K LINE, In-House, and External Lab options. K LINE Europe — Europe's #1 OEM Clear Aligner Provider.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="https://www.kline-europe.com/favicon.ico">
-<!-- Open Graph for link previews -->
 <meta property="og:title" content="K LINE — Aligner Price Comparison Calculator">
 <meta property="og:description" content="Compare aligner fulfillment costs and find the best value for your practice. Calculate savings instantly.">
 <meta property="og:type" content="website">
@@ -132,8 +131,41 @@
     font-size: 0.95rem; position: relative;
   }
 
-  /* ===== CONTAINER ===== */
-  main { max-width: 1180px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+  /* ===== MAIN LAYOUT ===== */
+  main { max-width: 1280px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .main-left { min-width: 0; }
+  .main-right { position: sticky; top: 72px; }
+
+  /* ===== TABS ===== */
+  .tabs {
+    display: flex; gap: 0; margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--surface-border);
+  }
+  .tab-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.85rem; font-weight: 700;
+    color: var(--text-light);
+    background: none; border: none;
+    cursor: pointer; font-family: inherit;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all var(--transition);
+    min-height: 44px;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+  }
+  .tab-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
 
   /* ===== SECTION ===== */
   section { margin-bottom: 1.75rem; }
@@ -154,6 +186,9 @@
 
   /* ===== INPUT GRID ===== */
   .input-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem;
+  }
+  .input-grid-4 {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem;
   }
   .field label {
@@ -205,6 +240,87 @@
   }
   .divider-row::after { content: ''; flex: 1; height: 1px; background: var(--surface-border); }
 
+  /* ===== RATE DISPLAY ===== */
+  .rate-display {
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .rate-display input { flex: 1; }
+  .rate-edit-btn {
+    background: none; border: none; cursor: pointer; color: var(--text-light);
+    padding: 0.3rem; min-width: 30px; min-height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px; transition: all var(--transition);
+  }
+  .rate-edit-btn:hover { color: var(--teal); background: var(--teal-subtle); }
+
+  /* ===== STICKY RESULTS PANEL ===== */
+  .results-panel {
+    background: var(--white); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .results-header {
+    background: var(--dark-900); color: var(--white);
+    padding: 1.25rem 1.5rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .results-header::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-dark), var(--teal));
+  }
+  .results-header .results-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--white-70); margin-bottom: 0.3rem;
+  }
+  .results-header .results-big {
+    font-size: 2.4rem; font-weight: 900; color: var(--teal);
+    letter-spacing: -0.03em; line-height: 1;
+  }
+  .results-header .results-sub {
+    font-size: 0.8rem; color: var(--white-70); margin-top: 0.3rem;
+  }
+  .results-body { padding: 1.25rem 1.5rem; }
+
+  /* ===== DONUT CHART ===== */
+  .donut-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    margin-bottom: 1.25rem;
+  }
+  .donut-svg { width: 180px; height: 180px; }
+  .donut-center-text {
+    font-size: 0.7rem; font-weight: 700; fill: var(--text-light);
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .donut-center-val {
+    font-size: 1.1rem; font-weight: 900; fill: var(--text);
+  }
+  .donut-legend {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1rem;
+    width: 100%; margin-top: 0.75rem;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem;
+  }
+  .legend-dot {
+    width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
+  }
+  .legend-label { color: var(--text-light); flex: 1; }
+  .legend-val { font-weight: 700; color: var(--text); white-space: nowrap; }
+
+  /* ===== LINE ITEMS ===== */
+  .line-items { border-top: 1px solid var(--surface-border); padding-top: 0.75rem; }
+  .line-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.4rem 0; font-size: 0.8rem;
+  }
+  .line-item .li-label { color: var(--text-light); }
+  .line-item .li-val { font-weight: 700; }
+  .line-item.total-line {
+    border-top: 2px solid var(--dark-900);
+    margin-top: 0.3rem; padding-top: 0.6rem;
+    font-weight: 800; font-size: 0.85rem;
+  }
+  .line-item.total-line .li-val { color: var(--teal-dark); }
+
   /* ===== SUMMARY BAR ===== */
   .summary-bar {
     background: var(--dark-900); border-radius: var(--radius);
@@ -239,7 +355,6 @@
     position: relative;
   }
   .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-
   .card.featured {
     background: var(--dark-900); color: var(--white);
     box-shadow: 0 0 0 1px var(--teal-glow), var(--shadow);
@@ -255,7 +370,6 @@
   .card.featured .row { border-top-color: var(--white-05); }
   .card.featured .row .lbl { color: var(--white-70); }
   .card.featured .row .val { color: var(--white-90); }
-
   .card-top {
     padding: 1.25rem 1.25rem 1rem; text-align: center;
     border-bottom: 1px solid #f3f4f6;
@@ -273,7 +387,6 @@
   .tag-neutral { background: #f3f4f6; color: var(--text-light); }
   .card-top h3 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; }
   .card-top .sub { font-size: 0.75rem; color: var(--text-light); margin-top: 0.1rem; }
-
   .card-body {
     padding: 1.25rem; flex: 1; display: flex; flex-direction: column; gap: 0.75rem;
   }
@@ -283,7 +396,6 @@
     letter-spacing: -0.03em; line-height: 1;
   }
   .price-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem; }
-
   .row {
     display: flex; justify-content: space-between; align-items: center;
     padding: 0.5rem 0; border-top: 1px solid #f3f4f6; font-size: 0.8rem;
@@ -292,7 +404,6 @@
   .row .val { font-weight: 700; }
   .val.green { color: var(--green); }
   .val.red { color: var(--red-text); }
-
   .pill {
     display: flex; align-items: center; justify-content: center;
     gap: 0.3rem; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm);
@@ -301,7 +412,6 @@
   .pill-green { background: var(--green-soft); color: var(--green); }
   .pill-red { background: var(--red-soft); color: var(--red-text); }
   .pill-neutral { background: #f3f4f6; color: var(--text-light); }
-
   .roi-box {
     background: var(--surface); border: 1px solid var(--surface-border);
     border-radius: var(--radius-sm); padding: 0.7rem 0.8rem; margin-top: auto;
@@ -352,7 +462,6 @@
   .btn-sm { padding: 0.45rem 0.85rem; font-size: 0.78rem; min-height: 36px; }
   .btn-cta { background: var(--teal); color: var(--dark-900); font-size: 0.9rem; padding: 0.75rem 1.5rem; }
   .btn-cta:hover { background: var(--teal-dark); box-shadow: 0 4px 16px rgba(6,176,174,0.3); }
-
   .modal-x:focus { outline: 2px solid var(--teal); outline-offset: 2px; }
 
   .action-bar { display: flex; gap: 0.65rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem; }
@@ -436,10 +545,22 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* ===== AUTO-FILL INDICATOR ===== */
+  .auto-fill-badge {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    font-size: 0.62rem; font-weight: 700; color: var(--teal);
+    background: var(--teal-subtle); padding: 0.15rem 0.45rem;
+    border-radius: 4px; margin-left: 0.35rem; vertical-align: middle;
+  }
+
   /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .main-right { position: static; }
+  }
   @media (max-width: 900px) {
     .cards { grid-template-columns: 1fr; }
-    .input-grid { grid-template-columns: repeat(2, 1fr); }
+    .input-grid-4 { grid-template-columns: repeat(2, 1fr); }
     .summary-bar { flex-direction: column; text-align: center; gap: 0.8rem; padding: 1.1rem; }
     .s-item .s-val { font-size: 1.25rem; }
     header h1 { font-size: 1.5rem; }
@@ -447,26 +568,32 @@
   }
   @media (max-width: 600px) {
     .input-grid { grid-template-columns: 1fr; }
+    .input-grid-4 { grid-template-columns: 1fr; }
     nav { padding: 0 1rem; }
     .navbar-brand .label { display: none; }
     main { padding: 1.15rem 1rem 2.5rem; }
     header { padding: 2rem 1.15rem 1.75rem; }
+    .tabs { gap: 0; }
+    .tab-btn { padding: 0.65rem 0.85rem; font-size: 0.78rem; }
   }
 
   /* ===== PRINT ===== */
   @media print {
     body { background: white !important; }
-    nav, .action-bar, .modal-overlay, .toast, .no-print, .cta-bar { display: none !important; }
+    nav, .action-bar, .modal-overlay, .toast, .no-print, .cta-bar, .tabs { display: none !important; }
     header {
       background: var(--dark-900) !important;
       -webkit-print-color-adjust: exact; print-color-adjust: exact;
       padding: 1.25rem;
     }
     main { padding: 1rem; }
-    .panel, .card { box-shadow: none; border: 1px solid #e5e7eb; page-break-inside: avoid; }
+    .main-grid { grid-template-columns: 1fr 1fr; }
+    .main-right { position: static; }
+    .tab-content { display: block !important; }
+    .panel, .card, .results-panel { box-shadow: none; border: 1px solid #e5e7eb; page-break-inside: avoid; }
     .card:hover { transform: none; }
     .cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important; }
-    .card-top, .tag, .summary-bar, .pill, .roi-box, .card.featured, footer {
+    .card-top, .tag, .summary-bar, .pill, .roi-box, .card.featured, footer, .results-header {
       -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
     .logo-white, .navbar-brand .logo { filter: brightness(0) invert(1) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -512,109 +639,330 @@
 <main>
   <noscript><div class="noscript-msg">This calculator requires JavaScript to function. Please enable JavaScript in your browser.</div></noscript>
 
-  <!-- Summary Bar -->
-  <div class="summary-bar" id="summaryBar" role="region" aria-label="Cost summary">
-    <div class="s-item"><div class="s-label">Loading</div><div class="s-val">...</div></div>
-  </div>
+  <div class="main-grid">
+    <div class="main-left">
 
-  <!-- Configuration -->
-  <section class="no-print">
-    <div class="section-header">
-      <h2>Configuration</h2>
-      <div class="line"></div>
+      <!-- Tabs -->
+      <div class="tabs" role="tablist" aria-label="Calculator sections">
+        <button type="button" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tabCalc" id="tabBtnCalc" onclick="switchTab('calc')">Cost Calculator</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="tabCompare" id="tabBtnCompare" onclick="switchTab('compare')">Compare Options</button>
+      </div>
+
+      <!-- TAB 1: Cost Calculator -->
+      <div class="tab-content active" id="tabCalc" role="tabpanel" aria-labelledby="tabBtnCalc">
+
+        <!-- Location & Labor -->
+        <section>
+          <div class="section-header">
+            <h2>Location &amp; Labor</h2>
+            <div class="line"></div>
+          </div>
+          <div class="panel">
+            <div class="input-grid">
+              <div class="field" style="grid-column:1/-1;">
+                <label for="country">Country / Region</label>
+                <select id="country"></select>
+              </div>
+              <div class="field">
+                <label for="doctorRate">Doctor Hourly Rate</label>
+                <div class="rate-display">
+                  <div class="pre" data-symbol="$" id="preDoctorRate"><input type="number" id="doctorRate" value="120" min="0" max="9999" step="5"></div>
+                  <button type="button" class="rate-edit-btn" title="Edit rate" aria-label="Edit doctor rate" onclick="this.previousElementSibling.querySelector('input').focus()">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  </button>
+                </div>
+                <div class="hint">Per hour, before tax</div>
+              </div>
+              <div class="field">
+                <label for="assistantRate">Assistant Hourly Rate</label>
+                <div class="rate-display">
+                  <div class="pre" data-symbol="$" id="preAssistantRate"><input type="number" id="assistantRate" value="22" min="0" max="9999" step="1"></div>
+                  <button type="button" class="rate-edit-btn" title="Edit rate" aria-label="Edit assistant rate" onclick="this.previousElementSibling.querySelector('input').focus()">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  </button>
+                </div>
+                <div class="hint">Per hour, before tax</div>
+              </div>
+              <div class="field">
+                <label for="doctorMinutes">Doctor Minutes / Case</label>
+                <input type="number" id="doctorMinutes" value="30" min="0" max="600" step="5">
+                <div class="hint">Treatment planning time</div>
+              </div>
+              <div class="field">
+                <label for="assistantMinutes">Assistant Minutes / Case</label>
+                <input type="number" id="assistantMinutes" value="45" min="0" max="600" step="5">
+                <div class="hint">Fabrication &amp; finishing</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Case Parameters -->
+        <section>
+          <div class="section-header">
+            <h2>Case Parameters</h2>
+            <div class="line"></div>
+          </div>
+          <div class="panel">
+            <div class="input-grid">
+              <div class="field">
+                <label for="alignersPerCase">Aligners per Case</label>
+                <input type="number" id="alignersPerCase" value="30" min="1" max="200">
+                <div class="hint">Average aligner count</div>
+              </div>
+              <div class="field">
+                <label for="calcMonthlyCases">Monthly Cases</label>
+                <input type="number" id="calcMonthlyCases" value="10" min="1" max="10000">
+                <div class="hint">Average production volume</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Material -->
+        <section>
+          <div class="section-header">
+            <h2>Material</h2>
+            <div class="line"></div>
+          </div>
+          <div class="panel">
+            <div class="input-grid">
+              <div class="field" style="grid-column:1/-1;">
+                <label for="material">Material Selection</label>
+                <select id="material"></select>
+              </div>
+              <div class="field" id="fieldCustomMaterialCost" style="display:none;">
+                <label for="customMaterialCost">Cost per Aligner</label>
+                <div class="pre" data-symbol="$"><input type="number" id="customMaterialCost" value="3.00" min="0" max="999" step="0.25"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3D Printer -->
+        <section>
+          <div class="section-header">
+            <h2>3D Printer</h2>
+            <div class="line"></div>
+          </div>
+          <div class="panel">
+            <div class="input-grid">
+              <div class="field" style="grid-column:1/-1;">
+                <label for="printer">3D Printer</label>
+                <select id="printer"></select>
+              </div>
+              <div id="customPrinterFields" style="display:none;grid-column:1/-1;">
+                <div class="input-grid" style="margin-top:0.5rem;">
+                  <div class="field">
+                    <label for="customPrinterPrice">Printer Price</label>
+                    <div class="pre" data-symbol="$"><input type="number" id="customPrinterPrice" value="10000" min="0" max="500000" step="500"></div>
+                  </div>
+                  <div class="field">
+                    <label for="customPrinterLifespan">Lifespan (years)</label>
+                    <input type="number" id="customPrinterLifespan" value="5" min="1" max="20">
+                  </div>
+                  <div class="field">
+                    <label for="customPrinterMaintenance">Annual Maintenance</label>
+                    <div class="pre" data-symbol="$"><input type="number" id="customPrinterMaintenance" value="500" min="0" max="50000" step="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Software -->
+        <section>
+          <div class="section-header">
+            <h2>Planning Software</h2>
+            <div class="line"></div>
+          </div>
+          <div class="panel">
+            <div class="input-grid">
+              <div class="field" style="grid-column:1/-1;">
+                <label for="software">Software</label>
+                <select id="software"></select>
+              </div>
+              <div id="customSoftwareFields" style="display:none;grid-column:1/-1;">
+                <div class="input-grid" style="margin-top:0.5rem;">
+                  <div class="field">
+                    <label for="customSoftwarePrice">Cost</label>
+                    <div class="pre" data-symbol="$"><input type="number" id="customSoftwarePrice" value="0" min="0" max="99999" step="5"></div>
+                  </div>
+                  <div class="field">
+                    <label for="customSoftwareModel">Pricing Model</label>
+                    <select id="customSoftwareModel">
+                      <option value="monthly">Monthly</option>
+                      <option value="perCase">Per Case</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Lab Overhead -->
+        <section>
+          <div class="section-header">
+            <h2>Lab Overhead</h2>
+            <div class="line"></div>
+          </div>
+          <div class="panel">
+            <div class="input-grid">
+              <div class="field">
+                <label for="labRent">Monthly Lab Space Rent</label>
+                <div class="pre" data-symbol="$"><input type="number" id="labRent" value="200" min="0" max="50000" step="25"></div>
+                <div class="hint">Proportion used for aligners</div>
+              </div>
+              <div class="field">
+                <label for="consumablesPolishing">Polishing Supplies / Aligner</label>
+                <div class="pre" data-symbol="$"><input type="number" id="consumablesPolishing" value="0.50" min="0" max="100" step="0.10"></div>
+              </div>
+              <div class="field">
+                <label for="consumablesCutting">Cutting Discs / Aligner</label>
+                <div class="pre" data-symbol="$"><input type="number" id="consumablesCutting" value="0.30" min="0" max="100" step="0.10"></div>
+              </div>
+              <div class="field">
+                <label for="thermoMaintenance">Thermoformer Annual Maint.</label>
+                <div class="pre" data-symbol="$"><input type="number" id="thermoMaintenance" value="300" min="0" max="50000" step="50"></div>
+                <div class="hint">If sheet material is used</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- TAB 2: Compare Options -->
+      <div class="tab-content" id="tabCompare" role="tabpanel" aria-labelledby="tabBtnCompare">
+
+        <!-- Configuration -->
+        <section class="no-print">
+          <div class="section-header">
+            <h2>Comparison Configuration</h2>
+            <div class="line"></div>
+          </div>
+          <div class="panel">
+            <div class="input-grid-4">
+              <div class="field">
+                <label for="complexity">Case Complexity</label>
+                <select id="complexity">
+                  <option value="14">Mild (14 aligners)</option>
+                  <option value="30" selected>Moderate (30 aligners)</option>
+                  <option value="50">Complex (50 aligners)</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="alignerCount">Aligner Count</label>
+                <input type="number" id="alignerCount" value="30" min="1" max="200" aria-describedby="hintAlignerCount">
+                <div class="hint" id="hintAlignerCount">Manual override</div>
+              </div>
+              <div class="field">
+                <label for="patientName">Patient Name</label>
+                <input type="text" id="patientName" placeholder="Optional — for quotes" maxlength="80">
+              </div>
+              <div class="field">
+                <label for="clinicName">Clinic Name</label>
+                <input type="text" id="clinicName" placeholder="Your clinic name" maxlength="80">
+              </div>
+
+              <div class="divider-row"><span>Price Per Aligner</span></div>
+
+              <div class="field">
+                <label for="priceKLine">K Line</label>
+                <div class="pre" data-symbol="$"><input type="number" id="priceKLine" value="6.50" min="0" max="9999" step="0.25" aria-describedby="hintKLine"></div>
+                <div class="hint" id="hintKLine">Per aligner cost</div>
+              </div>
+              <div class="field">
+                <label for="priceInHouse">In-House <span class="auto-fill-badge" id="autoFillBadge" title="Auto-calculated from Cost Calculator tab">AUTO</span></label>
+                <div class="pre" data-symbol="$"><input type="number" id="priceInHouse" value="4.00" min="0" max="9999" step="0.25" aria-describedby="hintInHouse"></div>
+                <div class="hint" id="hintInHouse">Auto-filled from Cost Calculator</div>
+              </div>
+              <div class="field">
+                <label for="priceCompetitor"><span id="compLabelText">External Lab</span></label>
+                <div class="pre" data-symbol="$"><input type="number" id="priceCompetitor" value="12.00" min="0" max="9999" step="0.25" aria-describedby="hintComp"></div>
+                <div class="hint" id="hintComp">External lab cost</div>
+              </div>
+              <div class="field">
+                <label for="equipmentCost">Equipment Investment</label>
+                <div class="pre" data-symbol="$"><input type="number" id="equipmentCost" value="15000" min="0" max="500000" step="500" aria-describedby="hintEquip"></div>
+                <div class="hint" id="hintEquip">In-House ROI calc</div>
+              </div>
+
+              <div class="divider-row"><span>Additional Settings</span></div>
+
+              <div class="field">
+                <label for="competitorName">Competitor Name</label>
+                <input type="text" id="competitorName" value="External Lab" placeholder="e.g. External Lab" maxlength="40" aria-describedby="hintCompName">
+                <div class="hint" id="hintCompName">Used in comparison cards</div>
+              </div>
+              <div class="field">
+                <label for="monthlyCases">Monthly Cases</label>
+                <input type="number" id="monthlyCases" value="10" min="1" max="10000" aria-describedby="hintMonthlyCases">
+                <div class="hint" id="hintMonthlyCases">For annual savings calc</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Print-Only Header -->
+        <div class="print-only" id="printHeader" style="margin-bottom:1rem;padding:0.65rem 0;border-bottom:1px solid #e5e7eb;">
+          <div style="font-size:0.82rem;color:var(--text-light);">Prepared for: <strong id="printPatient" style="color:#111827;">—</strong></div>
+          <div style="font-size:0.82rem;color:var(--text-light);">Clinic: <strong id="printClinic" style="color:#111827;">—</strong></div>
+          <div style="font-size:0.72rem;color:var(--text-light);margin-top:0.25rem;" id="printDate"></div>
+        </div>
+
+        <!-- Summary Bar -->
+        <div class="summary-bar" id="summaryBar" role="region" aria-label="Cost summary">
+          <div class="s-item"><div class="s-label">Loading</div><div class="s-val">...</div></div>
+        </div>
+
+        <!-- Comparison Cards -->
+        <section>
+          <div class="section-header">
+            <h2>Cost Comparison</h2>
+            <div class="line"></div>
+          </div>
+          <div class="cards" id="cardsGrid" role="region" aria-label="Price comparison cards">
+            <div class="card"><div class="card-body" style="justify-content:center;align-items:center;min-height:200px;"><span style="color:var(--text-light);">Loading...</span></div></div>
+          </div>
+        </section>
+
+        <!-- Visual Chart -->
+        <section class="chart-section">
+          <div class="section-header">
+            <h2>Visual Comparison</h2>
+            <div class="line"></div>
+          </div>
+          <div class="panel">
+            <div class="chart-bars" id="chartBars" role="img" aria-label="Bar chart comparing costs"></div>
+          </div>
+        </section>
+      </div>
+
     </div>
-    <div class="panel">
-      <div class="input-grid">
-        <div class="field">
-          <label for="complexity">Case Complexity</label>
-          <select id="complexity">
-            <option value="14">Mild (14 aligners)</option>
-            <option value="30" selected>Moderate (30 aligners)</option>
-            <option value="50">Complex (50 aligners)</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="alignerCount">Aligner Count</label>
-          <input type="number" id="alignerCount" value="30" min="1" max="200" aria-describedby="hintAlignerCount">
-          <div class="hint" id="hintAlignerCount">Manual override</div>
-        </div>
-        <div class="field">
-          <label for="patientName">Patient Name</label>
-          <input type="text" id="patientName" placeholder="Optional — for quotes" maxlength="80">
-        </div>
-        <div class="field">
-          <label for="clinicName">Clinic Name</label>
-          <input type="text" id="clinicName" placeholder="Your clinic name" maxlength="80">
-        </div>
 
-        <div class="divider-row"><span>Price Per Aligner</span></div>
-
-        <div class="field">
-          <label for="priceKLine">K Line</label>
-          <div class="pre" data-symbol="$"><input type="number" id="priceKLine" value="6.50" min="0" max="9999" step="0.25" aria-describedby="hintKLine"></div>
-          <div class="hint" id="hintKLine">Per aligner cost</div>
+    <!-- STICKY RESULTS PANEL (right column) -->
+    <div class="main-right">
+      <div class="results-panel" id="resultsPanel">
+        <div class="results-header">
+          <div class="results-label">In-House Cost per Aligner</div>
+          <div class="results-big" id="resultsBigCost">---</div>
+          <div class="results-sub" id="resultsCaseCost">--- per case</div>
         </div>
-        <div class="field">
-          <label for="priceInHouse">In-House</label>
-          <div class="pre" data-symbol="$"><input type="number" id="priceInHouse" value="4.00" min="0" max="9999" step="0.25" aria-describedby="hintInHouse"></div>
-          <div class="hint" id="hintInHouse">Total cost per aligner</div>
-        </div>
-        <div class="field">
-          <label for="priceCompetitor"><span id="compLabelText">External Lab</span></label>
-          <div class="pre" data-symbol="$"><input type="number" id="priceCompetitor" value="12.00" min="0" max="9999" step="0.25" aria-describedby="hintComp"></div>
-          <div class="hint" id="hintComp">External lab cost</div>
-        </div>
-        <div class="field">
-          <label for="equipmentCost">Equipment Investment</label>
-          <div class="pre" data-symbol="$"><input type="number" id="equipmentCost" value="15000" min="0" max="500000" step="500" aria-describedby="hintEquip"></div>
-          <div class="hint" id="hintEquip">In-House ROI calc</div>
-        </div>
-
-        <div class="divider-row"><span>Additional Settings</span></div>
-
-        <div class="field">
-          <label for="competitorName">Competitor Name</label>
-          <input type="text" id="competitorName" value="External Lab" placeholder="e.g. External Lab" maxlength="40" aria-describedby="hintCompName">
-          <div class="hint" id="hintCompName">Used in comparison cards</div>
-        </div>
-        <div class="field">
-          <label for="monthlyCases">Monthly Cases</label>
-          <input type="number" id="monthlyCases" value="10" min="1" max="10000" aria-describedby="hintMonthlyCases">
-          <div class="hint" id="hintMonthlyCases">For annual savings calc</div>
+        <div class="results-body">
+          <div class="donut-wrap">
+            <svg class="donut-svg" viewBox="0 0 180 180" id="donutChart" role="img" aria-label="Cost breakdown donut chart"></svg>
+            <div class="donut-legend" id="donutLegend"></div>
+          </div>
+          <div class="line-items" id="lineItems"></div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Print-Only Header -->
-  <div class="print-only" id="printHeader" style="margin-bottom:1rem;padding:0.65rem 0;border-bottom:1px solid #e5e7eb;">
-    <div style="font-size:0.82rem;color:var(--text-light);">Prepared for: <strong id="printPatient" style="color:#111827;">—</strong></div>
-    <div style="font-size:0.82rem;color:var(--text-light);">Clinic: <strong id="printClinic" style="color:#111827;">—</strong></div>
-    <div style="font-size:0.72rem;color:var(--text-light);margin-top:0.25rem;" id="printDate"></div>
   </div>
-
-  <!-- Comparison Cards -->
-  <section>
-    <div class="section-header">
-      <h2>Cost Comparison</h2>
-      <div class="line"></div>
-    </div>
-    <div class="cards" id="cardsGrid" role="region" aria-label="Price comparison cards">
-      <div class="card"><div class="card-body" style="justify-content:center;align-items:center;min-height:200px;"><span style="color:var(--text-light);">Loading...</span></div></div>
-    </div>
-  </section>
-
-  <!-- Visual Chart -->
-  <section class="chart-section">
-    <div class="section-header">
-      <h2>Visual Comparison</h2>
-      <div class="line"></div>
-    </div>
-    <div class="panel">
-      <div class="chart-bars" id="chartBars" role="img" aria-label="Bar chart comparing costs"></div>
-    </div>
-  </section>
 
   <!-- Actions -->
   <div class="action-bar no-print">
@@ -704,14 +1052,75 @@
 <script>
 var $ = function(id) { return document.getElementById(id); };
 
-/* ===== Logo base64 (M10) ===== */
+/* ===== Logo base64 ===== */
 var LOGO_BASE64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqgAAABYCAYAAAA5tQVsAAAF00lEQVR42u3dsXLUVhQG4D+Z9MZPALM8AMzYvV2QOjSmjWlMCR3ucDq7M+W6sltchNRsAQ/gGecBIM4TGL9B2uRCdDG70kqr7+sOM6y0VyvPmat/jn7I8Dwu6t8D/fFbUR/0/Hw/dny8zaK+nvPzNor6zZLX80lRX4z8evd9Pca2fh+XvH7nRb0/sPt/v/J9hnY9+ub+v4sfrQcAAH2iQQUAQIMKAAD/56cBnvPbov5Q1FsuK3yzScfHW89iM6jTJX+fZxlWxnLZ19v9stz1myx5/faK+mjOvwfrHX+/VbsesYMKAAAaVAAANKgAAJDxZVBLu0X9l8sKK2tamYPYtjIzd+KSQL43w1nLpBI7qAAAoEEFAAANKgAAkUFt11VRvy7q5y4zDNZOmjNrGdi7wwEZVGIHFQAADSoAAGhQAQCIDGpfHaR5Tuqayw4ZyrvOpx0ff1bUT1wS6Ox+36lkwIkdVAAA0KACAIAGFQCAyKC263NRHxf1K5cdemtaeXf3on2KzCmkp3NRZVDnc51+z3G+jh1UAADiET8AAGhQAQDI8DOoD4t/u1yx7yiD2i83ld/bliUalZdF/SjdZp5+vk0mCmhVef9vFPWFJZrr791J7KACAIAGFQAADSoAAGThGdQyo7md1Z6LelbUv/oZdOpFUR9YklEpM2WHWW7m9JNLAhlKRt2c4thBBQAADSoAAGhQAQBI3zKoW5WM4PGKfeeDyKB26WmaM8F3LdGoTDs+3rOYowhZ0tzN9Tk/b2fBnzc2k6J+17PzmxX1UeygAgAQj/gBAECDCgBAhpdBTSWjeZrmDOHQXBX1h3gX/CK9rvx+3luiUVvvOAM3s+TQmfOi3ku7c1FPLPmtPOrZ+XyygwoAQDziBwAADSoAAFnBDOpamueg7q7YGhzLoM7lLM1zdLetL1lexvUwzXNRgbSWKZwtOAO5J4MaO6gAAKBBBQBAg2oJAABIzzOoqbyrvsxsXg58Dd4W9U2aM7kx5zRNmdNU5upCl2qZtQtLBGkrA36UxWZQy8/fseSxgwoAABpUAAA0qAAAkJ5nUFPJoG6v2JqcFvXzkf9GnlbWJ+aeMiDTot60JJC2MqizypzUSVbr3fLEDioAABpUAADQoAIAEBnUmq1K5vB9ZFAzosxpKhll6JONon6Z5rmNwOKUc4gPI4Papuue/327sIMKAEA84gcAAA0qAAAZYQY1lczhw4GvyWVR/13Udwf+/W7SnCG+vOXnvSjqB24r8u2ZqHIO6Zs0Z0YXrcygnqd5biOQ3mRQGXYGNXZQAQDQoAIAgAYVAIDIoH6ZOdzNfHM0++Zthj0X9c+iflzUV7f8vHtFfeA24haepDnjuV/U79Ltu8MPK+cLZGGZyDKTumeJiB1UAAA0qAAAoEEFACAjy6Cmkkk8HfganQ4sg3qW5jmln7PYTO6a24hbqM0VnaV5LulOy+e3U3nX98wlzDwZ38nAfo+060gGtVOTDCijbAcVAIB4xA8AABpUAAAy0gzq3RWbi3pZeZd91xnMm0rG9LTlTPEDtw0d2u84g1qaFvVmmuc68l9ven5+9yOTmh5lgGeVDDiZK3P6sefnO7ODCgBAPOIHAAANKgAAkUH9wm5Way7q+6L+peXjfais59WCj/e4qF+5TUh/Mmpdv7u7zHC9THNGltWay0uWOhdVBnVcLmIHFQCAeMQPAAAaVAAAIoNa2irq7TRnOjOyDOpNZe7occvf52FWKyNMRj0Xdb3l45cZ1PM0ZKiIzCn53jmYX7leE0s0nvvTDioAAPGIHwAANKgAAEQG9ateDDyDejnn/z+rrMfnls//Tpozp2tuC3rsOs1zEw87Pp9pUW+6RJFBJS3NRZ1aEhlUAACIR/wAAGhQLQEAABl5BrWcG3ov7b5bPi3PQS39kea5ppcdn++dyvk/cBuQ1cmo7aXbuYkbleOfuETp7bu+6b2TSsZ83RKt7v1pBxUAgHjEDwAAGlQAAIbgH5UGx/EwHjDMAAAAAElFTkSuQmCC';
 $('navLogo').src = LOGO_BASE64;
 $('heroLogo').src = LOGO_BASE64;
 $('footerLogo').src = LOGO_BASE64;
 
-/* ===== Year (M7) ===== */
+/* ===== Year ===== */
 $('year').textContent = new Date().getFullYear();
+
+/* ===== DATABASES ===== */
+var COUNTRIES = {
+  'Germany': { currency: 'EUR', doctorRate: 120, assistantRate: 22 },
+  'USA': { currency: 'USD', doctorRate: 150, assistantRate: 25 },
+  'UK': { currency: 'GBP', doctorRate: 130, assistantRate: 20 },
+  'Spain': { currency: 'EUR', doctorRate: 80, assistantRate: 15 },
+  'France': { currency: 'EUR', doctorRate: 100, assistantRate: 18 },
+  'Italy': { currency: 'EUR', doctorRate: 90, assistantRate: 17 },
+  'Netherlands': { currency: 'EUR', doctorRate: 110, assistantRate: 20 },
+  'Switzerland': { currency: 'CHF', doctorRate: 200, assistantRate: 35 },
+  'Brazil': { currency: 'USD', doctorRate: 40, assistantRate: 8 },
+  'Mexico': { currency: 'USD', doctorRate: 35, assistantRate: 7 },
+  'UAE': { currency: 'USD', doctorRate: 120, assistantRate: 20 },
+  'Saudi Arabia': { currency: 'USD', doctorRate: 100, assistantRate: 18 },
+  'Turkey': { currency: 'EUR', doctorRate: 30, assistantRate: 6 },
+  'Poland': { currency: 'EUR', doctorRate: 50, assistantRate: 10 },
+  'India': { currency: 'USD', doctorRate: 25, assistantRate: 5 }
+};
+
+var MATERIALS = [
+  { name: 'DCA Resin (LuxCreo)', type: 'Resin', costPerLiter: 299, mlPerAligner: 100, desc: 'Direct clear aligner resin' },
+  { name: 'Dental LT Clear Resin V2 (Formlabs)', type: 'Resin', costPerLiter: 299, mlPerAligner: 100, desc: 'Biocompatible clear resin' },
+  { name: 'Essix ACE Plastic (Dentsply)', type: 'Sheet', costPerSheet: 2.50, desc: 'Thermoforming sheet' },
+  { name: 'Zendura FLX (Bay Materials)', type: 'Sheet', costPerSheet: 3.00, desc: 'Multi-layer aligner sheet' },
+  { name: 'GT FLEX PRO (Goodfit)', type: 'Sheet', costPerSheet: 2.00, desc: 'Professional thermoforming sheet' },
+  { name: 'Tera Harz TC-85 DAC (Graphy)', type: 'Resin', costPerLiter: 350, mlPerAligner: 95, desc: '3D printing dental resin' },
+  { name: 'Custom Material', type: 'Custom', costPerAligner: 0, desc: 'Enter your own cost' }
+];
+
+var PRINTERS = [
+  { name: 'Formlabs Form 4B', price: 16000, technology: 'MSLA', lifespan: 5, maintenance: 1000, thermoforming: true },
+  { name: 'SprintRay Pro 95 S', price: 18000, technology: 'DLP', lifespan: 5, maintenance: 800, thermoforming: false },
+  { name: 'Anycubic Photon Mono M5s Pro', price: 1000, technology: 'MSLA', lifespan: 3, maintenance: 200, thermoforming: true },
+  { name: 'LuxCreo iLux Pro Dental', price: 25000, technology: 'DLP', lifespan: 5, maintenance: 1200, thermoforming: false },
+  { name: 'Phrozen Sonic XL 4K', price: 3500, technology: 'MSLA', lifespan: 4, maintenance: 300, thermoforming: true },
+  { name: 'Structo DentaForm', price: 20000, technology: 'MSLA', lifespan: 5, maintenance: 1000, thermoforming: false },
+  { name: 'Custom Printer', price: 0, technology: '-', lifespan: 5, maintenance: 0, thermoforming: false }
+];
+
+var SOFTWARE = [
+  { name: '3Shape Clear Aligner Studio', priceModel: 'monthly', price: 450 },
+  { name: 'Archform', priceModel: 'perCase', price: 45 },
+  { name: 'BlueSkyBio Plan', priceModel: 'monthly', price: 300 },
+  { name: 'SoftSmile', priceModel: 'perCase', price: 55 },
+  { name: 'uLab Systems', priceModel: 'perCase', price: 60 },
+  { name: 'Custom Software', priceModel: 'perCase', price: 0 }
+];
+
+var DONUT_COLORS = [
+  '#06b0ae', /* Material - teal */
+  '#3b82f6', /* Equipment - blue */
+  '#8b5cf6', /* Doctor Labor - purple */
+  '#ec4899', /* Assistant Labor - pink */
+  '#f59e0b', /* Software - amber */
+  '#10b981', /* Lab Space - emerald */
+  '#ef4444', /* Consumables - red */
+  '#6366f1'  /* Maintenance - indigo */
+];
+
+var COST_LABELS = ['Material', 'Equipment', 'Doctor Labor', 'Assistant Labor', 'Software', 'Lab Space', 'Consumables', 'Maintenance'];
 
 /* ===== Currency ===== */
 var currencies = {
@@ -731,17 +1140,270 @@ function updateCurrencySymbols() {
 $('currency').addEventListener('change', function() {
   curCurrency = currencies[this.value] || currencies.EUR;
   updateCurrencySymbols();
-  render();
+  renderAll();
 });
 
-var defaults = { complexity: '30', alignerCount: 30, priceKLine: 6.50, priceInHouse: 4.00, priceCompetitor: 12.00, equipmentCost: 15000, competitorName: 'External Lab', monthlyCases: 10 };
+/* ===== Populate dropdowns ===== */
+function populateDropdowns() {
+  var countrySelect = $('country');
+  Object.keys(COUNTRIES).forEach(function(name) {
+    var opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name + ' (' + COUNTRIES[name].currency + ')';
+    countrySelect.appendChild(opt);
+  });
 
-/* Fix 1: HTML escape to prevent XSS from user inputs injected into innerHTML */
+  var matSelect = $('material');
+  MATERIALS.forEach(function(m, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    var priceStr = m.type === 'Resin' ? ' — ' + curCurrency.symbol + m.costPerLiter + '/L'
+                 : m.type === 'Sheet' ? ' — ' + curCurrency.symbol + m.costPerSheet + '/sheet'
+                 : '';
+    opt.textContent = m.name + priceStr;
+    matSelect.appendChild(opt);
+  });
+
+  var printerSelect = $('printer');
+  PRINTERS.forEach(function(p, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = p.name + (p.price > 0 ? ' — ' + curCurrency.symbol + p.price.toLocaleString() : '');
+    printerSelect.appendChild(opt);
+  });
+
+  var swSelect = $('software');
+  SOFTWARE.forEach(function(s, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    var model = s.priceModel === 'monthly' ? '/mo' : '/case';
+    opt.textContent = s.name + (s.price > 0 ? ' — ' + curCurrency.symbol + s.price + model : '');
+    swSelect.appendChild(opt);
+  });
+}
+
+/* ===== XSS escape ===== */
 function esc(s) {
   var d = document.createElement('div');
   d.textContent = s;
   return d.innerHTML;
 }
+
+/* ===== Currency formatting ===== */
+function roundCurrency(n) {
+  return Math.round(n * 100) / 100;
+}
+
+function fmt(n) {
+  return Math.abs(n).toLocaleString(curCurrency.locale, {
+    style: 'currency', currency: curCurrency.code, minimumFractionDigits: 2
+  });
+}
+
+function pct(a, b) {
+  if (b === 0 && a !== 0) { return 'N/A'; }
+  if (b === 0) { return '0%'; }
+  return Math.round(Math.abs((b - a) / b) * 100) + '%';
+}
+
+function fmtNum(n) {
+  return n.toLocaleString(curCurrency.locale);
+}
+
+/* ===== Tab switching ===== */
+function switchTab(tab) {
+  var isCalc = tab === 'calc';
+  $('tabBtnCalc').classList.toggle('active', isCalc);
+  $('tabBtnCalc').setAttribute('aria-selected', isCalc ? 'true' : 'false');
+  $('tabBtnCompare').classList.toggle('active', !isCalc);
+  $('tabBtnCompare').setAttribute('aria-selected', !isCalc ? 'true' : 'false');
+  $('tabCalc').classList.toggle('active', isCalc);
+  $('tabCompare').classList.toggle('active', !isCalc);
+}
+
+/* ===== Country change ===== */
+$('country').addEventListener('change', function() {
+  var c = COUNTRIES[this.value];
+  if (c) {
+    $('doctorRate').value = c.doctorRate;
+    $('assistantRate').value = c.assistantRate;
+    curCurrency = currencies[c.currency] || currencies.EUR;
+    $('currency').value = curCurrency.code;
+    updateCurrencySymbols();
+    renderAll();
+  }
+});
+
+/* ===== Material change ===== */
+$('material').addEventListener('change', function() {
+  var m = MATERIALS[parseInt(this.value)];
+  $('fieldCustomMaterialCost').style.display = (m && m.type === 'Custom') ? '' : 'none';
+  renderAll();
+});
+
+/* ===== Printer change ===== */
+$('printer').addEventListener('change', function() {
+  var p = PRINTERS[parseInt(this.value)];
+  $('customPrinterFields').style.display = (p && p.name === 'Custom Printer') ? '' : 'none';
+  renderAll();
+});
+
+/* ===== Software change ===== */
+$('software').addEventListener('change', function() {
+  var s = SOFTWARE[parseInt(this.value)];
+  $('customSoftwareFields').style.display = (s && s.name === 'Custom Software') ? '' : 'none';
+  renderAll();
+});
+
+/* ===== In-House cost calculation ===== */
+function calcInHouse() {
+  var matIdx = parseInt($('material').value) || 0;
+  var mat = MATERIALS[matIdx];
+  var printerIdx = parseInt($('printer').value) || 0;
+  var printer = PRINTERS[printerIdx];
+  var swIdx = parseInt($('software').value) || 0;
+  var sw = SOFTWARE[swIdx];
+
+  var alignersPerCase = Math.min(200, Math.max(1, parseInt($('alignersPerCase').value) || 1));
+  var monthlyCases = Math.min(10000, Math.max(1, parseInt($('calcMonthlyCases').value) || 1));
+  var alignersPerYear = monthlyCases * 12 * alignersPerCase;
+
+  var doctorRate = Math.min(9999, Math.max(0, parseFloat($('doctorRate').value) || 0));
+  var assistantRate = Math.min(9999, Math.max(0, parseFloat($('assistantRate').value) || 0));
+  var doctorMin = Math.min(600, Math.max(0, parseFloat($('doctorMinutes').value) || 0));
+  var assistantMin = Math.min(600, Math.max(0, parseFloat($('assistantMinutes').value) || 0));
+
+  /* 1. Material cost */
+  var materialCost = 0;
+  if (mat.type === 'Resin') {
+    materialCost = (mat.costPerLiter / 1000) * mat.mlPerAligner;
+  } else if (mat.type === 'Sheet') {
+    materialCost = mat.costPerSheet;
+  } else {
+    materialCost = Math.max(0, parseFloat($('customMaterialCost').value) || 0);
+  }
+
+  /* 2. Equipment amortization */
+  var pPrice = printer.name === 'Custom Printer' ? (parseFloat($('customPrinterPrice').value) || 0) : printer.price;
+  var pLifespan = printer.name === 'Custom Printer' ? (parseInt($('customPrinterLifespan').value) || 5) : printer.lifespan;
+  var pMaint = printer.name === 'Custom Printer' ? (parseFloat($('customPrinterMaintenance').value) || 0) : printer.maintenance;
+  var equipmentCost = alignersPerYear > 0 ? (pPrice / (pLifespan * alignersPerYear)) + (pMaint / alignersPerYear) : 0;
+
+  /* 3. Doctor labor */
+  var doctorLabor = alignersPerCase > 0 ? (doctorRate / 60) * doctorMin / alignersPerCase : 0;
+
+  /* 4. Assistant labor */
+  var assistantLabor = alignersPerCase > 0 ? (assistantRate / 60) * assistantMin / alignersPerCase : 0;
+
+  /* 5. Software */
+  var swPrice = sw.name === 'Custom Software' ? (parseFloat($('customSoftwarePrice').value) || 0) : sw.price;
+  var swModel = sw.name === 'Custom Software' ? $('customSoftwareModel').value : sw.priceModel;
+  var softwareCost = 0;
+  if (swModel === 'monthly') {
+    softwareCost = alignersPerYear > 0 ? (swPrice * 12) / alignersPerYear : 0;
+  } else {
+    softwareCost = alignersPerCase > 0 ? swPrice / alignersPerCase : 0;
+  }
+
+  /* 6. Lab space */
+  var labRent = Math.max(0, parseFloat($('labRent').value) || 0);
+  var labSpaceCost = alignersPerYear > 0 ? (labRent * 12) / alignersPerYear : 0;
+
+  /* 7. Consumables */
+  var polishing = Math.max(0, parseFloat($('consumablesPolishing').value) || 0);
+  var cutting = Math.max(0, parseFloat($('consumablesCutting').value) || 0);
+  var consumablesCost = polishing + cutting;
+
+  /* 8. Thermoforming maintenance */
+  var thermoMaint = Math.max(0, parseFloat($('thermoMaintenance').value) || 0);
+  var needsThermo = printer.thermoforming || (mat.type === 'Sheet');
+  var thermoMaintenanceCost = (needsThermo && alignersPerYear > 0) ? thermoMaint / alignersPerYear : 0;
+
+  var total = materialCost + equipmentCost + doctorLabor + assistantLabor + softwareCost + labSpaceCost + consumablesCost + thermoMaintenanceCost;
+
+  return {
+    costs: [materialCost, equipmentCost, doctorLabor, assistantLabor, softwareCost, labSpaceCost, consumablesCost, thermoMaintenanceCost],
+    total: roundCurrency(total),
+    alignersPerCase: alignersPerCase,
+    alignersPerYear: alignersPerYear
+  };
+}
+
+/* ===== Donut chart SVG ===== */
+function renderDonut(costs, total) {
+  var svg = $('donutChart');
+  var legend = $('donutLegend');
+
+  if (total <= 0) {
+    svg.innerHTML = '<text x="90" y="86" text-anchor="middle" class="donut-center-text">Cost per Aligner</text><text x="90" y="104" text-anchor="middle" class="donut-center-val">' + fmt(0) + '</text>';
+    legend.innerHTML = '';
+    return;
+  }
+
+  var cx = 90, cy = 90, r = 65;
+  var circumference = 2 * Math.PI * r;
+  var html = '';
+  var offset = 0;
+
+  for (var i = 0; i < costs.length; i++) {
+    if (costs[i] <= 0) continue;
+    var pctVal = costs[i] / total;
+    var dashLen = pctVal * circumference;
+    var dashOff = -offset;
+    html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + DONUT_COLORS[i] + '" stroke-width="22" stroke-dasharray="' + dashLen + ' ' + (circumference - dashLen) + '" stroke-dashoffset="' + dashOff + '" transform="rotate(-90 ' + cx + ' ' + cy + ')" style="transition:all 0.3s ease;"/>';
+    offset += dashLen;
+  }
+
+  /* Center circle background */
+  html += '<circle cx="' + cx + '" cy="' + cy + '" r="50" fill="white"/>';
+  html += '<text x="' + cx + '" y="' + (cy - 6) + '" text-anchor="middle" class="donut-center-text">Per Aligner</text>';
+  html += '<text x="' + cx + '" y="' + (cy + 12) + '" text-anchor="middle" class="donut-center-val">' + fmt(total) + '</text>';
+
+  svg.innerHTML = html;
+
+  /* Legend */
+  var legendHtml = '';
+  for (var j = 0; j < costs.length; j++) {
+    if (costs[j] <= 0) continue;
+    var p = total > 0 ? Math.round((costs[j] / total) * 100) : 0;
+    legendHtml += '<div class="legend-item"><div class="legend-dot" style="background:' + DONUT_COLORS[j] + ';"></div><span class="legend-label">' + COST_LABELS[j] + '</span><span class="legend-val">' + p + '%</span></div>';
+  }
+  legend.innerHTML = legendHtml;
+}
+
+/* ===== Render line items ===== */
+function renderLineItems(costs, total, alignersPerCase) {
+  var el = $('lineItems');
+  var html = '';
+  for (var i = 0; i < costs.length; i++) {
+    if (costs[i] <= 0) continue;
+    html += '<div class="line-item"><span class="li-label">' + COST_LABELS[i] + '</span><span class="li-val">' + fmt(costs[i]) + '</span></div>';
+  }
+  html += '<div class="line-item total-line"><span class="li-label">Total per Aligner</span><span class="li-val">' + fmt(total) + '</span></div>';
+  html += '<div class="line-item"><span class="li-label">Total per Case (' + alignersPerCase + ' aligners)</span><span class="li-val">' + fmt(roundCurrency(total * alignersPerCase)) + '</span></div>';
+  el.innerHTML = html;
+}
+
+/* ===== Render results panel ===== */
+function renderResults() {
+  var result = calcInHouse();
+  var total = result.total;
+  var caseCost = roundCurrency(total * result.alignersPerCase);
+
+  $('resultsBigCost').textContent = fmt(total);
+  $('resultsCaseCost').textContent = fmt(caseCost) + ' per case (' + result.alignersPerCase + ' aligners)';
+
+  renderDonut(result.costs, total);
+  renderLineItems(result.costs, total, result.alignersPerCase);
+
+  /* Auto-fill into comparison tab */
+  $('priceInHouse').value = total.toFixed(2);
+
+  return total;
+}
+
+/* ===== Comparison tab values ===== */
+var defaults = { complexity: '30', alignerCount: 30, priceKLine: 6.50, priceInHouse: 4.00, priceCompetitor: 12.00, equipmentCost: 15000, competitorName: 'External Lab', monthlyCases: 10 };
 
 function getValues() {
   return {
@@ -757,52 +1419,22 @@ function getValues() {
   };
 }
 
-/* H1: Use Math.round for currency precision */
-function roundCurrency(n) {
-  return Math.round(n * 100) / 100;
-}
-
-function fmt(n) {
-  return Math.abs(n).toLocaleString(curCurrency.locale, {
-    style: 'currency', currency: curCurrency.code, minimumFractionDigits: 2
-  });
-}
-/* H2: Return N/A when denominator is 0 and numerator isn't */
-function pct(a, b) {
-  if (b === 0 && a !== 0) { return 'N/A'; }
-  if (b === 0) { return '0%'; }
-  return Math.round(Math.abs((b - a) / b) * 100) + '%';
-}
-function fmtNum(n) {
-  return n.toLocaleString(curCurrency.locale);
-}
-
-/* ===== Debounced URL update ===== */
-var urlTimer;
-function debouncedUpdateURL() {
-  clearTimeout(urlTimer);
-  urlTimer = setTimeout(updateURL, 400);
-}
-
-/* ===== Render ===== */
-function render() {
+/* ===== Render comparison tab ===== */
+function renderComparison() {
   var v = getValues();
   var tK = roundCurrency(v.count * v.kline);
   var tI = roundCurrency(v.count * v.inhouse);
   var tC = roundCurrency(v.count * v.competitor);
   var compName = v.compName;
 
-  /* Update competitor label in config panel */
   $('compLabelText').textContent = compName;
 
-  /* Find cheapest */
   var totals = [{name: 'K Line', total: tK}, {name: 'In-House', total: tI}, {name: compName, total: tC}];
   var cheapest = totals.reduce(function(a, b) { return a.total <= b.total ? a : b; });
   var kIsBest = tK <= tI && tK <= tC;
   var saveVsComp = roundCurrency(tC - tK);
   var diff = roundCurrency(tK - tI);
   var be = diff > 0 ? Math.ceil(v.equipment / diff) : null;
-  /* H3: break-even explanation */
   var beFormatted;
   if (be !== null) {
     if (be > 99999) {
@@ -814,10 +1446,8 @@ function render() {
     beFormatted = 'N/A';
   }
 
-  /* B6: Annual savings */
   var annualSavings = roundCurrency(saveVsComp * v.monthlyCases * 12);
 
-  /* Summary bar */
   $('summaryBar').innerHTML =
     '<div class="s-item"><div class="s-label">Aligners</div><div class="s-val">' + v.count + '</div></div>' +
     '<div class="s-item"><div class="s-label">K Line Total</div><div class="s-val teal">' + fmt(tK) + '</div><div class="s-note">' + (kIsBest ? 'Best value' : 'Per case') + '</div></div>' +
@@ -825,7 +1455,6 @@ function render() {
     '<div class="s-item"><div class="s-label">Best Option</div><div class="s-val teal">' + cheapest.name + '</div><div class="s-note">' + fmt(cheapest.total) + ' total</div></div>' +
     '<div class="s-item"><div class="s-label">' + (annualSavings >= 0 ? 'Annual Savings' : 'Annual Extra Cost') + '</div><div class="s-val' + (annualSavings >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(annualSavings)) + '</div><div class="s-note">' + v.monthlyCases + ' cases/mo vs ' + compName + '</div></div>';
 
-  /* K Line card — dynamic Best Value tag */
   var kTag = kIsBest
     ? '<div class="tag tag-kline">&#9733; Best Value</div>'
     : '<div class="tag tag-kline">K Line</div>';
@@ -835,14 +1464,11 @@ function render() {
   var kPill = saveVsComp >= 0
     ? '<div class="pill pill-green" style="background:var(--teal-subtle);color:var(--teal);"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Save ' + fmt(saveVsComp) + ' per case with K Line</div>'
     : '<div class="pill pill-neutral">K Line costs ' + fmt(Math.abs(saveVsComp)) + ' more than ' + compName + '</div>';
-
-  /* B3: K Line card — only featured when best value */
   var kCardClass = kIsBest ? 'card featured' : 'card';
   var kPriceSub = kIsBest
     ? '<div class="price-sub" style="color:var(--white-70);">Total for ' + v.count + ' aligners</div>'
     : '<div class="price-sub">Total for ' + v.count + ' aligners</div>';
 
-  /* Competitor card — fully dynamic */
   var compTag = tC > tK ? '<div class="tag tag-comp">High Overhead</div>'
     : tC < tK ? '<div class="tag tag-best">Lower Cost</div>'
     : '<div class="tag tag-neutral">Same Price</div>';
@@ -856,17 +1482,12 @@ function render() {
     : compDiff < 0 ? '<div class="pill pill-green">Saving ' + fmt(Math.abs(compDiff)) + ' per case vs K Line</div>'
     : '<div class="pill pill-neutral">Same price as K Line</div>';
 
-  /* In-House vs K Line */
   var ihVsK = tI < tK ? fmt(roundCurrency(tK - tI)) + ' less' : tI > tK ? fmt(roundCurrency(tI - tK)) + ' more' : 'Same';
   var ihVsComp = roundCurrency(tC - tI);
 
   $('cardsGrid').innerHTML =
     '<div class="' + kCardClass + '">' +
-      '<div class="card-top">' +
-        kTag +
-        '<h3>K Line</h3>' +
-        '<div class="sub">K Line Europe &mdash; Premium Quality</div>' +
-      '</div>' +
+      '<div class="card-top">' + kTag + '<h3>K Line</h3><div class="sub">K Line Europe &mdash; Premium Quality</div></div>' +
       '<div class="card-body">' +
         '<div class="price-block"><div class="price">' + fmt(tK) + '</div>' + kPriceSub + '</div>' +
         '<div class="row"><span class="lbl">Price per aligner</span><span class="val">' + fmt(v.kline) + '</span></div>' +
@@ -875,13 +1496,8 @@ function render() {
         kPill +
       '</div>' +
     '</div>' +
-
     '<div class="card">' +
-      '<div class="card-top">' +
-        '<div class="tag tag-inhouse">In-House</div>' +
-        '<h3>In-House</h3>' +
-        '<div class="sub">Total Aligner Cost</div>' +
-      '</div>' +
+      '<div class="card-top"><div class="tag tag-inhouse">In-House</div><h3>In-House</h3><div class="sub">Total Aligner Cost</div></div>' +
       '<div class="card-body">' +
         '<div class="price-block"><div class="price">' + fmt(tI) + '</div><div class="price-sub">Total for ' + v.count + ' aligners</div></div>' +
         '<div class="row"><span class="lbl">Price per aligner</span><span class="val">' + fmt(v.inhouse) + '</span></div>' +
@@ -895,13 +1511,8 @@ function render() {
         '</div>' +
       '</div>' +
     '</div>' +
-
     '<div class="card">' +
-      '<div class="card-top">' +
-        compTag +
-        '<h3>' + compName + '</h3>' +
-        '<div class="sub">' + fmt(v.competitor) + ' per aligner</div>' +
-      '</div>' +
+      '<div class="card-top">' + compTag + '<h3>' + compName + '</h3><div class="sub">' + fmt(v.competitor) + ' per aligner</div></div>' +
       '<div class="card-body">' +
         '<div class="price-block"><div class="price">' + fmt(tC) + '</div><div class="price-sub">Total for ' + v.count + ' aligners</div></div>' +
         '<div class="row"><span class="lbl">Price per aligner</span><span class="val">' + fmt(v.competitor) + '</span></div>' +
@@ -911,45 +1522,42 @@ function render() {
       '</div>' +
     '</div>';
 
-  /* Chart (M5: update aria-label dynamically) */
+  /* Bar chart */
   var maxTotal = Math.max(tK, tI, tC, 1);
   var chartHeight = 130;
   function barH(t) { return Math.max(4, (t / maxTotal) * chartHeight); }
   $('chartBars').setAttribute('aria-label', 'Bar chart: K Line ' + fmt(tK) + ', In-House ' + fmt(tI) + ', ' + compName + ' ' + fmt(tC));
   $('chartBars').innerHTML =
-    '<div class="chart-bar">' +
-      '<div class="bar-val">' + fmt(tK) + '</div>' +
-      '<div class="bar-fill" style="height:' + barH(tK) + 'px;background:var(--teal);"></div>' +
-      '<div class="bar-label">K Line</div>' +
-    '</div>' +
-    '<div class="chart-bar">' +
-      '<div class="bar-val">' + fmt(tI) + '</div>' +
-      '<div class="bar-fill" style="height:' + barH(tI) + 'px;background:var(--orange);"></div>' +
-      '<div class="bar-label">In-House</div>' +
-    '</div>' +
-    '<div class="chart-bar">' +
-      '<div class="bar-val">' + fmt(tC) + '</div>' +
-      '<div class="bar-fill" style="height:' + barH(tC) + 'px;background:' + (tC > tK ? 'var(--red-text)' : 'var(--green)') + ';"></div>' +
-      '<div class="bar-label">' + compName + '</div>' +
-    '</div>';
+    '<div class="chart-bar"><div class="bar-val">' + fmt(tK) + '</div><div class="bar-fill" style="height:' + barH(tK) + 'px;background:var(--teal);"></div><div class="bar-label">K Line</div></div>' +
+    '<div class="chart-bar"><div class="bar-val">' + fmt(tI) + '</div><div class="bar-fill" style="height:' + barH(tI) + 'px;background:var(--orange);"></div><div class="bar-label">In-House</div></div>' +
+    '<div class="chart-bar"><div class="bar-val">' + fmt(tC) + '</div><div class="bar-fill" style="height:' + barH(tC) + 'px;background:' + (tC > tK ? 'var(--red-text)' : 'var(--green)') + ';"></div><div class="bar-label">' + compName + '</div></div>';
 
-  /* M9: CTA conditional text */
   if (kIsBest) {
     $('ctaText').textContent = 'Ready to switch to K LINE and start saving?';
   } else {
     $('ctaText').textContent = 'Want to learn more about K LINE?';
   }
 
-  /* Print */
   $('printPatient').textContent = v.patient || '\u2014';
   $('printClinic').textContent = v.clinic || '\u2014';
   $('printDate').textContent = 'Generated: ' + new Date().toLocaleDateString(curCurrency.locale, {year: 'numeric', month: 'long', day: 'numeric'});
+}
+
+/* ===== Master render ===== */
+function renderAll() {
+  renderResults();
+  renderComparison();
   debouncedUpdateURL();
 }
 
+/* ===== Debounced URL update ===== */
+var urlTimer;
+function debouncedUpdateURL() {
+  clearTimeout(urlTimer);
+  urlTimer = setTimeout(updateURL, 400);
+}
+
 /* ===== URL State ===== */
-/* H7: Don't include patient name or clinic in URL (GDPR) */
-/* L2: Only replaceState when URL actually changed */
 var lastURL = '';
 function updateURL() {
   var v = getValues();
@@ -962,6 +1570,20 @@ function updateURL() {
   p.set('cur', curCurrency.code);
   p.set('cn', v.compName);
   p.set('mc', v.monthlyCases);
+  p.set('country', $('country').value);
+  p.set('mat', $('material').value);
+  p.set('printer', $('printer').value);
+  p.set('sw', $('software').value);
+  p.set('apc', $('alignersPerCase').value);
+  p.set('cmc', $('calcMonthlyCases').value);
+  p.set('dr', $('doctorRate').value);
+  p.set('ar', $('assistantRate').value);
+  p.set('dm', $('doctorMinutes').value);
+  p.set('am', $('assistantMinutes').value);
+  p.set('rent', $('labRent').value);
+  p.set('pol', $('consumablesPolishing').value);
+  p.set('cut', $('consumablesCutting').value);
+  p.set('thm', $('thermoMaintenance').value);
   var newURL = location.pathname + '?' + p.toString();
   if (newURL !== lastURL) {
     lastURL = newURL;
@@ -971,6 +1593,12 @@ function updateURL() {
 
 function loadFromURL() {
   var p = new URLSearchParams(location.search);
+  if (p.has('country') && COUNTRIES[p.get('country')]) {
+    $('country').value = p.get('country');
+  }
+  if (p.has('mat')) { $('material').value = p.get('mat'); }
+  if (p.has('printer')) { $('printer').value = p.get('printer'); }
+  if (p.has('sw')) { $('software').value = p.get('sw'); }
   if (p.has('n')) { $('alignerCount').value = p.get('n'); }
   if (p.has('k')) { $('priceKLine').value = p.get('k'); }
   if (p.has('i')) { $('priceInHouse').value = p.get('i'); }
@@ -978,30 +1606,64 @@ function loadFromURL() {
   if (p.has('e')) { $('equipmentCost').value = p.get('e'); }
   if (p.has('cn')) { $('competitorName').value = p.get('cn').substring(0, 40); }
   if (p.has('mc')) { $('monthlyCases').value = p.get('mc'); }
-  /* H7: Do NOT load p or cl from URL */
+  if (p.has('apc')) { $('alignersPerCase').value = p.get('apc'); }
+  if (p.has('cmc')) { $('calcMonthlyCases').value = p.get('cmc'); }
+  if (p.has('dr')) { $('doctorRate').value = p.get('dr'); }
+  if (p.has('ar')) { $('assistantRate').value = p.get('ar'); }
+  if (p.has('dm')) { $('doctorMinutes').value = p.get('dm'); }
+  if (p.has('am')) { $('assistantMinutes').value = p.get('am'); }
+  if (p.has('rent')) { $('labRent').value = p.get('rent'); }
+  if (p.has('pol')) { $('consumablesPolishing').value = p.get('pol'); }
+  if (p.has('cut')) { $('consumablesCutting').value = p.get('cut'); }
+  if (p.has('thm')) { $('thermoMaintenance').value = p.get('thm'); }
   if (p.has('cur') && currencies[p.get('cur')]) {
     curCurrency = currencies[p.get('cur')];
     $('currency').value = curCurrency.code;
   }
   var c = parseInt($('alignerCount').value);
   $('complexity').value = c === 14 ? '14' : c === 30 ? '30' : c === 50 ? '50' : 'custom';
+
+  /* Show custom fields if needed */
+  var matIdx = parseInt($('material').value);
+  if (MATERIALS[matIdx] && MATERIALS[matIdx].type === 'Custom') {
+    $('fieldCustomMaterialCost').style.display = '';
+  }
+  var printerIdx = parseInt($('printer').value);
+  if (PRINTERS[printerIdx] && PRINTERS[printerIdx].name === 'Custom Printer') {
+    $('customPrinterFields').style.display = '';
+  }
+  var swIdx = parseInt($('software').value);
+  if (SOFTWARE[swIdx] && SOFTWARE[swIdx].name === 'Custom Software') {
+    $('customSoftwareFields').style.display = '';
+  }
 }
 
 /* ===== Events ===== */
 $('complexity').addEventListener('change', function() {
-  if (this.value !== 'custom') { $('alignerCount').value = this.value; }
-  render();
+  if (this.value !== 'custom') {
+    $('alignerCount').value = this.value;
+    $('alignersPerCase').value = this.value;
+  }
+  renderAll();
 });
 $('alignerCount').addEventListener('input', function() {
   var v = parseInt(this.value);
   $('complexity').value = v === 14 ? '14' : v === 30 ? '30' : v === 50 ? '50' : 'custom';
-  render();
-});
-['priceKLine', 'priceInHouse', 'priceCompetitor', 'equipmentCost', 'patientName', 'clinicName', 'competitorName', 'monthlyCases'].forEach(function(id) {
-  $(id).addEventListener('input', render);
+  renderAll();
 });
 
-/* L9: Red border on invalid number inputs */
+/* Tab 1 inputs */
+['doctorRate', 'assistantRate', 'doctorMinutes', 'assistantMinutes', 'alignersPerCase', 'calcMonthlyCases', 'customMaterialCost', 'customPrinterPrice', 'customPrinterLifespan', 'customPrinterMaintenance', 'customSoftwarePrice', 'labRent', 'consumablesPolishing', 'consumablesCutting', 'thermoMaintenance'].forEach(function(id) {
+  $(id).addEventListener('input', renderAll);
+});
+$('customSoftwareModel').addEventListener('change', renderAll);
+
+/* Tab 2 inputs */
+['priceKLine', 'priceInHouse', 'priceCompetitor', 'equipmentCost', 'patientName', 'clinicName', 'competitorName', 'monthlyCases'].forEach(function(id) {
+  $(id).addEventListener('input', renderAll);
+});
+
+/* Red border on invalid */
 document.querySelectorAll('input[type="number"]').forEach(function(input) {
   input.addEventListener('change', function() {
     var val = parseFloat(this.value);
@@ -1029,7 +1691,7 @@ function closeEmailModal() {
   $('emailModal').classList.remove('active');
 }
 
-/* M2: Modal focus trap */
+/* Modal focus trap */
 $('emailModal').addEventListener('keydown', function(e) {
   if (e.key !== 'Tab') { return; }
   var modal = this.querySelector('.modal');
@@ -1038,19 +1700,12 @@ $('emailModal').addEventListener('keydown', function(e) {
   var first = focusable[0];
   var last = focusable[focusable.length - 1];
   if (e.shiftKey) {
-    if (document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    }
+    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
   } else {
-    if (document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
+    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 });
 
-/* H5: Better email regex */
 var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 function sendEmail() {
@@ -1068,6 +1723,10 @@ function sendEmail() {
   var from = $('emailFrom').value.trim();
   var msg = $('emailMsg').value.trim();
   var subj = encodeURIComponent('Aligner Price Comparison' + (v.patient ? ' \u2014 ' + v.patient : ''));
+
+  /* Include in-house breakdown */
+  var result = calcInHouse();
+
   var b = '';
   if (msg) { b += msg + '\n\n---\n\n'; }
   b += 'ALIGNER PRICE COMPARISON\n========================\n';
@@ -1080,13 +1739,19 @@ function sendEmail() {
   var rawCompName = $('competitorName').value.trim().substring(0, 40) || 'External Lab';
   b += rawCompName + ':    ' + fmt(tC) + '  (' + fmt(v.competitor) + '/aligner)\n\n';
   b += 'SAVINGS WITH K LINE: ' + fmt(Math.abs(roundCurrency(tC - tK))) + ' per case\n\n';
+  b += 'IN-HOUSE COST BREAKDOWN (per aligner):\n';
+  for (var i = 0; i < result.costs.length; i++) {
+    if (result.costs[i] > 0) {
+      b += '  ' + COST_LABELS[i] + ': ' + fmt(result.costs[i]) + '\n';
+    }
+  }
+  b += '  TOTAL: ' + fmt(result.total) + '/aligner\n\n';
   b += '---\nK Line Europe | kline-europe.com\n';
   location.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + subj + '&body=' + encodeURIComponent(b);
   closeEmailModal();
   showToast('Opening email client...');
 }
 
-/* H4: Remove deprecated document.execCommand fallback */
 function copyLink() {
   navigator.clipboard.writeText(location.href).then(function() {
     showToast('Link copied!');
@@ -1095,7 +1760,6 @@ function copyLink() {
   });
 }
 
-/* H6: Reset also resets currency to EUR */
 function resetDefaults() {
   if (!confirm('Reset all values to defaults?')) { return; }
   $('complexity').value = defaults.complexity;
@@ -1110,18 +1774,39 @@ function resetDefaults() {
   $('monthlyCases').value = defaults.monthlyCases;
   $('currency').value = 'EUR';
   curCurrency = currencies.EUR;
+  /* Reset Tab 1 fields */
+  $('country').value = 'Germany';
+  $('doctorRate').value = 120;
+  $('assistantRate').value = 22;
+  $('doctorMinutes').value = 30;
+  $('assistantMinutes').value = 45;
+  $('alignersPerCase').value = 30;
+  $('calcMonthlyCases').value = 10;
+  $('material').value = 0;
+  $('printer').value = 0;
+  $('software').value = 0;
+  $('labRent').value = 200;
+  $('consumablesPolishing').value = 0.50;
+  $('consumablesCutting').value = 0.30;
+  $('thermoMaintenance').value = 300;
+  $('customMaterialCost').value = 3.00;
+  $('customPrinterPrice').value = 10000;
+  $('customPrinterLifespan').value = 5;
+  $('customPrinterMaintenance').value = 500;
+  $('customSoftwarePrice').value = 0;
+  $('customSoftwareModel').value = 'monthly';
+  $('fieldCustomMaterialCost').style.display = 'none';
+  $('customPrinterFields').style.display = 'none';
+  $('customSoftwareFields').style.display = 'none';
   updateCurrencySymbols();
-  /* Clear invalid states */
   document.querySelectorAll('input.invalid').forEach(function(el) { el.classList.remove('invalid'); });
-  render();
+  renderAll();
   showToast('Reset to defaults');
 }
 
-/* L3: Fix toast — hide existing before showing new */
 function showToast(m) {
   var t = $('toast');
   t.classList.remove('show');
-  /* Force reflow */
   void t.offsetWidth;
   t.textContent = m;
   t.classList.add('show');
@@ -1130,9 +1815,10 @@ function showToast(m) {
 }
 
 /* ===== Init ===== */
+populateDropdowns();
 loadFromURL();
 updateCurrencySymbols();
-render();
+renderAll();
 $('emailModal').addEventListener('click', function(e) { if (e.target === this) { closeEmailModal(); } });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeEmailModal(); } });
 </script>
