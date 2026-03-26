@@ -14,9 +14,7 @@
 <meta name="twitter:title" content="K LINE — Aligner Price Comparison Calculator">
 <meta name="twitter:description" content="Compare aligner fulfillment costs and find the best value for your practice.">
 <meta name="theme-color" content="#1a1a2e">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- System font stack — no external font loading (GDPR compliant for EU) -->
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -62,7 +60,7 @@
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background: var(--surface);
     color: var(--text);
     line-height: 1.55;
@@ -1162,14 +1160,15 @@ var MATERIALS = [
 
 /* Fix #18: Removed Anycubic (consumer grade), added Asiga MAX UV and Ackuretta SOL */
 var PRINTERS = [
-  { name: 'Formlabs Form 4B', price: 16000, technology: 'MSLA', lifespan: 5, maintenance: 1000, thermoforming: true },
-  { name: 'SprintRay Pro 95 S', price: 18000, technology: 'DLP', lifespan: 5, maintenance: 800, thermoforming: false },
-  { name: 'LuxCreo iLux Pro Dental', price: 25000, technology: 'DLP', lifespan: 5, maintenance: 1200, thermoforming: false },
-  { name: 'Phrozen Sonic XL 4K', price: 3500, technology: 'MSLA', lifespan: 4, maintenance: 300, thermoforming: true },
-  { name: 'Structo DentaForm', price: 20000, technology: 'MSLA', lifespan: 5, maintenance: 1000, thermoforming: false },
-  { name: 'Asiga MAX UV', price: 8000, technology: 'DLP', lifespan: 5, maintenance: 600, thermoforming: true },
-  { name: 'Ackuretta SOL', price: 5000, technology: 'DLP', lifespan: 4, maintenance: 400, thermoforming: true },
-  { name: 'Custom Printer', price: 0, technology: '-', lifespan: 5, maintenance: 0, thermoforming: false }
+  /* thermoforming removed from printers — driven by material type instead (Sheet = needs thermoformer) */
+  { name: 'Formlabs Form 4B', price: 16000, technology: 'MSLA', lifespan: 5, maintenance: 1000 },
+  { name: 'SprintRay Pro 95 S', price: 18000, technology: 'DLP', lifespan: 5, maintenance: 800 },
+  { name: 'LuxCreo iLux Pro Dental', price: 25000, technology: 'DLP', lifespan: 5, maintenance: 1200 },
+  { name: 'Phrozen Sonic XL 4K', price: 3500, technology: 'MSLA', lifespan: 4, maintenance: 300 },
+  { name: 'Structo DentaForm', price: 20000, technology: 'MSLA', lifespan: 5, maintenance: 1000 },
+  { name: 'Asiga MAX UV', price: 8000, technology: 'DLP', lifespan: 5, maintenance: 600 },
+  { name: 'Ackuretta SOL', price: 5000, technology: 'DLP', lifespan: 4, maintenance: 400 },
+  { name: 'Custom Printer', price: 0, technology: '-', lifespan: 5, maintenance: 0 }
 ];
 
 var SOFTWARE = [
@@ -1375,13 +1374,14 @@ function calcInHouse() {
 
   /* 8. Thermoforming maintenance */
   var thermoMaint = Math.max(0, parseFloat($('thermoMaintenance').value) || 0);
-  var needsThermo = printer.thermoforming || (mat.type === 'Sheet');
+  var needsThermo = (mat.type === 'Sheet'); /* Only sheet materials need thermoforming, not resin */
   var thermoMaintenanceCost = needsThermo ? thermoMaint / alignersPerYear : 0;
 
-  /* 9. Fix #17: Post-processing (wash station + UV curing, amortized) */
+  /* 9. Post-processing (wash station + UV curing — one-time costs amortized over lifespan) */
   var washCost = Math.max(0, parseFloat($('washStationCost').value) || 0);
   var uvCost = Math.max(0, parseFloat($('uvCuringCost').value) || 0);
-  var postProcessingCost = (washCost + uvCost) / alignersPerYear;
+  var ppLifespan = printer.lifespan || 5; /* Assume same lifespan as printer */
+  var postProcessingCost = alignersPerYear > 0 ? (washCost + uvCost) / (ppLifespan * alignersPerYear) : 0;
 
   var total = materialCost + equipmentCost + doctorLabor + assistantLabor + softwareCost + labSpaceCost + consumablesCost + thermoMaintenanceCost + postProcessingCost;
 
@@ -1492,7 +1492,11 @@ function renderComparison() {
   $('compLabelText').textContent = compName;
 
   var totals = [{name: 'K Line', total: tK}, {name: 'In-House', total: tI}, {name: compNameH, total: tC}];
-  var cheapest = totals.reduce(function(a, b) { return a.total <= b.total ? a : b; });
+  var cheapest = totals.reduce(function(a, b) { return a.total < b.total ? a : b; });
+  /* Fix tie-breaking bias: show "Tied" when multiple options have the same lowest price */
+  var minTotal = cheapest.total;
+  var tiedCount = totals.filter(function(t) { return t.total === minTotal; }).length;
+  var bestLabel = tiedCount > 1 ? 'Tied (' + tiedCount + ' options)' : cheapest.name;
   var kIsBest = tK <= tI && tK <= tC;
   var saveVsComp = roundCurrency(tC - tK);
   var diff = roundCurrency(tK - tI);
@@ -1517,7 +1521,7 @@ function renderComparison() {
     '<div class="s-item"><div class="s-label">Aligners</div><div class="s-val">' + v.count + '</div></div>' +
     '<div class="s-item"><div class="s-label">K Line Total</div><div class="s-val teal">' + fmt(tK) + '</div><div class="s-note">' + (kIsBest ? 'Best value' : 'Per case') + '</div></div>' +
     '<div class="s-item"><div class="s-label">' + (saveVsComp >= 0 ? 'You Save vs ' + compNameH : 'K Line Premium') + '</div><div class="s-val' + (saveVsComp >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(saveVsComp)) + '</div><div class="s-note">' + (saveVsComp >= 0 ? pct(tK, tC) + ' less' : 'more') + ' per case</div></div>' +
-    '<div class="s-item"><div class="s-label">Best Option</div><div class="s-val teal">' + cheapest.name + '</div><div class="s-note">' + fmt(cheapest.total) + ' total</div></div>' +
+    '<div class="s-item"><div class="s-label">Best Option</div><div class="s-val teal">' + bestLabel + '</div><div class="s-note">' + fmt(minTotal) + ' total</div></div>' +
     '<div class="s-item"><div class="s-label">' + (annualSavings >= 0 ? 'Annual Savings' : 'Annual Extra Cost') + '</div><div class="s-val' + (annualSavings >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(annualSavings)) + '</div><div class="s-note">' + v.monthlyCases + ' cases/mo vs ' + compNameH + '</div>' + annualSavingsDisclaimer + '</div>';
 
   var kTag = kIsBest
@@ -1755,6 +1759,8 @@ $('complexity').addEventListener('change', function() {
 $('alignerCount').addEventListener('input', function() {
   var v = parseInt(this.value);
   $('complexity').value = v === 14 ? '14' : v === 30 ? '30' : v === 50 ? '50' : 'custom';
+  /* Sync Tab 1 alignersPerCase with Tab 2 alignerCount */
+  $('alignersPerCase').value = v || 30;
   renderAll();
 });
 
