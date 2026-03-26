@@ -736,17 +736,24 @@ $('currency').addEventListener('change', function() {
 
 var defaults = { complexity: '30', alignerCount: 30, priceKLine: 6.50, priceInHouse: 4.00, priceCompetitor: 12.00, equipmentCost: 15000, competitorName: 'External Lab', monthlyCases: 10 };
 
+/* Fix 1: HTML escape to prevent XSS from user inputs injected into innerHTML */
+function esc(s) {
+  var d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
 function getValues() {
   return {
-    count: Math.max(1, parseInt($('alignerCount').value) || 1),
-    kline: Math.max(0, parseFloat($('priceKLine').value) || 0),
-    inhouse: Math.max(0, parseFloat($('priceInHouse').value) || 0),
-    competitor: Math.max(0, parseFloat($('priceCompetitor').value) || 0),
-    equipment: Math.max(0, parseFloat($('equipmentCost').value) || 0),
+    count: Math.min(200, Math.max(1, parseInt($('alignerCount').value) || 1)),
+    kline: Math.min(9999, Math.max(0, parseFloat($('priceKLine').value) || 0)),
+    inhouse: Math.min(9999, Math.max(0, parseFloat($('priceInHouse').value) || 0)),
+    competitor: Math.min(9999, Math.max(0, parseFloat($('priceCompetitor').value) || 0)),
+    equipment: Math.min(500000, Math.max(0, parseFloat($('equipmentCost').value) || 0)),
     patient: $('patientName').value.trim().substring(0, 80),
     clinic: $('clinicName').value.trim().substring(0, 80),
-    compName: $('competitorName').value.trim().substring(0, 40) || 'External Lab',
-    monthlyCases: Math.max(1, parseInt($('monthlyCases').value) || 1)
+    compName: esc($('competitorName').value.trim().substring(0, 40)) || 'External Lab',
+    monthlyCases: Math.min(10000, Math.max(1, parseInt($('monthlyCases').value) || 1))
   };
 }
 
@@ -759,9 +766,6 @@ function fmt(n) {
   return Math.abs(n).toLocaleString(curCurrency.locale, {
     style: 'currency', currency: curCurrency.code, minimumFractionDigits: 2
   });
-}
-function fmtSigned(n) {
-  return (n > 0 ? '+' : n < 0 ? '-' : '') + fmt(n);
 }
 /* H2: Return N/A when denominator is 0 and numerator isn't */
 function pct(a, b) {
@@ -819,7 +823,7 @@ function render() {
     '<div class="s-item"><div class="s-label">K Line Total</div><div class="s-val teal">' + fmt(tK) + '</div><div class="s-note">' + (kIsBest ? 'Best value' : 'Per case') + '</div></div>' +
     '<div class="s-item"><div class="s-label">' + (saveVsComp >= 0 ? 'You Save vs ' + compName : 'K Line Premium') + '</div><div class="s-val' + (saveVsComp >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(saveVsComp)) + '</div><div class="s-note">' + (saveVsComp >= 0 ? pct(tK, tC) + ' less' : 'more') + ' per case</div></div>' +
     '<div class="s-item"><div class="s-label">Best Option</div><div class="s-val teal">' + cheapest.name + '</div><div class="s-note">' + fmt(cheapest.total) + ' total</div></div>' +
-    '<div class="s-item"><div class="s-label">Annual Savings</div><div class="s-val' + (annualSavings >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(annualSavings)) + '</div><div class="s-note">' + v.monthlyCases + ' cases/mo vs ' + compName + '</div></div>';
+    '<div class="s-item"><div class="s-label">' + (annualSavings >= 0 ? 'Annual Savings' : 'Annual Extra Cost') + '</div><div class="s-val' + (annualSavings >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(annualSavings)) + '</div><div class="s-note">' + v.monthlyCases + ' cases/mo vs ' + esc(compName) + '</div></div>';
 
   /* K Line card — dynamic Best Value tag */
   var kTag = kIsBest
@@ -1095,9 +1099,9 @@ function resetDefaults() {
   if (!confirm('Reset all values to defaults?')) { return; }
   $('complexity').value = defaults.complexity;
   $('alignerCount').value = defaults.alignerCount;
-  $('priceKLine').value = defaults.priceKLine;
-  $('priceInHouse').value = defaults.priceInHouse;
-  $('priceCompetitor').value = defaults.priceCompetitor;
+  $('priceKLine').value = defaults.priceKLine.toFixed(2);
+  $('priceInHouse').value = defaults.priceInHouse.toFixed(2);
+  $('priceCompetitor').value = defaults.priceCompetitor.toFixed(2);
   $('equipmentCost').value = defaults.equipmentCost;
   $('patientName').value = '';
   $('clinicName').value = '';
