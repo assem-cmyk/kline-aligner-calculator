@@ -1373,7 +1373,7 @@ function getValues() {
     equipment: Math.min(500000, Math.max(0, parseFloat($('equipmentCost').value) || 0)),
     patient: $('patientName').value.trim().substring(0, 80),
     clinic: $('clinicName').value.trim().substring(0, 80),
-    compName: esc($('competitorName').value.trim().substring(0, 40)) || 'External Lab',
+    compName: $('competitorName').value.trim().substring(0, 40) || 'External Lab',
     monthlyCases: Math.min(10000, Math.max(1, parseInt($('monthlyCases').value) || 1))
   };
 }
@@ -1385,10 +1385,11 @@ function renderComparison() {
   var tI = roundCurrency(v.count * v.inhouse);
   var tC = roundCurrency(v.count * v.competitor);
   var compName = v.compName;
+  var compNameH = esc(compName); /* HTML-safe for innerHTML */
 
   $('compLabelText').textContent = compName;
 
-  var totals = [{name: 'K Line', total: tK}, {name: 'In-House', total: tI}, {name: compName, total: tC}];
+  var totals = [{name: 'K Line', total: tK}, {name: 'In-House', total: tI}, {name: compNameH, total: tC}];
   var cheapest = totals.reduce(function(a, b) { return a.total <= b.total ? a : b; });
   var kIsBest = tK <= tI && tK <= tC;
   var saveVsComp = roundCurrency(tC - tK);
@@ -1410,9 +1411,9 @@ function renderComparison() {
   $('summaryBar').innerHTML =
     '<div class="s-item"><div class="s-label">Aligners</div><div class="s-val">' + v.count + '</div></div>' +
     '<div class="s-item"><div class="s-label">K Line Total</div><div class="s-val teal">' + fmt(tK) + '</div><div class="s-note">' + (kIsBest ? 'Best value' : 'Per case') + '</div></div>' +
-    '<div class="s-item"><div class="s-label">' + (saveVsComp >= 0 ? 'You Save vs ' + compName : 'K Line Premium') + '</div><div class="s-val' + (saveVsComp >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(saveVsComp)) + '</div><div class="s-note">' + (saveVsComp >= 0 ? pct(tK, tC) + ' less' : 'more') + ' per case</div></div>' +
+    '<div class="s-item"><div class="s-label">' + (saveVsComp >= 0 ? 'You Save vs ' + compNameH : 'K Line Premium') + '</div><div class="s-val' + (saveVsComp >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(saveVsComp)) + '</div><div class="s-note">' + (saveVsComp >= 0 ? pct(tK, tC) + ' less' : 'more') + ' per case</div></div>' +
     '<div class="s-item"><div class="s-label">Best Option</div><div class="s-val teal">' + cheapest.name + '</div><div class="s-note">' + fmt(cheapest.total) + ' total</div></div>' +
-    '<div class="s-item"><div class="s-label">' + (annualSavings >= 0 ? 'Annual Savings' : 'Annual Extra Cost') + '</div><div class="s-val' + (annualSavings >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(annualSavings)) + '</div><div class="s-note">' + v.monthlyCases + ' cases/mo vs ' + compName + '</div></div>';
+    '<div class="s-item"><div class="s-label">' + (annualSavings >= 0 ? 'Annual Savings' : 'Annual Extra Cost') + '</div><div class="s-val' + (annualSavings >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(annualSavings)) + '</div><div class="s-note">' + v.monthlyCases + ' cases/mo vs ' + compNameH + '</div></div>';
 
   var kTag = kIsBest
     ? '<div class="tag tag-kline">&#9733; Best Value</div>'
@@ -1422,7 +1423,7 @@ function renderComparison() {
     : '<span class="val red">' + fmt(Math.abs(saveVsComp)) + ' more</span>';
   var kPill = saveVsComp >= 0
     ? '<div class="pill pill-green" style="background:var(--teal-subtle);color:var(--teal);"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Save ' + fmt(saveVsComp) + ' per case with K Line</div>'
-    : '<div class="pill pill-neutral">K Line costs ' + fmt(Math.abs(saveVsComp)) + ' more than ' + compName + '</div>';
+    : '<div class="pill pill-neutral">K Line costs ' + fmt(Math.abs(saveVsComp)) + ' more than ' + compNameH + '</div>';
   var kCardClass = kIsBest ? 'card featured' : 'card';
   var kPriceSub = kIsBest
     ? '<div class="price-sub" style="color:var(--white-70);">Total for ' + v.count + ' aligners</div>'
@@ -1450,7 +1451,7 @@ function renderComparison() {
       '<div class="card-body">' +
         '<div class="price-block"><div class="price">' + fmt(tK) + '</div>' + kPriceSub + '</div>' +
         '<div class="row"><span class="lbl">Price per aligner</span><span class="val">' + fmt(v.kline) + '</span></div>' +
-        '<div class="row"><span class="lbl">vs ' + compName + '</span>' + kVsComp + '</div>' +
+        '<div class="row"><span class="lbl">vs ' + compNameH + '</span>' + kVsComp + '</div>' +
         '<div class="row"><span class="lbl">Difference</span><span class="val' + (saveVsComp >= 0 ? ' green' : ' red') + '">' + pct(tK, tC) + '</span></div>' +
         kPill +
       '</div>' +
@@ -1460,7 +1461,7 @@ function renderComparison() {
       '<div class="card-body">' +
         '<div class="price-block"><div class="price">' + fmt(tI) + '</div><div class="price-sub">Total for ' + v.count + ' aligners</div></div>' +
         '<div class="row"><span class="lbl">Price per aligner</span><span class="val">' + fmt(v.inhouse) + '</span></div>' +
-        '<div class="row"><span class="lbl">vs ' + compName + '</span><span class="val' + (ihVsComp >= 0 ? ' green' : ' red') + '">' + (ihVsComp >= 0 ? fmt(ihVsComp) + ' saved' : fmt(Math.abs(ihVsComp)) + ' more') + '</span></div>' +
+        '<div class="row"><span class="lbl">vs ' + compNameH + '</span><span class="val' + (ihVsComp >= 0 ? ' green' : ' red') + '">' + (ihVsComp >= 0 ? fmt(ihVsComp) + ' saved' : fmt(Math.abs(ihVsComp)) + ' more') + '</span></div>' +
         '<div class="row"><span class="lbl">vs K Line</span><span class="val">' + ihVsK + '</span></div>' +
         '<div class="roi-box">' +
           '<div class="roi-h">ROI Breakdown</div>' +
@@ -1471,7 +1472,7 @@ function renderComparison() {
       '</div>' +
     '</div>' +
     '<div class="card">' +
-      '<div class="card-top">' + compTag + '<h3>' + compName + '</h3><div class="sub">' + fmt(v.competitor) + ' per aligner</div></div>' +
+      '<div class="card-top">' + compTag + '<h3>' + compNameH + '</h3><div class="sub">' + fmt(v.competitor) + ' per aligner</div></div>' +
       '<div class="card-body">' +
         '<div class="price-block"><div class="price">' + fmt(tC) + '</div><div class="price-sub">Total for ' + v.count + ' aligners</div></div>' +
         '<div class="row"><span class="lbl">Price per aligner</span><span class="val">' + fmt(v.competitor) + '</span></div>' +
@@ -1485,11 +1486,11 @@ function renderComparison() {
   var maxTotal = Math.max(tK, tI, tC, 1);
   var chartHeight = 130;
   function barH(t) { return Math.max(4, (t / maxTotal) * chartHeight); }
-  $('chartBars').setAttribute('aria-label', 'Bar chart: K Line ' + fmt(tK) + ', In-House ' + fmt(tI) + ', ' + compName + ' ' + fmt(tC));
+  $('chartBars').setAttribute('aria-label', 'Bar chart: K Line ' + fmt(tK) + ', In-House ' + fmt(tI) + ', ' + compName + ' ' + fmt(tC)); /* aria-label is safe, not innerHTML */
   $('chartBars').innerHTML =
     '<div class="chart-bar"><div class="bar-val">' + fmt(tK) + '</div><div class="bar-fill" style="height:' + barH(tK) + 'px;background:var(--teal);"></div><div class="bar-label">K Line</div></div>' +
     '<div class="chart-bar"><div class="bar-val">' + fmt(tI) + '</div><div class="bar-fill" style="height:' + barH(tI) + 'px;background:var(--orange);"></div><div class="bar-label">In-House</div></div>' +
-    '<div class="chart-bar"><div class="bar-val">' + fmt(tC) + '</div><div class="bar-fill" style="height:' + barH(tC) + 'px;background:' + (tC > tK ? 'var(--red-text)' : 'var(--green)') + ';"></div><div class="bar-label">' + compName + '</div></div>';
+    '<div class="chart-bar"><div class="bar-val">' + fmt(tC) + '</div><div class="bar-fill" style="height:' + barH(tC) + 'px;background:' + (tC > tK ? 'var(--red-text)' : 'var(--green)') + ';"></div><div class="bar-label">' + compNameH + '</div></div>';
 
   if (kIsBest) {
     $('ctaText').textContent = 'Ready to switch to K LINE and start saving?';
@@ -1542,6 +1543,13 @@ function updateURL() {
   p.set('pol', $('consumablesPolishing').value);
   p.set('cut', $('consumablesCutting').value);
   p.set('thm', $('thermoMaintenance').value);
+  /* Custom field values */
+  p.set('cmat', $('customMaterialCost').value);
+  p.set('cpp', $('customPrinterPrice').value);
+  p.set('cpl', $('customPrinterLifespan').value);
+  p.set('cpm', $('customPrinterMaintenance').value);
+  p.set('csp', $('customSoftwarePrice').value);
+  p.set('csm', $('customSoftwareModel').value);
   var newURL = location.pathname + '?' + p.toString();
   if (newURL !== lastURL) {
     lastURL = newURL;
@@ -1578,6 +1586,13 @@ function loadFromURL() {
   var c = parseInt($('alignerCount').value);
   $('complexity').value = c === 14 ? '14' : c === 30 ? '30' : c === 50 ? '50' : 'custom';
 
+  /* Load custom field values */
+  if (p.has('cmat')) { $('customMaterialCost').value = p.get('cmat'); }
+  if (p.has('cpp')) { $('customPrinterPrice').value = p.get('cpp'); }
+  if (p.has('cpl')) { $('customPrinterLifespan').value = p.get('cpl'); }
+  if (p.has('cpm')) { $('customPrinterMaintenance').value = p.get('cpm'); }
+  if (p.has('csp')) { $('customSoftwarePrice').value = p.get('csp'); }
+  if (p.has('csm')) { $('customSoftwareModel').value = p.get('csm'); }
   /* Show custom fields if needed */
   var matIdx = parseInt($('material').value);
   if (MATERIALS[matIdx] && MATERIALS[matIdx].type === 'Custom') {
