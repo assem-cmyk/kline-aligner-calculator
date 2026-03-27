@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>K LINE — Aligner Cost Discovery Tool</title>
-<meta name="description" content="Discover your true aligner production costs. Calculate in-house and external lab expenses, then see how much you could save with K Line Europe.">
+<meta name="description" content="Calculate your in-house aligner production costs. Discover your true costs and see how much you could save with K Line Europe.">
 <meta name="robots" content="index, follow">
 <link rel="icon" href="https://www.kline-europe.com/favicon.ico">
 <meta property="og:title" content="K LINE — Aligner Cost Discovery Tool">
@@ -567,62 +567,12 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
   <!-- ========== STEP 2 ========== -->
   <div class="step-panel" id="step2" role="tabpanel">
     <div class="onboarding-text">
-      How do you currently get your aligners? Enter your costs below — we'll calculate the full picture.
+      Enter your in-house production costs below — we'll calculate the full picture.
     </div>
 
-    <section>
-      <div class="section-header"><h2>Your Current Method</h2><div class="line"></div></div>
-      <div class="panel">
-        <div class="input-grid">
-          <div class="field" style="grid-column:1/-1;">
-            <label for="currentMethod">How do you currently fulfill aligner cases?</label>
-            <select id="currentMethod">
-              <option value="lab">External Lab / Competitor</option>
-              <option value="inhouse">In-House (3D Printing)</option>
-              <option value="both">Both — Lab + In-House</option>
-            </select>
-          </div>
-          <!-- Blended ratio (shown only for "both") -->
-          <div class="field" id="fieldSplitRatio" style="display:none;grid-column:1/-1;">
-            <label for="labSplitPct">% of Cases Sent to External Lab</label>
-            <input type="number" id="labSplitPct" value="70" min="0" max="100" step="5" aria-describedby="hintSplit">
-            <div class="hint" id="hintSplit">e.g. 70 = 70% lab, 30% in-house</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- External Lab -->
-    <section id="sectionLabCost">
-      <div class="section-header"><h2>External Lab Costs</h2><div class="line"></div></div>
-      <div class="panel">
-        <div class="input-grid">
-          <div class="field">
-            <label for="labName">Lab / Provider Name</label>
-            <input type="text" id="labName" placeholder="e.g. K Line, Align Technology, SureSmile" maxlength="40" aria-describedby="hintLab">
-            <div class="hint" id="hintLab">Who is your current provider?</div>
-          </div>
-          <div class="field">
-            <label for="labCostPerCase">Cost per Case</label>
-            <div class="pre" data-symbol="€"><input type="number" id="labCostPerCase" value="250" min="0" max="99999" step="5" aria-describedby="hintLabCost"></div>
-            <div class="hint" id="hintLabCost">Lab fee per complete case (excl. refinements). Typical: €150-400/case</div>
-          </div>
-          <div class="field">
-            <label for="labShipping">Shipping per Case</label>
-            <div class="pre" data-symbol="€"><input type="number" id="labShipping" value="15" min="0" max="9999" step="5"></div>
-          </div>
-          <div class="field">
-            <label for="labRefinements">Avg. Refinement Cost</label>
-            <div class="pre" data-symbol="€"><input type="number" id="labRefinements" value="0" min="0" max="9999" step="5" aria-describedby="hintRef"></div>
-            <div class="hint" id="hintRef">Additional cost if refinements not included</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- In-House -->
+    <!-- In-House Production Costs -->
     <section id="sectionInHouseCost">
-      <div class="section-header"><h2>In-House Production Costs</h2><div class="line"></div></div>
+      <div class="section-header"><h2>Your Production Costs</h2><div class="line"></div></div>
       <div class="panel">
         <div class="input-grid">
           <div class="divider-row"><span>Labor</span></div>
@@ -866,7 +816,7 @@ var T = {
     step2Label: 'Current Costs',
     step3Label: 'Your Results',
     onboard1: 'Tell us about your aligner volume. This helps us calculate your true costs accurately.',
-    onboard2: 'How do you currently get your aligners? Enter your costs below — we\'ll calculate the full picture.',
+    onboard2: 'Enter your in-house production costs below — we\'ll calculate the full picture.',
     secCaseVol: 'Case Volume',
     lblComplexity: 'Case Complexity',
     optMild: 'Mild (10 aligners)',
@@ -881,23 +831,7 @@ var T = {
     hintCN: 'Optional — appears on your results report',
     phClinic: 'Your clinic name',
     btnNext: 'Next: Your Current Costs →',
-    secMethod: 'Your Current Method',
-    lblMethod: 'How do you currently fulfill aligner cases?',
-    optLab: 'External Lab / Competitor',
-    optInhouse: 'In-House (3D Printing)',
-    optBoth: 'Both — Lab + In-House',
-    lblSplitPct: '% of Cases Sent to External Lab',
-    hintSplit: 'e.g. 70 = 70% lab, 30% in-house',
-    secLabCost: 'External Lab Costs',
-    lblLabName: 'Lab / Provider Name',
-    phLabName: 'e.g. K Line, Align Technology, SureSmile',
-    hintLab: 'Who is your current provider?',
-    lblLabCostCase: 'Cost per Case',
-    hintLabCost: 'Lab fee per complete case (excl. refinements). Typical: €150-400/case',
-    lblShipping: 'Shipping per Case',
-    lblRefinements: 'Avg. Refinement Cost',
-    hintRef: 'Additional cost if refinements not included',
-    secInHouse: 'In-House Production Costs',
+    secInHouse: 'Your Production Costs',
     divLabor: 'Labor',
     lblDoctorRate: 'Doctor Hourly Rate',
     hintDoctorRate: 'Salary or opportunity cost of chair time',
@@ -946,7 +880,6 @@ var T = {
     casesYear: 'Cases per Year',
     costAligner: 'Cost per Aligner',
     casesMonth: 'cases/month',
-    extLabCase: 'External Lab / Case',
     inHouseCase: 'In-House / Case',
     perAligner: 'per aligner',
     monthlySpend: 'Monthly Spend',
@@ -975,8 +908,7 @@ var T = {
     barLabor: 'Labor', barMaterial: 'Material (incl. waste)', barEquipment: 'Equipment',
     barSoftware: 'Software', barRent: 'Lab Space', barConsumables: 'Consumables',
     barPostProc: 'Post-Processing', barScanner: 'Scanner',
-    aligners: 'aligners', externalLab: 'External Lab', inHouseProd: 'In-House Production',
-    blended: 'Blended', lab: 'lab', inhouse: 'in-house',
+    aligners: 'aligners', inHouseProd: 'In-House Production',
     noJS: 'This tool requires JavaScript. Please enable JavaScript in your browser.',
     perCaseStar: '/ case*',
     savingsIcon: '💡',
@@ -1001,7 +933,7 @@ var T = {
     step2Label: 'Coûts Actuels',
     step3Label: 'Vos Résultats',
     onboard1: 'Parlez-nous de votre volume d\'aligneurs. Cela nous aide à calculer vos coûts réels avec précision.',
-    onboard2: 'Comment obtenez-vous actuellement vos aligneurs ? Entrez vos coûts ci-dessous — nous calculerons le tableau complet.',
+    onboard2: 'Entrez vos coûts de production interne ci-dessous — nous calculerons le tableau complet.',
     secCaseVol: 'Volume de Cas',
     lblComplexity: 'Complexité du Cas',
     optMild: 'Simple (10 aligneurs)',
@@ -1016,23 +948,7 @@ var T = {
     hintCN: 'Optionnel — pour votre rapport de résultats',
     phClinic: 'Nom de votre cabinet',
     btnNext: 'Suivant : Vos Coûts Actuels →',
-    secMethod: 'Votre Méthode Actuelle',
-    lblMethod: 'Comment réalisez-vous actuellement vos cas d\'aligneurs ?',
-    optLab: 'Laboratoire Externe / Concurrent',
-    optInhouse: 'En Interne (Impression 3D)',
-    optBoth: 'Les Deux — Labo + Interne',
-    lblSplitPct: '% de Cas Envoyés au Labo Externe',
-    hintSplit: 'ex: 70 = 70% labo, 30% interne',
-    secLabCost: 'Coûts du Laboratoire Externe',
-    lblLabName: 'Nom du Labo / Fournisseur',
-    phLabName: 'ex: K Line, Align Technology, SureSmile',
-    hintLab: 'Quel est votre fournisseur actuel ?',
-    lblLabCostCase: 'Coût par Cas',
-    hintLabCost: 'Frais de labo par cas complet (hors ajustements). Typique : 150-400 €/cas',
-    lblShipping: 'Livraison par Cas',
-    lblRefinements: 'Coût Moyen de Retouche',
-    hintRef: 'Coût supplémentaire si ajustements non inclus',
-    secInHouse: 'Coûts de Production Interne',
+    secInHouse: 'Vos Coûts de Production',
     divLabor: 'Main-d\'Œuvre',
     lblDoctorRate: 'Taux Horaire du Docteur',
     hintDoctorRate: 'Salaire ou coût d\'opportunité du fauteuil',
@@ -1080,7 +996,6 @@ var T = {
     casesYear: 'Cas par An',
     costAligner: 'Coût par Aligneur',
     casesMonth: 'cas/mois',
-    extLabCase: 'Labo Externe / Cas',
     inHouseCase: 'Interne / Cas',
     perAligner: 'par aligneur',
     monthlySpend: 'Dépense Mensuelle',
@@ -1109,8 +1024,7 @@ var T = {
     barLabor: 'Main-d\'Œuvre', barMaterial: 'Matériau (incl. déchets)', barEquipment: 'Équipement',
     barSoftware: 'Logiciel', barRent: 'Espace Labo', barConsumables: 'Consommables',
     barPostProc: 'Post-Traitement', barScanner: 'Scanner',
-    aligners: 'aligneurs', externalLab: 'Labo Externe', inHouseProd: 'Production Interne',
-    blended: 'Mixte', lab: 'labo', inhouse: 'interne',
+    aligners: 'aligneurs', inHouseProd: 'Production Interne',
     noJS: 'Cet outil nécessite JavaScript. Veuillez activer JavaScript dans votre navigateur.',
     perCaseStar: '/ cas*',
     savingsIcon: '💡',
@@ -1135,7 +1049,7 @@ var T = {
     step2Label: 'Costes Actuales',
     step3Label: 'Sus Resultados',
     onboard1: 'Cuéntenos sobre su volumen de alineadores. Esto nos ayuda a calcular sus costes reales con precisión.',
-    onboard2: '¿Cómo obtiene actualmente sus alineadores? Ingrese sus costes abajo — calcularemos el panorama completo.',
+    onboard2: 'Ingrese sus costes de producción propia abajo — calcularemos el panorama completo.',
     secCaseVol: 'Volumen de Casos',
     lblComplexity: 'Complejidad del Caso',
     optMild: 'Leve (10 alineadores)',
@@ -1150,23 +1064,7 @@ var T = {
     hintCN: 'Opcional — para su informe de resultados',
     phClinic: 'Nombre de su clínica',
     btnNext: 'Siguiente: Sus Costes Actuales →',
-    secMethod: 'Su Método Actual',
-    lblMethod: '¿Cómo realiza actualmente sus casos de alineadores?',
-    optLab: 'Laboratorio Externo / Competidor',
-    optInhouse: 'Producción Propia (Impresión 3D)',
-    optBoth: 'Ambos — Lab + Propio',
-    lblSplitPct: '% de Casos Enviados al Lab Externo',
-    hintSplit: 'ej: 70 = 70% lab, 30% propio',
-    secLabCost: 'Costes del Laboratorio Externo',
-    lblLabName: 'Nombre del Lab / Proveedor',
-    phLabName: 'ej: K Line, Align Technology, SureSmile',
-    hintLab: '¿Quién es su proveedor actual?',
-    lblLabCostCase: 'Coste por Caso',
-    hintLabCost: 'Tarifa del lab por caso completo (sin refinamientos). Típico: 150-400 €/caso',
-    lblShipping: 'Envío por Caso',
-    lblRefinements: 'Coste Medio de Refinamiento',
-    hintRef: 'Coste adicional si los refinamientos no están incluidos',
-    secInHouse: 'Costes de Producción Propia',
+    secInHouse: 'Sus Costes de Producción',
     divLabor: 'Mano de Obra',
     lblDoctorRate: 'Tarifa Horaria del Doctor',
     hintDoctorRate: 'Salario o coste de oportunidad del sillón',
@@ -1214,7 +1112,6 @@ var T = {
     casesYear: 'Casos por Año',
     costAligner: 'Coste por Alineador',
     casesMonth: 'casos/mes',
-    extLabCase: 'Lab Externo / Caso',
     inHouseCase: 'Producción Propia / Caso',
     perAligner: 'por alineador',
     monthlySpend: 'Gasto Mensual',
@@ -1243,8 +1140,7 @@ var T = {
     barLabor: 'Mano de Obra', barMaterial: 'Material (incl. residuos)', barEquipment: 'Equipos',
     barSoftware: 'Software', barRent: 'Espacio Lab', barConsumables: 'Consumibles',
     barPostProc: 'Post-Procesado', barScanner: 'Escáner',
-    aligners: 'alineadores', externalLab: 'Lab Externo', inHouseProd: 'Producción Propia',
-    blended: 'Mixto', lab: 'lab', inhouse: 'propio',
+    aligners: 'alineadores', inHouseProd: 'Producción Propia',
     noJS: 'Esta herramienta requiere JavaScript. Por favor active JavaScript en su navegador.',
     perCaseStar: '/ caso*',
     savingsIcon: '💡',
@@ -1269,7 +1165,7 @@ var T = {
     step2Label: 'Costi Attuali',
     step3Label: 'I Suoi Risultati',
     onboard1: 'Ci indichi il Suo volume di allineatori. Questo ci aiuta a calcolare i Suoi costi reali con precisione.',
-    onboard2: 'Come ottiene attualmente i Suoi allineatori? Inserisca i Suoi costi qui sotto — calcoleremo il quadro completo.',
+    onboard2: 'Inserisca i Suoi costi di produzione interna qui sotto — calcoleremo il quadro completo.',
     secCaseVol: 'Volume Casi',
     lblComplexity: 'Complessità del Caso',
     optMild: 'Lieve (10 allineatori)',
@@ -1284,23 +1180,7 @@ var T = {
     hintCN: 'Opzionale — per il Suo rapporto risultati',
     phClinic: 'Nome del Suo studio',
     btnNext: 'Avanti: I Suoi Costi Attuali →',
-    secMethod: 'Il Suo Metodo Attuale',
-    lblMethod: 'Come realizza attualmente i Suoi casi di allineatori?',
-    optLab: 'Laboratorio Esterno / Concorrente',
-    optInhouse: 'Produzione Interna (Stampa 3D)',
-    optBoth: 'Entrambi — Lab + Interno',
-    lblSplitPct: '% di Casi Inviati al Lab Esterno',
-    hintSplit: 'es: 70 = 70% lab, 30% interno',
-    secLabCost: 'Costi del Laboratorio Esterno',
-    lblLabName: 'Nome Lab / Fornitore',
-    phLabName: 'es: K Line, Align Technology, SureSmile',
-    hintLab: 'Chi è il Suo fornitore attuale?',
-    lblLabCostCase: 'Costo per Caso',
-    hintLabCost: 'Tariffa lab per caso completo (esclusi ritocchi). Tipico: 150-400 €/caso',
-    lblShipping: 'Spedizione per Caso',
-    lblRefinements: 'Costo Medio Ritocchi',
-    hintRef: 'Costo aggiuntivo se ritocchi non inclusi',
-    secInHouse: 'Costi di Produzione Interna',
+    secInHouse: 'I Suoi Costi di Produzione',
     divLabor: 'Manodopera',
     lblDoctorRate: 'Tariffa Oraria Dottore',
     hintDoctorRate: 'Stipendio o costo opportunità della poltrona',
@@ -1348,7 +1228,6 @@ var T = {
     casesYear: 'Casi all\'Anno',
     costAligner: 'Costo per Allineatore',
     casesMonth: 'casi/mese',
-    extLabCase: 'Lab Esterno / Caso',
     inHouseCase: 'Interno / Caso',
     perAligner: 'per allineatore',
     monthlySpend: 'Spesa Mensile',
@@ -1377,8 +1256,7 @@ var T = {
     barLabor: 'Manodopera', barMaterial: 'Materiale (incl. scarti)', barEquipment: 'Attrezzature',
     barSoftware: 'Software', barRent: 'Spazio Lab', barConsumables: 'Consumabili',
     barPostProc: 'Post-Lavorazione', barScanner: 'Scanner',
-    aligners: 'allineatori', externalLab: 'Lab Esterno', inHouseProd: 'Produzione Interna',
-    blended: 'Misto', lab: 'lab', inhouse: 'interno',
+    aligners: 'allineatori', inHouseProd: 'Produzione Interna',
     noJS: 'Questo strumento richiede JavaScript. Attivi JavaScript nel Suo browser.',
     perCaseStar: '/ caso*',
     savingsIcon: '💡',
@@ -1403,7 +1281,7 @@ var T = {
     step2Label: 'Custos Atuais',
     step3Label: 'Seus Resultados',
     onboard1: 'Indique-nos o seu volume de alinhadores. Isto ajuda-nos a calcular os seus custos reais com precisão.',
-    onboard2: 'Como obtém atualmente os seus alinhadores? Insira os seus custos abaixo — calcularemos o quadro completo.',
+    onboard2: 'Insira os seus custos de produção própria abaixo — calcularemos o quadro completo.',
     secCaseVol: 'Volume de Casos',
     lblComplexity: 'Complexidade do Caso',
     optMild: 'Leve (10 alinhadores)',
@@ -1418,23 +1296,7 @@ var T = {
     hintCN: 'Opcional — para seu relatório de resultados',
     phClinic: 'Nome da sua clínica',
     btnNext: 'Próximo: Seus Custos Atuais →',
-    secMethod: 'Seu Método Atual',
-    lblMethod: 'Como realiza atualmente os seus casos de alinhadores?',
-    optLab: 'Laboratório Externo / Concorrente',
-    optInhouse: 'Produção Própria (Impressão 3D)',
-    optBoth: 'Ambos — Lab + Próprio',
-    lblSplitPct: '% de Casos Enviados ao Lab Externo',
-    hintSplit: 'ex: 70 = 70% lab, 30% próprio',
-    secLabCost: 'Custos do Laboratório Externo',
-    lblLabName: 'Nome do Lab / Fornecedor',
-    phLabName: 'ex: K Line, Align Technology, SureSmile',
-    hintLab: 'Quem é o seu fornecedor atual?',
-    lblLabCostCase: 'Custo por Caso',
-    hintLabCost: 'Taxa do lab por caso completo (excl. refinamentos). Típico: 150-400 €/caso',
-    lblShipping: 'Envio por Caso',
-    lblRefinements: 'Custo Médio de Refinamento',
-    hintRef: 'Custo adicional se refinamentos não incluídos',
-    secInHouse: 'Custos de Produção Própria',
+    secInHouse: 'Seus Custos de Produção',
     divLabor: 'Mão de Obra',
     lblDoctorRate: 'Taxa Horária do Médico',
     hintDoctorRate: 'Salário ou custo de oportunidade da cadeira',
@@ -1482,7 +1344,6 @@ var T = {
     casesYear: 'Casos por Ano',
     costAligner: 'Custo por Alinhador',
     casesMonth: 'casos/mês',
-    extLabCase: 'Lab Externo / Caso',
     inHouseCase: 'Produção Própria / Caso',
     perAligner: 'por alinhador',
     monthlySpend: 'Gasto Mensal',
@@ -1511,8 +1372,7 @@ var T = {
     barLabor: 'Mão de Obra', barMaterial: 'Material (incl. resíduos)', barEquipment: 'Equipamentos',
     barSoftware: 'Software', barRent: 'Espaço Lab', barConsumables: 'Consumíveis',
     barPostProc: 'Pós-Processamento', barScanner: 'Scanner',
-    aligners: 'alinhadores', externalLab: 'Lab Externo', inHouseProd: 'Produção Própria',
-    blended: 'Misto', lab: 'lab', inhouse: 'próprio',
+    aligners: 'alinhadores', inHouseProd: 'Produção Própria',
     noJS: 'Esta ferramenta requer JavaScript. Por favor ative JavaScript no seu navegador.',
     perCaseStar: '/ caso*',
     savingsIcon: '💡',
@@ -1537,7 +1397,7 @@ var T = {
     step2Label: 'Aktuelle Kosten',
     step3Label: 'Ihre Ergebnisse',
     onboard1: 'Erzählen Sie uns von Ihrem Aligner-Volumen. Das hilft uns, Ihre tatsächlichen Kosten präzise zu berechnen.',
-    onboard2: 'Wie beziehen Sie derzeit Ihre Aligner? Geben Sie Ihre Kosten unten ein — wir berechnen das Gesamtbild.',
+    onboard2: 'Geben Sie Ihre Produktionskosten unten ein — wir berechnen das Gesamtbild.',
     secCaseVol: 'Fallvolumen',
     lblComplexity: 'Fallkomplexität',
     optMild: 'Leicht (10 Aligner)',
@@ -1552,23 +1412,7 @@ var T = {
     hintCN: 'Optional — für Ihren Ergebnisbericht',
     phClinic: 'Ihr Praxisname',
     btnNext: 'Weiter: Ihre aktuellen Kosten →',
-    secMethod: 'Ihre aktuelle Methode',
-    lblMethod: 'Wie erfüllen Sie derzeit Ihre Aligner-Fälle?',
-    optLab: 'Externes Labor / Wettbewerber',
-    optInhouse: 'Eigenproduktion (3D-Druck)',
-    optBoth: 'Beides — Labor + Eigen',
-    lblSplitPct: '% der Fälle an externes Labor',
-    hintSplit: 'z.B. 70 = 70% Labor, 30% eigen',
-    secLabCost: 'Kosten des externen Labors',
-    lblLabName: 'Labor- / Anbietername',
-    phLabName: 'z.B. K Line, Align Technology, SureSmile',
-    hintLab: 'Wer ist Ihr aktueller Anbieter?',
-    lblLabCostCase: 'Kosten pro Fall',
-    hintLabCost: 'Laborgebühr pro komplettem Fall (ohne Nachbesserungen). Typisch: 150-400 €/Fall',
-    lblShipping: 'Versand pro Fall',
-    lblRefinements: 'Durchschn. Nachbesserungskosten',
-    hintRef: 'Zusatzkosten falls Nachbesserungen nicht enthalten',
-    secInHouse: 'Kosten der Eigenproduktion',
+    secInHouse: 'Ihre Produktionskosten',
     divLabor: 'Arbeitskosten',
     lblDoctorRate: 'Stundensatz Arzt',
     hintDoctorRate: 'Gehalt oder Opportunitätskosten der Behandlungszeit',
@@ -1616,7 +1460,6 @@ var T = {
     casesYear: 'Fälle pro Jahr',
     costAligner: 'Kosten pro Aligner',
     casesMonth: 'Fälle/Monat',
-    extLabCase: 'Externes Labor / Fall',
     inHouseCase: 'Eigenproduktion / Fall',
     perAligner: 'pro Aligner',
     monthlySpend: 'Monatliche Ausgaben',
@@ -1645,8 +1488,7 @@ var T = {
     barLabor: 'Arbeitskosten', barMaterial: 'Material (inkl. Ausschuss)', barEquipment: 'Ausrüstung',
     barSoftware: 'Software', barRent: 'Laborraum', barConsumables: 'Verbrauchsmaterial',
     barPostProc: 'Nachbearbeitung', barScanner: 'Scanner',
-    aligners: 'Aligner', externalLab: 'Externes Labor', inHouseProd: 'Eigenproduktion',
-    blended: 'Gemischt', lab: 'Labor', inhouse: 'eigen',
+    aligners: 'Aligner', inHouseProd: 'Eigenproduktion',
     noJS: 'Dieses Tool erfordert JavaScript. Bitte aktivieren Sie JavaScript in Ihrem Browser.',
     perCaseStar: '/ Fall*',
     savingsIcon: '💡',
@@ -1671,7 +1513,7 @@ var T = {
     step2Label: '当前成本',
     step3Label: '您的结果',
     onboard1: '告诉我们您的矫治器产量。这有助于我们准确计算您的真实成本。',
-    onboard2: '您目前如何获取矫治器？在下方输入您的成本 — 我们将计算完整图景。',
+    onboard2: '在下方输入您的自主生产成本 — 我们将计算完整图景。',
     secCaseVol: '病例量',
     lblComplexity: '病例复杂度',
     optMild: '简单 (10副矫治器)',
@@ -1686,23 +1528,7 @@ var T = {
     hintCN: '可选 — 用于您的结果报告',
     phClinic: '您的诊所名称',
     btnNext: '下一步：您的当前成本 →',
-    secMethod: '您的当前方法',
-    lblMethod: '您目前如何完成矫治器病例？',
-    optLab: '外部实验室 / 竞争对手',
-    optInhouse: '自主生产 (3D打印)',
-    optBoth: '两者兼有 — 外部 + 自主',
-    lblSplitPct: '发送到外部实验室的病例百分比',
-    hintSplit: '例：70 = 70%外部, 30%自主',
-    secLabCost: '外部实验室成本',
-    lblLabName: '实验室/供应商名称',
-    phLabName: '例：K Line, Align Technology, SureSmile',
-    hintLab: '您当前的供应商是谁？',
-    lblLabCostCase: '每例成本',
-    hintLabCost: '每个完整病例的实验室费用（不含修正）。典型：150-400 €/例',
-    lblShipping: '每例运费',
-    lblRefinements: '平均修正成本',
-    hintRef: '如果修正不包含在内的额外费用',
-    secInHouse: '自主生产成本',
+    secInHouse: '您的生产成本',
     divLabor: '人工',
     lblDoctorRate: '医生时薪',
     hintDoctorRate: '工资或椅旁时间的机会成本',
@@ -1750,7 +1576,6 @@ var T = {
     casesYear: '年病例数',
     costAligner: '每副矫治器成本',
     casesMonth: '例/月',
-    extLabCase: '外部实验室/例',
     inHouseCase: '自主生产/例',
     perAligner: '每副矫治器',
     monthlySpend: '月度支出',
@@ -1779,8 +1604,7 @@ var T = {
     barLabor: '人工', barMaterial: '材料（含废品）', barEquipment: '设备',
     barSoftware: '软件', barRent: '实验室空间', barConsumables: '消耗品',
     barPostProc: '后处理', barScanner: '扫描仪',
-    aligners: '副矫治器', externalLab: '外部实验室', inHouseProd: '自主生产',
-    blended: '混合', lab: '外部', inhouse: '自主',
+    aligners: '副矫治器', inHouseProd: '自主生产',
     noJS: '此工具需要JavaScript。请在浏览器中启用JavaScript。',
     perCaseStar: '/ 每例*',
     savingsIcon: '💡',
@@ -1805,7 +1629,7 @@ var T = {
     step2Label: 'التكاليف الحالية',
     step3Label: 'نتائجك',
     onboard1: 'أخبرنا عن حجم المصففات لديك. هذا يساعدنا في حساب تكاليفك الحقيقية بدقة.',
-    onboard2: 'كيف تحصل حالياً على المصففات؟ أدخل تكاليفك أدناه — سنحسب الصورة الكاملة.',
+    onboard2: 'أدخل تكاليف الإنتاج الداخلي أدناه — سنحسب الصورة الكاملة.',
     secCaseVol: 'حجم الحالات',
     lblComplexity: 'تعقيد الحالة',
     optMild: 'بسيطة (10 مصفف)',
@@ -1820,23 +1644,7 @@ var T = {
     hintCN: 'اختياري — لتقرير النتائج',
     phClinic: 'اسم عيادتك',
     btnNext: '← التالي: تكاليفك الحالية',
-    secMethod: 'طريقتك الحالية',
-    lblMethod: 'كيف تنفذ حالياً حالات المصففات؟',
-    optLab: 'مختبر خارجي / منافس',
-    optInhouse: 'إنتاج داخلي (طباعة ثلاثية الأبعاد)',
-    optBoth: 'كلاهما — مختبر + داخلي',
-    lblSplitPct: '% من الحالات المرسلة للمختبر الخارجي',
-    hintSplit: 'مثال: 70 = 70% مختبر، 30% داخلي',
-    secLabCost: 'تكاليف المختبر الخارجي',
-    lblLabName: 'اسم المختبر / المورد',
-    phLabName: 'مثال: K Line, Align Technology, SureSmile',
-    hintLab: 'من هو موردك الحالي؟',
-    lblLabCostCase: 'التكلفة لكل حالة',
-    hintLabCost: 'رسوم المختبر لكل حالة كاملة (بدون التعديلات). نموذجي: 150-400 €/حالة',
-    lblShipping: 'الشحن لكل حالة',
-    lblRefinements: 'متوسط تكلفة التعديلات',
-    hintRef: 'تكلفة إضافية إذا لم تكن التعديلات مشمولة',
-    secInHouse: 'تكاليف الإنتاج الداخلي',
+    secInHouse: 'تكاليف الإنتاج',
     divLabor: 'العمالة',
     lblDoctorRate: 'أجر الطبيب بالساعة',
     hintDoctorRate: 'الراتب أو تكلفة الفرصة البديلة للكرسي',
@@ -1884,7 +1692,6 @@ var T = {
     casesYear: 'حالات في السنة',
     costAligner: 'التكلفة لكل مصفف',
     casesMonth: 'حالة/شهر',
-    extLabCase: 'مختبر خارجي / حالة',
     inHouseCase: 'إنتاج داخلي / حالة',
     perAligner: 'لكل مصفف',
     monthlySpend: 'الإنفاق الشهري',
@@ -1913,8 +1720,7 @@ var T = {
     barLabor: 'العمالة', barMaterial: 'المواد (شامل الهدر)', barEquipment: 'المعدات',
     barSoftware: 'البرمجيات', barRent: 'مساحة المختبر', barConsumables: 'المستهلكات',
     barPostProc: 'ما بعد المعالجة', barScanner: 'الماسح',
-    aligners: 'مصفف', externalLab: 'مختبر خارجي', inHouseProd: 'إنتاج داخلي',
-    blended: 'مختلط', lab: 'مختبر', inhouse: 'داخلي',
+    aligners: 'مصفف', inHouseProd: 'إنتاج داخلي',
     noJS: 'هذه الأداة تتطلب JavaScript. يرجى تفعيل JavaScript في متصفحك.',
     perCaseStar: '/ حالة*',
     savingsIcon: '💡',
@@ -1966,12 +1772,6 @@ function applyLanguage(lang) {
   var step1Sec = document.querySelector('#step1 .section-header h2');
   if (step1Sec) step1Sec.textContent = t('secCaseVol');
 
-  var step2Secs = document.querySelectorAll('#step2 .section-header h2');
-  if (step2Secs[0]) step2Secs[0].textContent = t('secMethod');
-
-  var labSecH = document.querySelector('#sectionLabCost .section-header h2');
-  if (labSecH) labSecH.textContent = t('secLabCost');
-
   var ihSecH = document.querySelector('#sectionInHouseCost .section-header h2');
   if (ihSecH) ihSecH.textContent = t('secInHouse');
 
@@ -1979,9 +1779,6 @@ function applyLanguage(lang) {
   var lblMap = {
     complexity: 'lblComplexity', alignersPerCase: 'lblAlignersCase',
     monthlyCases: 'lblMonthlyCases',
-    currentMethod: 'lblMethod', labSplitPct: 'lblSplitPct',
-    labName: 'lblLabName', labCostPerCase: 'lblLabCostCase',
-    labShipping: 'lblShipping', labRefinements: 'lblRefinements',
     doctorRate: 'lblDoctorRate', assistantRate: 'lblAssistantRate',
     doctorMinutes: 'lblDoctorMin', assistantMinutes: 'lblAssistantMin',
     materialCostPerAligner: 'lblMatCost', printerCost: 'lblPrinterCost',
@@ -2005,12 +1802,6 @@ function applyLanguage(lang) {
     cmplx.options[2].textContent = t('optComplex');
     cmplx.options[3].textContent = t('optCustom');
   }
-  var meth = $('currentMethod');
-  if (meth) {
-    meth.options[0].textContent = t('optLab');
-    meth.options[1].textContent = t('optInhouse');
-    meth.options[2].textContent = t('optBoth');
-  }
   var arch = $('archType');
   if (arch) {
     arch.options[0].textContent = t('optDualArch');
@@ -2020,8 +1811,7 @@ function applyLanguage(lang) {
   /* Hints */
   var hintMap = {
     hintAPC: 'hintAPC', hintMC: 'hintMC', hintCN: 'hintCN',
-    hintSplit: 'hintSplit', hintLab: 'hintLab', hintLabCost: 'hintLabCost',
-    hintRef: 'hintRef', hintWaste: 'hintWaste', hintScan: 'hintScanner'
+    hintWaste: 'hintWaste', hintScan: 'hintScanner'
   };
   Object.keys(hintMap).forEach(function(id) {
     var el = $(id);
@@ -2049,7 +1839,6 @@ function applyLanguage(lang) {
 
   /* Placeholders */
   $('clinicName').placeholder = t('phClinic');
-  $('labName').placeholder = t('phLabName');
 
   /* Divider rows */
   var dividers = document.querySelectorAll('.divider-row span');
@@ -2239,14 +2028,6 @@ function goToStep(step) {
 // Expose for onclick
 window.goToStep = goToStep;
 
-/* ===== Method Toggle ===== */
-$('currentMethod').addEventListener('change', function() {
-  var v = this.value;
-  $('sectionLabCost').style.display = (v === 'lab' || v === 'both') ? '' : 'none';
-  $('sectionInHouseCost').style.display = (v === 'inhouse' || v === 'both') ? '' : 'none';
-  $('fieldSplitRatio').style.display = v === 'both' ? '' : 'none';
-});
-
 /* ===== Debounce helper ===== */
 function debounce(fn, ms) {
   var timer;
@@ -2277,13 +2058,6 @@ document.querySelectorAll('input[type="number"]').forEach(function(inp) {
 });
 
 /* ===== Calculations ===== */
-function calcLabCost() {
-  var caseCost = Math.max(0, parseFloat($('labCostPerCase').value) || 0);
-  var shipping = Math.max(0, parseFloat($('labShipping').value) || 0);
-  var refinements = Math.max(0, parseFloat($('labRefinements').value) || 0);
-  return roundC(caseCost + shipping + refinements);
-}
-
 function calcInHouseCost(ihFraction) {
   var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
   var archType = $('archType').value;
@@ -2353,27 +2127,12 @@ var BAR_LABELS = { labor:'Labor', material:'Material (incl. waste)', equipment:'
 /* ===== Render ===== */
 function renderResults() {
   try {
-    var method = $('currentMethod').value;
     var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
     var monthly = Math.max(1, parseInt($('monthlyCases').value) || 10);
     var annual = monthly * 12;
-    var labCost = 0, ihCost = null, totalCost = 0, methodLabel = '';
-
-    if (method === 'lab') {
-      labCost = calcLabCost();
-      totalCost = labCost;
-      methodLabel = aligners + ' ' + t('aligners') + ' \u00b7 ' + esc($('labName').value.trim() || t('externalLab'));
-    } else if (method === 'inhouse') {
-      ihCost = calcInHouseCost();
-      totalCost = ihCost.total;
-      methodLabel = aligners + ' ' + t('aligners') + ' \u00b7 ' + t('inHouseProd');
-    } else {
-      labCost = calcLabCost();
-      var split = Math.min(100, Math.max(0, parseInt($('labSplitPct').value) || 70)) / 100;
-      ihCost = calcInHouseCost(1 - split); /* amortize fixed costs over in-house volume only */
-      totalCost = roundC(labCost * split + ihCost.total * (1 - split));
-      methodLabel = aligners + ' ' + t('aligners') + ' \u00b7 ' + t('blended') + ' (' + Math.round(split * 100) + '% ' + t('lab') + ' / ' + Math.round((1 - split) * 100) + '% ' + t('inhouse') + ')';
-    }
+    var ihCost = calcInHouseCost(1);
+    var totalCost = ihCost.total;
+    var methodLabel = aligners + ' ' + t('aligners') + ' \u00b7 ' + t('inHouseProd');
 
     $('resultTotal').textContent = fmt(totalCost);
     var clinic = $('clinicName').value.trim();
@@ -2381,12 +2140,7 @@ function renderResults() {
 
     /* Cost cards */
     var ch = '';
-    if (method === 'lab' || method === 'both') {
-      ch += '<div class="cost-card highlight"><div class="cc-label">' + t('extLabCase') + '</div><div class="cc-val">' + fmt(labCost) + '</div><div class="cc-sub">' + fmt2(labCost / aligners) + ' ' + t('perAligner') + '</div></div>';
-    }
-    if (method === 'inhouse' || method === 'both') {
-      ch += '<div class="cost-card highlight"><div class="cc-label">' + t('inHouseCase') + '</div><div class="cc-val">' + fmt(ihCost.total) + '</div><div class="cc-sub">' + fmt2(ihCost.total / aligners) + ' ' + t('perAligner') + '</div></div>';
-    }
+    ch += '<div class="cost-card highlight"><div class="cc-label">' + t('inHouseCase') + '</div><div class="cc-val">' + fmt(ihCost.total) + '</div><div class="cc-sub">' + fmt2(ihCost.total / aligners) + ' ' + t('perAligner') + '</div></div>';
     ch += '<div class="cost-card"><div class="cc-label">' + t('monthlySpend') + '</div><div class="cc-val">' + fmt(roundC(totalCost * monthly)) + '</div><div class="cc-sub">' + monthly + ' ' + t('casesMonth') + '</div></div>';
     ch += '<div class="cost-card"><div class="cc-label">' + t('annualSpendCard') + '</div><div class="cc-val">' + fmt(roundC(totalCost * annual)) + '</div><div class="cc-sub">' + annual + ' ' + t('casesYearSuffix') + '</div></div>';
     $('costCards').innerHTML = ch;
@@ -2398,26 +2152,22 @@ function renderResults() {
       '<div class="annual-item"><div class="ai-label">' + t('casesYear') + '</div><div class="ai-val">' + annual + '</div><div class="ai-sub">' + monthly + ' ' + t('casesMonth') + '</div></div>' +
       '<div class="annual-item"><div class="ai-label">' + t('costAligner') + '</div><div class="ai-val">' + fmt2(totalCost / aligners) + '</div><div class="ai-sub">' + aligners + ' ' + t('alignersCase') + '</div></div>';
 
-    /* Breakdown */
-    if (ihCost && (method === 'inhouse' || method === 'both')) {
-      $('breakdownSection').style.display = '';
-      var bar = $('stackedBar'), legend = $('stackedLegend');
-      var bh = '', lh = '', total = ihCost.total;
-      var keys = ['labor','material','equipment','software','rent','consumables','retainer','postProcessing','scanner','custom'];
-      var ariaDesc = [];
-      keys.forEach(function(k) {
-        if (ihCost[k] <= 0) return;
-        var pct = total > 0 ? (ihCost[k] / total) * 100 : 0;
-        bh += '<div class="stacked-bar-segment" style="width:' + pct + '%;background:' + BAR_COLORS[k] + ';" title="' + BAR_LABELS[k] + ': ' + Math.round(pct) + '%"></div>';
-        lh += '<div class="legend-item"><div class="legend-dot" style="background:' + BAR_COLORS[k] + ';"></div><span class="legend-label">' + BAR_LABELS[k] + '</span><span class="legend-val">' + Math.round(pct) + '% \u00b7 ' + fmt(ihCost[k]) + '</span></div>';
-        ariaDesc.push(BAR_LABELS[k] + ' ' + Math.round(pct) + '%');
-      });
-      bar.innerHTML = bh;
-      bar.setAttribute('aria-label', t('secBreakdown') + ': ' + ariaDesc.join(', '));
-      legend.innerHTML = lh;
-    } else {
-      $('breakdownSection').style.display = 'none';
-    }
+    /* Breakdown — always show stacked bar for in-house costs */
+    $('breakdownSection').style.display = '';
+    var bar = $('stackedBar'), legend = $('stackedLegend');
+    var bh = '', lh = '', total = ihCost.total;
+    var keys = ['labor','material','equipment','software','rent','consumables','retainer','postProcessing','scanner','custom'];
+    var ariaDesc = [];
+    keys.forEach(function(k) {
+      if (ihCost[k] <= 0) return;
+      var pct = total > 0 ? (ihCost[k] / total) * 100 : 0;
+      bh += '<div class="stacked-bar-segment" style="width:' + pct + '%;background:' + BAR_COLORS[k] + ';" title="' + BAR_LABELS[k] + ': ' + Math.round(pct) + '%"></div>';
+      lh += '<div class="legend-item"><div class="legend-dot" style="background:' + BAR_COLORS[k] + ';"></div><span class="legend-label">' + BAR_LABELS[k] + '</span><span class="legend-val">' + Math.round(pct) + '% \u00b7 ' + fmt(ihCost[k]) + '</span></div>';
+      ariaDesc.push(BAR_LABELS[k] + ' ' + Math.round(pct) + '%');
+    });
+    bar.innerHTML = bh;
+    bar.setAttribute('aria-label', t('secBreakdown') + ': ' + ariaDesc.join(', '));
+    legend.innerHTML = lh;
 
     /* Savings teaser — show personalized range (up to 40-60%) */
     var lowSave = roundC(totalCost * 0.40);
@@ -2445,38 +2195,27 @@ window.renderResults = renderResults;
 /* ===== URL State ===== */
 function updateURL() {
   var p = new URLSearchParams();
-  p.set('m', $('currentMethod').value);
   p.set('a', $('alignersPerCase').value);
   p.set('mc', $('monthlyCases').value);
   p.set('cur', curCurrency.code);
-  if ($('currentMethod').value === 'lab' || $('currentMethod').value === 'both') {
-    p.set('lc', $('labCostPerCase').value);
-    p.set('ls', $('labShipping').value);
-    p.set('lr', $('labRefinements').value);
-  }
-  if ($('currentMethod').value === 'both') {
-    p.set('sp', $('labSplitPct').value);
-  }
   p.set('at', $('archType').value);
-  if ($('currentMethod').value === 'inhouse' || $('currentMethod').value === 'both') {
-    p.set('dr', $('doctorRate').value);
-    p.set('ar', $('assistantRate').value);
-    p.set('dm', $('doctorMinutes').value);
-    p.set('am', $('assistantMinutes').value);
-    p.set('mat', $('materialCostPerAligner').value);
-    p.set('pc', $('printerCost').value);
-    p.set('pl', $('printerLifespan').value);
-    p.set('mn', $('annualMaintenance').value);
-    p.set('sw', $('softwareCost').value);
-    p.set('rn', $('labRent').value);
-    p.set('cn', $('consumablesPerAligner').value);
-    p.set('pp', $('postProcessingEquip').value);
-    p.set('ppl', $('ppLifespan').value);
-    p.set('wr', $('wasteRate').value);
-    p.set('sc', $('scannerCost').value);
-    p.set('scl', $('scannerLifespan').value);
-    p.set('ret', $('retainerCost').value);
-  }
+  p.set('dr', $('doctorRate').value);
+  p.set('ar', $('assistantRate').value);
+  p.set('dm', $('doctorMinutes').value);
+  p.set('am', $('assistantMinutes').value);
+  p.set('mat', $('materialCostPerAligner').value);
+  p.set('pc', $('printerCost').value);
+  p.set('pl', $('printerLifespan').value);
+  p.set('mn', $('annualMaintenance').value);
+  p.set('sw', $('softwareCost').value);
+  p.set('rn', $('labRent').value);
+  p.set('cn', $('consumablesPerAligner').value);
+  p.set('pp', $('postProcessingEquip').value);
+  p.set('ppl', $('ppLifespan').value);
+  p.set('wr', $('wasteRate').value);
+  p.set('sc', $('scannerCost').value);
+  p.set('scl', $('scannerLifespan').value);
+  p.set('ret', $('retainerCost').value);
   p.set('s', '3');
   if (curLang !== 'en') p.set('lang', curLang);
   history.replaceState(null, '', location.pathname + '?' + p.toString());
@@ -2494,17 +2233,11 @@ function setFromURL(el, val, min, max) {
 
 function loadFromURL() {
   var p = new URLSearchParams(location.search);
-  if (!p.has('m')) return;
+  if (!p.has('s')) return;
   if (p.has('lang') && T[p.get('lang')]) { $('langSelect').value = p.get('lang'); applyLanguage(p.get('lang')); }
   if (p.has('cur') && currencies[p.get('cur')]) { curCurrency = currencies[p.get('cur')]; $('currency').value = curCurrency.code; }
-  var validMethods = ['lab','inhouse','both'];
-  if (p.has('m') && validMethods.indexOf(p.get('m')) !== -1) { $('currentMethod').value = p.get('m'); $('currentMethod').dispatchEvent(new Event('change')); }
   if (p.has('a')) { setFromURL($('alignersPerCase'), p.get('a'), 1, 200); var v = parseInt($('alignersPerCase').value); $('complexity').value = v === 10 ? '10' : v === 30 ? '30' : v === 50 ? '50' : 'custom'; }
   if (p.has('mc')) setFromURL($('monthlyCases'), p.get('mc'), 1, 10000);
-  if (p.has('lc')) setFromURL($('labCostPerCase'), p.get('lc'), 0, 99999);
-  if (p.has('ls')) setFromURL($('labShipping'), p.get('ls'), 0, 9999);
-  if (p.has('lr')) setFromURL($('labRefinements'), p.get('lr'), 0, 9999);
-  if (p.has('sp')) setFromURL($('labSplitPct'), p.get('sp'), 0, 100);
   if (p.has('dr')) setFromURL($('doctorRate'), p.get('dr'), 0, 9999);
   if (p.has('ar')) setFromURL($('assistantRate'), p.get('ar'), 0, 9999);
   if (p.has('dm')) setFromURL($('doctorMinutes'), p.get('dm'), 0, 600);
@@ -2694,7 +2427,6 @@ $('clinicName').addEventListener('input', debounce(function() {
 
 /* ===== Init ===== */
 updateSymbols();
-$('sectionInHouseCost').style.display = 'none';
 /* Hide email capture if already submitted */
 if (localStorage.getItem('kline_email')) {
   var ec = $('emailCapture');
