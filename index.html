@@ -107,6 +107,7 @@ header p { color: var(--white-70); margin-top: 0.45rem; font-size: 0.95rem; posi
   background: var(--surface-border); color: var(--text-muted);
   display: inline-flex; align-items: center; justify-content: center;
   font-weight: 800; font-size: 0.88rem; transition: all var(--transition);
+  position: relative; z-index: 2;
 }
 .step-item.active .step-num { background: var(--teal); color: var(--dark-900); }
 .step-item.completed .step-num { background: var(--green); color: white; }
@@ -117,7 +118,7 @@ header p { color: var(--white-70); margin-top: 0.45rem; font-size: 0.95rem; posi
 }
 .step-item.active .step-label { color: var(--teal); }
 .step-item.completed .step-label { color: var(--green); }
-.step-connector { position: absolute; top: 18px; left: 50%; width: 100%; height: 2px; background: var(--surface-border); }
+.step-connector { position: absolute; top: 18px; left: 50%; width: 100%; height: 2px; background: var(--surface-border); z-index: 1; }
 .step-item:last-child .step-connector { display: none; }
 .step-item.completed .step-connector { background: var(--green); }
 
