@@ -27,7 +27,7 @@
   --white: #ffffff;
   --white-90: rgba(255,255,255,0.9);
   --white-70: rgba(255,255,255,0.7);
-  --white-60: rgba(255,255,255,0.75);
+  --white-60: rgba(255,255,255,0.6);
   --white-20: rgba(255,255,255,0.2);
   --white-10: rgba(255,255,255,0.1);
   --green: #10b981;
@@ -38,7 +38,7 @@
   --surface: #f8f9fb;
   --surface-border: #e5e7eb;
   --text: #374151;
-  --text-muted: #586069;
+  --text-muted: #4b5563;
   --radius: 14px;
   --radius-sm: 8px;
   --shadow: 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
@@ -321,8 +321,11 @@ footer { background: var(--dark-900); text-align: center; padding: 1.75rem 1.5re
 }
 .custom-item .remove-btn:hover { background: var(--red-soft); }
 @media (max-width: 768px) {
-  .custom-item { grid-template-columns: 1fr 1fr auto; }
-  .custom-item select { grid-column: 1 / -2; }
+  .custom-item { grid-template-columns: 1fr auto; }
+  .custom-item input[type="text"] { grid-column: 1 / -1; }
+  .custom-item select { grid-column: 1; }
+  .custom-item .pre { grid-column: 1; }
+  .custom-item .remove-btn { grid-row: 2; grid-column: 2; }
 }
 
 /* ===== RTL ===== */
@@ -378,6 +381,8 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
   .panel, .cost-card, .results-hero, .annual-spend { box-shadow: none; border: 1px solid #e5e7eb; page-break-inside: avoid; }
   .results-hero, .cost-card.highlight, footer, .savings-teaser { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .logo-white { filter: brightness(0) invert(1) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .cta-group, .savings-teaser .cta-group, #ctaLink, #ctaDownload { display: none !important; }
+  .no-print { display: none !important; }
 }
 </style>
 </head>
@@ -868,7 +873,7 @@ var T = {
     barRetainer: 'Retainers', barCustom: 'Custom Items',
     divCustom: 'Custom Cost Items',
     btnAddCustom: 'Add Custom Cost',
-    hintCustom: 'Add any unlisted materials, equipment, or costs',
+    hintCustom: 'Add any unlisted materials, equipment, or costs (one-time purchases amortized over 5 years)',
     phCustomName: 'Item name (e.g. UV lamp)',
     optPerCase: 'Per Case',
     optPerAligner: 'Per Aligner',
@@ -881,7 +886,9 @@ var T = {
     barPostProc: 'Post-Processing', barScanner: 'Scanner',
     aligners: 'aligners', externalLab: 'External Lab', inHouseProd: 'In-House Production',
     blended: 'Blended', lab: 'lab', inhouse: 'in-house',
-    noJS: 'This tool requires JavaScript. Please enable JavaScript in your browser.'
+    noJS: 'This tool requires JavaScript. Please enable JavaScript in your browser.',
+    perCaseStar: '/ case*',
+    savingsIcon: '💡'
   },
   fr: {
     toolLabel: 'Outil de Découverte des Coûts',
@@ -962,7 +969,7 @@ var T = {
     btnAdjust: '← Ajuster les Coûts',
     btnPDF: 'Enregistrer PDF',
     btnCopy: 'Copier le Lien',
-    footerTagline: 'Le #1 Européen en Aligneurs Transparents OEM',
+    footerTagline: 'Le fournisseur OEM nº1 en Europe pour les aligneurs transparents',
     footerDisclaimer: 'Tous les chiffres sont des estimations basées sur vos données. Les coûts réels peuvent varier. Les projections d\'économies sont indicatives — contactez K Line Europe pour un devis précis et personnalisé. Cet outil ne constitue pas un conseil financier.',
     toastCopied: 'Lien copié !',
     toastCopyFail: 'Veuillez copier l\'URL manuellement.',
@@ -989,7 +996,7 @@ var T = {
     barRetainer: 'Contention', barCustom: 'Éléments personnalisés',
     divCustom: 'Coûts personnalisés',
     btnAddCustom: 'Ajouter un coût',
-    hintCustom: 'Ajoutez tout matériau, équipement ou coût non listé',
+    hintCustom: 'Ajoutez tout matériau, équipement ou coût non listé (achats uniques amortis sur 5 ans)',
     phCustomName: 'Nom (ex: lampe UV)',
     optPerCase: 'Par cas',
     optPerAligner: 'Par aligneur',
@@ -1002,7 +1009,9 @@ var T = {
     barPostProc: 'Post-Traitement', barScanner: 'Scanner',
     aligners: 'aligneurs', externalLab: 'Labo Externe', inHouseProd: 'Production Interne',
     blended: 'Mixte', lab: 'labo', inhouse: 'interne',
-    noJS: 'Cet outil nécessite JavaScript. Veuillez activer JavaScript dans votre navigateur.'
+    noJS: 'Cet outil nécessite JavaScript. Veuillez activer JavaScript dans votre navigateur.',
+    perCaseStar: '/ cas*',
+    savingsIcon: '💡'
   },
   es: {
     toolLabel: 'Herramienta de Análisis de Costes',
@@ -1110,7 +1119,7 @@ var T = {
     barRetainer: 'Retención', barCustom: 'Elementos personalizados',
     divCustom: 'Costes personalizados',
     btnAddCustom: 'Añadir coste',
-    hintCustom: 'Añada cualquier material, equipo o coste no listado',
+    hintCustom: 'Añada cualquier material, equipo o coste no listado (compras únicas amortizadas a 5 años)',
     phCustomName: 'Nombre (ej: lámpara UV)',
     optPerCase: 'Por caso',
     optPerAligner: 'Por alineador',
@@ -1123,16 +1132,18 @@ var T = {
     barPostProc: 'Post-Procesado', barScanner: 'Escáner',
     aligners: 'alineadores', externalLab: 'Lab Externo', inHouseProd: 'Producción Propia',
     blended: 'Mixto', lab: 'lab', inhouse: 'propio',
-    noJS: 'Esta herramienta requiere JavaScript. Por favor active JavaScript en su navegador.'
+    noJS: 'Esta herramienta requiere JavaScript. Por favor active JavaScript en su navegador.',
+    perCaseStar: '/ caso*',
+    savingsIcon: '💡'
   },
   it: {
     toolLabel: 'Strumento Analisi Costi',
     reset: '↺ Ripristina',
     heroTitle: 'Strumento di <span class="accent">Analisi dei Costi</span> degli Allineatori',
     heroSub: 'Scopra i Suoi veri costi di produzione degli allineatori — poi veda quanto potrebbe risparmiare',
-    step1Label: 'Il Tuo Studio',
+    step1Label: 'Il Suo Studio',
     step2Label: 'Costi Attuali',
-    step3Label: 'I Tuoi Risultati',
+    step3Label: 'I Suoi Risultati',
     onboard1: 'Ci indichi il Suo volume di allineatori. Questo ci aiuta a calcolare i Suoi costi reali con precisione.',
     onboard2: 'Come ottiene attualmente i Suoi allineatori? Inserisca i Suoi costi qui sotto — calcoleremo il quadro completo.',
     secCaseVol: 'Volume Casi',
@@ -1148,9 +1159,9 @@ var T = {
     lblClinicName: 'Nome dello Studio',
     hintCN: 'Opzionale — per il Suo rapporto risultati',
     phClinic: 'Nome del Suo studio',
-    btnNext: 'Avanti: I Tuoi Costi Attuali →',
-    secMethod: 'Il Tuo Metodo Attuale',
-    lblMethod: 'Come realizzi attualmente i tuoi casi di allineatori?',
+    btnNext: 'Avanti: I Suoi Costi Attuali →',
+    secMethod: 'Il Suo Metodo Attuale',
+    lblMethod: 'Come realizza attualmente i Suoi casi di allineatori?',
     optLab: 'Laboratorio Esterno / Concorrente',
     optInhouse: 'Produzione Interna (Stampa 3D)',
     optBoth: 'Entrambi — Lab + Interno',
@@ -1191,16 +1202,16 @@ var T = {
     lblWaste: 'Tasso Fallimento Stampa (%)',
     hintWaste: 'Tipicamente 5-15% delle stampe fallisce',
     lblScanner: 'Costo Scanner Intraorale',
-    hintScanner: 'Inserisci 0 se già posseduto',
+    hintScanner: 'Inserisca 0 se già posseduto',
     btnBack: '← Indietro',
     btnResults: 'Vedi i Miei Risultati →',
-    rhLabel: 'Il Tuo Costo Attuale Per Caso',
+    rhLabel: 'Il Suo Costo Attuale Per Caso',
     secAnnual: 'Proiezione Annuale',
     secBreakdown: 'Dettaglio Costi Interni',
     savingsHeadline: 'I clienti K Line riportano <span class="teal">risparmi significativi</span> per caso',
     savingsSub: 'In base ai Suoi costi attuali, passare a K Line potrebbe ridurre significativamente la Sua spesa per caso. Richieda un preventivo personalizzato per vedere i Suoi risparmi esatti.',
-    savingsDisclaimer: '*I risparmi variano per volume, complessità e regione. Contatta K Line Europe per una proposta personalizzata.',
-    ctaQuote: 'Ottieni il Tuo Preventivo K Line',
+    savingsDisclaimer: '*I risparmi variano per volume, complessità e regione. Contatti K Line Europe per una proposta personalizzata.',
+    ctaQuote: 'Ottenga il Suo Preventivo K Line',
     btnAdjust: '← Modifica Costi',
     btnPDF: 'Salva PDF',
     btnCopy: 'Copia Link',
@@ -1220,7 +1231,7 @@ var T = {
     annualSpendCard: 'Spesa Annuale',
     casesYearSuffix: 'casi/anno',
     alignersCase: 'allineatori/caso',
-    savingsRangeText: 'Richiedi il tuo preventivo personalizzato per vedere i risparmi esatti',
+    savingsRangeText: 'Richieda il Suo preventivo personalizzato per vedere i risparmi esatti',
     lblArchType: 'Tipo di Arcata',
     optDualArch: 'Doppia Arcata (Superiore + Inferiore)',
     optSingleArch: 'Arcata Singola',
@@ -1231,7 +1242,7 @@ var T = {
     barRetainer: 'Contenzione', barCustom: 'Elementi personalizzati',
     divCustom: 'Costi personalizzati',
     btnAddCustom: 'Aggiungi costo',
-    hintCustom: 'Aggiunga qualsiasi materiale, attrezzatura o costo non elencato',
+    hintCustom: 'Aggiunga qualsiasi materiale, attrezzatura o costo non elencato (acquisti unici ammortizzati su 5 anni)',
     phCustomName: 'Nome (es: lampada UV)',
     optPerCase: 'Per caso',
     optPerAligner: 'Per allineatore',
@@ -1244,18 +1255,20 @@ var T = {
     barPostProc: 'Post-Lavorazione', barScanner: 'Scanner',
     aligners: 'allineatori', externalLab: 'Lab Esterno', inHouseProd: 'Produzione Interna',
     blended: 'Misto', lab: 'lab', inhouse: 'interno',
-    noJS: 'Questo strumento richiede JavaScript. Attivi JavaScript nel Suo browser.'
+    noJS: 'Questo strumento richiede JavaScript. Attivi JavaScript nel Suo browser.',
+    perCaseStar: '/ caso*',
+    savingsIcon: '💡'
   },
   pt: {
     toolLabel: 'Ferramenta de Análise de Custos',
     reset: '↺ Redefinir',
     heroTitle: 'Ferramenta de <span class="accent">Análise de Custos</span> de Alinhadores',
-    heroSub: 'Descubra seus verdadeiros custos de produção de alinhadores — depois veja quanto poderia economizar',
+    heroSub: 'Descubra os seus verdadeiros custos de produção de alinhadores — e veja quanto poderia poupar',
     step1Label: 'Sua Clínica',
     step2Label: 'Custos Atuais',
     step3Label: 'Seus Resultados',
     onboard1: 'Indique-nos o seu volume de alinhadores. Isto ajuda-nos a calcular os seus custos reais com precisão.',
-    onboard2: 'Como você obtém seus alinhadores atualmente? Insira seus custos abaixo — calcularemos o quadro completo.',
+    onboard2: 'Como obtém atualmente os seus alinhadores? Insira os seus custos abaixo — calcularemos o quadro completo.',
     secCaseVol: 'Volume de Casos',
     lblComplexity: 'Complexidade do Caso',
     optMild: 'Leve (14 alinhadores)',
@@ -1271,7 +1284,7 @@ var T = {
     phClinic: 'Nome da sua clínica',
     btnNext: 'Próximo: Seus Custos Atuais →',
     secMethod: 'Seu Método Atual',
-    lblMethod: 'Como você realiza atualmente seus casos de alinhadores?',
+    lblMethod: 'Como realiza atualmente os seus casos de alinhadores?',
     optLab: 'Laboratório Externo / Concorrente',
     optInhouse: 'Produção Própria (Impressão 3D)',
     optBoth: 'Ambos — Lab + Próprio',
@@ -1352,7 +1365,7 @@ var T = {
     barRetainer: 'Contenção', barCustom: 'Itens personalizados',
     divCustom: 'Custos personalizados',
     btnAddCustom: 'Adicionar custo',
-    hintCustom: 'Adicione qualquer material, equipamento ou custo não listado',
+    hintCustom: 'Adicione qualquer material, equipamento ou custo não listado (compras únicas amortizadas em 5 anos)',
     phCustomName: 'Nome (ex: lâmpada UV)',
     optPerCase: 'Por caso',
     optPerAligner: 'Por alinhador',
@@ -1365,7 +1378,9 @@ var T = {
     barPostProc: 'Pós-Processamento', barScanner: 'Scanner',
     aligners: 'alinhadores', externalLab: 'Lab Externo', inHouseProd: 'Produção Própria',
     blended: 'Misto', lab: 'lab', inhouse: 'próprio',
-    noJS: 'Esta ferramenta requer JavaScript. Por favor ative JavaScript no seu navegador.'
+    noJS: 'Esta ferramenta requer JavaScript. Por favor ative JavaScript no seu navegador.',
+    perCaseStar: '/ caso*',
+    savingsIcon: '💡'
   },
   de: {
     toolLabel: 'Kostenanalyse-Tool',
@@ -1473,7 +1488,7 @@ var T = {
     barRetainer: 'Retainer', barCustom: 'Benutzerdefinierte Posten',
     divCustom: 'Benutzerdefinierte Kosten',
     btnAddCustom: 'Kosten hinzufügen',
-    hintCustom: 'Fügen Sie nicht aufgeführte Materialien, Geräte oder Kosten hinzu',
+    hintCustom: 'Fügen Sie nicht aufgeführte Materialien, Geräte oder Kosten hinzu (Einmalkäufe über 5 Jahre amortisiert)',
     phCustomName: 'Name (z.B. UV-Lampe)',
     optPerCase: 'Pro Fall',
     optPerAligner: 'Pro Aligner',
@@ -1486,7 +1501,9 @@ var T = {
     barPostProc: 'Nachbearbeitung', barScanner: 'Scanner',
     aligners: 'Aligner', externalLab: 'Externes Labor', inHouseProd: 'Eigenproduktion',
     blended: 'Gemischt', lab: 'Labor', inhouse: 'eigen',
-    noJS: 'Dieses Tool erfordert JavaScript. Bitte aktivieren Sie JavaScript in Ihrem Browser.'
+    noJS: 'Dieses Tool erfordert JavaScript. Bitte aktivieren Sie JavaScript in Ihrem Browser.',
+    perCaseStar: '/ Fall*',
+    savingsIcon: '💡'
   },
   zh: {
     toolLabel: '成本分析工具',
@@ -1594,7 +1611,7 @@ var T = {
     barRetainer: '保持器', barCustom: '自定义项目',
     divCustom: '自定义成本项目',
     btnAddCustom: '添加自定义成本',
-    hintCustom: '添加任何未列出的材料、设备或成本',
+    hintCustom: '添加任何未列出的材料、设备或成本（一次性购买按5年摊销）',
     phCustomName: '项目名称（例：UV灯）',
     optPerCase: '每例',
     optPerAligner: '每副矫治器',
@@ -1607,7 +1624,9 @@ var T = {
     barPostProc: '后处理', barScanner: '扫描仪',
     aligners: '副矫治器', externalLab: '外部实验室', inHouseProd: '自主生产',
     blended: '混合', lab: '外部', inhouse: '自主',
-    noJS: '此工具需要JavaScript。请在浏览器中启用JavaScript。'
+    noJS: '此工具需要JavaScript。请在浏览器中启用JavaScript。',
+    perCaseStar: '/ 每例*',
+    savingsIcon: '💡'
   },
   ar: {
     toolLabel: 'أداة تحليل التكاليف',
@@ -1715,7 +1734,7 @@ var T = {
     barRetainer: 'المثبتات', barCustom: 'عناصر مخصصة',
     divCustom: 'تكاليف مخصصة',
     btnAddCustom: 'إضافة تكلفة',
-    hintCustom: 'أضف أي مواد أو معدات أو تكاليف غير مدرجة',
+    hintCustom: 'أضف أي مواد أو معدات أو تكاليف غير مدرجة (المشتريات لمرة واحدة مستهلكة على 5 سنوات)',
     phCustomName: 'اسم العنصر (مثال: مصباح UV)',
     optPerCase: 'لكل حالة',
     optPerAligner: 'لكل مصفف',
@@ -1728,26 +1747,14 @@ var T = {
     barPostProc: 'ما بعد المعالجة', barScanner: 'الماسح',
     aligners: 'مصفف', externalLab: 'مختبر خارجي', inHouseProd: 'إنتاج داخلي',
     blended: 'مختلط', lab: 'مختبر', inhouse: 'داخلي',
-    noJS: 'هذه الأداة تتطلب JavaScript. يرجى تفعيل JavaScript في متصفحك.'
+    noJS: 'هذه الأداة تتطلب JavaScript. يرجى تفعيل JavaScript في متصفحك.',
+    perCaseStar: '/ حالة*',
+    savingsIcon: '💡'
   }
 };
 
 var curLang = 'en';
 function t(key) { return (T[curLang] && T[curLang][key]) || T.en[key] || key; }
-
-/* data-i18n mapping: element id -> translation key */
-var I18N_MAP = {
-  /* Navbar */
-  'navLabel': { sel: '.navbar-brand .label', prop: 'textContent', key: 'toolLabel' },
-  'resetBtn': { sel: '.nav-right button[onclick="resetAll()"]', prop: 'innerHTML', key: 'reset' },
-  /* Hero */
-  'heroH1': { sel: 'header h1', prop: 'innerHTML', key: 'heroTitle' },
-  'heroP': { sel: 'header p', prop: 'textContent', key: 'heroSub' },
-  /* Steps */
-  'step1Lbl': { idx: 0, key: 'step1Label' },
-  'step2Lbl': { idx: 1, key: 'step2Label' },
-  'step3Lbl': { idx: 2, key: 'step3Label' }
-};
 
 function applyLanguage(lang) {
   curLang = lang;
@@ -1845,9 +1852,7 @@ function applyLanguage(lang) {
   /* Hints without IDs — match by parent field */
   var allHints = document.querySelectorAll('.hint');
   allHints.forEach(function(h) {
-    var inp = h.previousElementSibling;
-    if (!inp) { var pre = h.previousElementSibling; if (pre) inp = pre.querySelector('input'); }
-    if (!inp) return;
+    if (!h.closest('.field')) return;
     var par = h.closest('.field');
     if (!par) return;
     var lbl = par.querySelector('label');
@@ -1976,10 +1981,11 @@ $('currency').addEventListener('change', function() {
   curCurrency = currencies[this.value] || currencies.EUR;
   updateSymbols();
   if (currentStep === 3) renderResults();
+  showToast(t('currencyNote'));
 });
 
 /* ===== Formatting ===== */
-function roundC(n) { return Math.round(n * 100) / 100; }
+function roundC(n) { return Number(n.toFixed(2)); }
 function fmt(n) {
   if (typeof n !== 'number' || isNaN(n) || !isFinite(n)) return '\u2014';
   return n.toLocaleString(curCurrency.locale, { style: 'currency', currency: curCurrency.code, minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -2048,6 +2054,9 @@ function calcLabCost() {
 
 function calcInHouseCost(ihFraction) {
   var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
+  var archType = $('archType').value;
+  /* Single-arch: material/consumable costs halved (only one arch printed) */
+  var archMultiplier = archType === 'single' ? 0.5 : 1;
   var monthly = Math.max(1, parseInt($('monthlyCases').value) || 10);
   var frac = typeof ihFraction === 'number' ? ihFraction : 1;
   var annual = Math.max(1, Math.round(monthly * 12 * frac));
@@ -2059,7 +2068,7 @@ function calcInHouseCost(ihFraction) {
   var laborDoctor = (drRate / 60) * drMin;
   var laborAssistant = (asRate / 60) * asMin;
 
-  var matCost = Math.max(0, parseFloat($('materialCostPerAligner').value) || 0) * aligners;
+  var matCost = Math.max(0, parseFloat($('materialCostPerAligner').value) || 0) * aligners * archMultiplier;
   var wasteRate = Math.min(50, Math.max(0, parseFloat($('wasteRate').value) || 0)) / 100;
   matCost = roundC(matCost * (1 + wasteRate));
 
@@ -2074,9 +2083,11 @@ function calcInHouseCost(ihFraction) {
   var rent = Math.max(0, parseFloat($('labRent').value) || 0);
   var rentPerCase = annual > 0 ? (rent * 12) / annual : 0;
 
-  var consumables = Math.max(0, parseFloat($('consumablesPerAligner').value) || 0) * aligners;
+  var consumables = Math.max(0, parseFloat($('consumablesPerAligner').value) || 0) * aligners * archMultiplier;
+  /* Waste rate also affects consumables */
+  consumables = roundC(consumables * (1 + wasteRate));
 
-  var retainer = Math.max(0, parseFloat($('retainerCost').value) || 0);
+  var retainer = Math.max(0, parseFloat($('retainerCost').value) || 0) * archMultiplier;
 
   var ppEquip = Math.max(0, parseFloat($('postProcessingEquip').value) || 0);
   var ppLife = Math.max(1, parseInt($('ppLifespan').value) || 7);
@@ -2170,7 +2181,7 @@ function renderResults() {
         ariaDesc.push(BAR_LABELS[k] + ' ' + Math.round(pct) + '%');
       });
       bar.innerHTML = bh;
-      bar.setAttribute('aria-label', 'Cost breakdown: ' + ariaDesc.join(', '));
+      bar.setAttribute('aria-label', t('secBreakdown') + ': ' + ariaDesc.join(', '));
       legend.innerHTML = lh;
     } else {
       $('breakdownSection').style.display = 'none';
@@ -2181,7 +2192,7 @@ function renderResults() {
     var lowSave = roundC(totalCost * 0.30);
     var highSave = roundC(totalCost * 0.60);
     if (totalCost > 0) {
-      $('savingsRange').textContent = fmt(lowSave) + ' — ' + fmt(highSave) + ' / case*';
+      $('savingsRange').textContent = fmt(lowSave) + ' — ' + fmt(highSave) + ' ' + t('perCaseStar');
     } else {
       $('savingsRange').textContent = t('savingsRangeText');
     }
@@ -2206,6 +2217,7 @@ function updateURL() {
   if ($('currentMethod').value === 'both') {
     p.set('sp', $('labSplitPct').value);
   }
+  p.set('at', $('archType').value);
   if ($('currentMethod').value === 'inhouse' || $('currentMethod').value === 'both') {
     p.set('dr', $('doctorRate').value);
     p.set('ar', $('assistantRate').value);
@@ -2219,8 +2231,11 @@ function updateURL() {
     p.set('rn', $('labRent').value);
     p.set('cn', $('consumablesPerAligner').value);
     p.set('pp', $('postProcessingEquip').value);
+    p.set('ppl', $('ppLifespan').value);
     p.set('wr', $('wasteRate').value);
     p.set('sc', $('scannerCost').value);
+    p.set('scl', $('scannerLifespan').value);
+    p.set('ret', $('retainerCost').value);
   }
   p.set('s', '3');
   if (curLang !== 'en') p.set('lang', curLang);
@@ -2264,6 +2279,10 @@ function loadFromURL() {
   if (p.has('pp')) setFromURL($('postProcessingEquip'), p.get('pp'), 0, 50000);
   if (p.has('wr')) setFromURL($('wasteRate'), p.get('wr'), 0, 50);
   if (p.has('sc')) setFromURL($('scannerCost'), p.get('sc'), 0, 99999);
+  if (p.has('scl')) setFromURL($('scannerLifespan'), p.get('scl'), 1, 15);
+  if (p.has('ppl')) setFromURL($('ppLifespan'), p.get('ppl'), 1, 20);
+  if (p.has('ret')) setFromURL($('retainerCost'), p.get('ret'), 0, 500);
+  if (p.has('at') && (p.get('at') === 'dual' || p.get('at') === 'single')) $('archType').value = p.get('at');
   if (p.get('s') === '3') goToStep(3);
 }
 
@@ -2341,10 +2360,7 @@ window.resetAll = function() {
   location.href = location.pathname;
 };
 
-/* ===== Currency warning ===== */
-$('currency').addEventListener('change', function() {
-  showToast(t('currencyNote'));
-});
+/* Currency warning is now handled in the main currency change listener */
 
 /* ===== Init ===== */
 updateSymbols();
