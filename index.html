@@ -11,6 +11,8 @@
 <meta property="og:description" content="Discover your true aligner costs. See how much you could save with K Line Europe.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#1a1a2e">
+<!-- Google Tag Manager: Replace GTM-XXXXXXX with your actual GTM container ID -->
+<!-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-XXXXXXX');</script> -->
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -214,7 +216,7 @@ section { margin-bottom: 1.75rem; }
 .stacked-bar-wrap { margin: 1.25rem 0; }
 .stacked-bar-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; }
 .stacked-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; background: var(--surface); }
-.stacked-bar-segment { height: 100%; transition: width 0.3s ease; min-width: 0; }
+.stacked-bar-segment { height: 100%; transition: width 0.3s ease; min-width: 3px; }
 .stacked-bar-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1rem; width: 100%; margin-top: 0.75rem; }
 .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; }
 .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
@@ -347,6 +349,7 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
 </style>
 </head>
 <body>
+<a href="#main-content" class="btn" style="position:absolute;left:-9999px;top:0;z-index:999;background:var(--teal);color:var(--dark-900);" onfocus="this.style.left='1rem';this.style.top='0.5rem';" onblur="this.style.left='-9999px';">Skip to content</a>
 
 <!-- Navbar -->
 <nav aria-label="Main navigation">
@@ -385,7 +388,7 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
   <p>Discover your true aligner production costs — then see how much you could save</p>
 </header>
 
-<main>
+<main id="main-content">
   <noscript><div style="text-align:center;padding:3rem 2rem;font-size:1.1rem;color:var(--text-muted);">This tool requires JavaScript. Please enable JavaScript in your browser.</div></noscript>
 
   <!-- Steps — accessible buttons with roles -->
@@ -428,6 +431,13 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
             <label for="alignersPerCase">Aligners per Case</label>
             <input type="number" id="alignersPerCase" value="30" min="1" max="200" aria-describedby="hintAPC">
             <div class="hint" id="hintAPC">Average aligners per case</div>
+          </div>
+          <div class="field">
+            <label for="archType">Arch Type</label>
+            <select id="archType">
+              <option value="dual" selected>Dual Arch (Upper + Lower)</option>
+              <option value="single">Single Arch</option>
+            </select>
           </div>
           <div class="field">
             <label for="monthlyCases">Monthly Cases</label>
@@ -565,9 +575,18 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
             <div class="hint">Polishing, cutting, IPA, etc.</div>
           </div>
           <div class="field">
+            <label for="retainerCost">Retainer Cost / Case</label>
+            <div class="pre" data-symbol="€"><input type="number" id="retainerCost" value="8" min="0" max="500" step="1"></div>
+            <div class="hint">Material cost for retention aligners</div>
+          </div>
+          <div class="field">
             <label for="postProcessingEquip">Post-Processing Equipment</label>
             <div class="pre" data-symbol="€"><input type="number" id="postProcessingEquip" value="1000" min="0" max="50000" step="100"></div>
             <div class="hint">Wash station, UV curing, thermoformer</div>
+          </div>
+          <div class="field">
+            <label for="ppLifespan">Post-Processing Lifespan (Years)</label>
+            <input type="number" id="ppLifespan" value="7" min="1" max="20">
           </div>
           <div class="field">
             <label for="wasteRate">Failed Print Rate (%)</label>
@@ -578,6 +597,10 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
             <label for="scannerCost">Intraoral Scanner Cost</label>
             <div class="pre" data-symbol="€"><input type="number" id="scannerCost" value="0" min="0" max="99999" step="500" aria-describedby="hintScan"></div>
             <div class="hint" id="hintScan">Enter 0 if already owned</div>
+          </div>
+          <div class="field">
+            <label for="scannerLifespan">Scanner Lifespan (Years)</label>
+            <input type="number" id="scannerLifespan" value="5" min="1" max="15">
           </div>
         </div>
       </div>
@@ -792,6 +815,14 @@ var T = {
     casesYearSuffix: 'cases/year',
     alignersCase: 'aligners/case',
     savingsRangeText: 'Request your personalized quote to see exact savings',
+    lblArchType: 'Arch Type',
+    optDualArch: 'Dual Arch (Upper + Lower)',
+    optSingleArch: 'Single Arch',
+    lblRetainerCost: 'Retainer Cost / Case',
+    hintRetainer: 'Material cost for retention aligners',
+    lblPpLifespan: 'Post-Processing Lifespan (Years)',
+    lblScannerLife: 'Scanner Lifespan (Years)',
+    barRetainer: 'Retainers',
     ctaDownload: 'Download Cost Report',
     currencyNote: 'All values are in the selected currency. Adjust amounts if switching currencies.',
     barLabor: 'Labor', barMaterial: 'Material (incl. waste)', barEquipment: 'Equipment',
@@ -897,6 +928,14 @@ var T = {
     casesYearSuffix: 'cas/an',
     alignersCase: 'aligneurs/cas',
     savingsRangeText: 'Demandez votre devis personnalisé pour voir les économies exactes',
+    lblArchType: 'Type d\'Arcade',
+    optDualArch: 'Double Arcade (Haut + Bas)',
+    optSingleArch: 'Arcade Unique',
+    lblRetainerCost: 'Coût Contention / Cas',
+    hintRetainer: 'Coût matériau pour les aligneurs de contention',
+    lblPpLifespan: 'Durée de Vie Post-Traitement (Années)',
+    lblScannerLife: 'Durée de Vie Scanner (Années)',
+    barRetainer: 'Contention',
     ctaDownload: 'Télécharger le rapport',
     currencyNote: 'Toutes les valeurs sont dans la devise sélectionnée. Ajustez les montants si vous changez de devise.',
     barLabor: 'Main-d\'Œuvre', barMaterial: 'Matériau (incl. déchets)', barEquipment: 'Équipement',
@@ -1002,6 +1041,14 @@ var T = {
     casesYearSuffix: 'casos/año',
     alignersCase: 'alineadores/caso',
     savingsRangeText: 'Solicite su presupuesto personalizado para ver los ahorros exactos',
+    lblArchType: 'Tipo de Arcada',
+    optDualArch: 'Doble Arcada (Superior + Inferior)',
+    optSingleArch: 'Arcada Única',
+    lblRetainerCost: 'Coste Retenedor / Caso',
+    hintRetainer: 'Coste material para alineadores de retención',
+    lblPpLifespan: 'Vida Útil Post-Procesado (Años)',
+    lblScannerLife: 'Vida Útil Escáner (Años)',
+    barRetainer: 'Retención',
     ctaDownload: 'Descargar informe de costes',
     currencyNote: 'Todos los valores están en la divisa seleccionada. Ajuste los importes si cambia de divisa.',
     barLabor: 'Mano de Obra', barMaterial: 'Material (incl. residuos)', barEquipment: 'Equipos',
@@ -1107,6 +1154,14 @@ var T = {
     casesYearSuffix: 'casi/anno',
     alignersCase: 'allineatori/caso',
     savingsRangeText: 'Richiedi il tuo preventivo personalizzato per vedere i risparmi esatti',
+    lblArchType: 'Tipo di Arcata',
+    optDualArch: 'Doppia Arcata (Superiore + Inferiore)',
+    optSingleArch: 'Arcata Singola',
+    lblRetainerCost: 'Costo Contenzione / Caso',
+    hintRetainer: 'Costo materiale per allineatori di contenzione',
+    lblPpLifespan: 'Durata Post-Lavorazione (Anni)',
+    lblScannerLife: 'Durata Scanner (Anni)',
+    barRetainer: 'Contenzione',
     ctaDownload: 'Scarica il rapporto costi',
     currencyNote: 'Tutti i valori sono nella valuta selezionata. Modifichi gli importi se cambia valuta.',
     barLabor: 'Manodopera', barMaterial: 'Materiale (incl. scarti)', barEquipment: 'Attrezzature',
@@ -1212,6 +1267,14 @@ var T = {
     casesYearSuffix: 'casos/ano',
     alignersCase: 'alinhadores/caso',
     savingsRangeText: 'Solicite seu orçamento personalizado para ver as economias exatas',
+    lblArchType: 'Tipo de Arcada',
+    optDualArch: 'Dupla Arcada (Superior + Inferior)',
+    optSingleArch: 'Arcada Única',
+    lblRetainerCost: 'Custo Contenção / Caso',
+    hintRetainer: 'Custo material para alinhadores de contenção',
+    lblPpLifespan: 'Vida Útil Pós-Processamento (Anos)',
+    lblScannerLife: 'Vida Útil Scanner (Anos)',
+    barRetainer: 'Contenção',
     ctaDownload: 'Descarregar relatório de custos',
     currencyNote: 'Todos os valores estão na moeda selecionada. Ajuste os montantes se mudar de moeda.',
     barLabor: 'Mão de Obra', barMaterial: 'Material (incl. resíduos)', barEquipment: 'Equipamentos',
@@ -1317,6 +1380,14 @@ var T = {
     casesYearSuffix: 'Fälle/Jahr',
     alignersCase: 'Aligner/Fall',
     savingsRangeText: 'Fordern Sie Ihr individuelles Angebot an, um die genauen Einsparungen zu sehen',
+    lblArchType: 'Kiefertyp',
+    optDualArch: 'Beide Kiefer (Ober + Unter)',
+    optSingleArch: 'Einzelner Kiefer',
+    lblRetainerCost: 'Retainerkosten / Fall',
+    hintRetainer: 'Materialkosten für Retainer-Aligner',
+    lblPpLifespan: 'Nachbearbeitungs-Lebensdauer (Jahre)',
+    lblScannerLife: 'Scanner-Lebensdauer (Jahre)',
+    barRetainer: 'Retainer',
     ctaDownload: 'Kostenbericht herunterladen',
     currencyNote: 'Alle Werte sind in der gewählten Währung. Passen Sie die Beträge an, wenn Sie die Währung wechseln.',
     barLabor: 'Arbeitskosten', barMaterial: 'Material (inkl. Ausschuss)', barEquipment: 'Ausrüstung',
@@ -1422,6 +1493,14 @@ var T = {
     casesYearSuffix: '例/年',
     alignersCase: '副矫治器/例',
     savingsRangeText: '申请您的个性化报价以查看确切节省',
+    lblArchType: '牙弓类型',
+    optDualArch: '双牙弓（上+下）',
+    optSingleArch: '单牙弓',
+    lblRetainerCost: '保持器成本/例',
+    hintRetainer: '保持矫治器的材料成本',
+    lblPpLifespan: '后处理设备寿命（年）',
+    lblScannerLife: '扫描仪寿命（年）',
+    barRetainer: '保持器',
     ctaDownload: '下载成本报告',
     currencyNote: '所有金额均以所选货币显示。如更换货币请调整金额。',
     barLabor: '人工', barMaterial: '材料（含废品）', barEquipment: '设备',
@@ -1527,6 +1606,14 @@ var T = {
     casesYearSuffix: 'حالة/سنة',
     alignersCase: 'مصفف/حالة',
     savingsRangeText: 'اطلب عرض أسعار مخصص لمعرفة التوفير الدقيق',
+    lblArchType: 'نوع القوس',
+    optDualArch: 'قوس مزدوج (علوي + سفلي)',
+    optSingleArch: 'قوس واحد',
+    lblRetainerCost: 'تكلفة المثبت / حالة',
+    hintRetainer: 'تكلفة مواد مصففات التثبيت',
+    lblPpLifespan: 'عمر معدات ما بعد المعالجة (سنوات)',
+    lblScannerLife: 'عمر الماسح (سنوات)',
+    barRetainer: 'المثبتات',
     ctaDownload: 'تحميل تقرير التكاليف',
     currencyNote: 'جميع القيم بالعملة المحددة. عدّل المبالغ عند تغيير العملة.',
     barLabor: 'العمالة', barMaterial: 'المواد (شامل الهدر)', barEquipment: 'المعدات',
@@ -1608,7 +1695,9 @@ function applyLanguage(lang) {
     printerLifespan: 'lblPrinterLife', annualMaintenance: 'lblMaintenance',
     softwareCost: 'lblSoftware', labRent: 'lblRent',
     consumablesPerAligner: 'lblConsumables', postProcessingEquip: 'lblPostProc',
-    wasteRate: 'lblWaste', scannerCost: 'lblScanner'
+    wasteRate: 'lblWaste', scannerCost: 'lblScanner',
+    archType: 'lblArchType', retainerCost: 'lblRetainerCost',
+    ppLifespan: 'lblPpLifespan', scannerLifespan: 'lblScannerLife'
   };
   Object.keys(lblMap).forEach(function(id) {
     var lbl = document.querySelector('label[for="' + id + '"]');
@@ -1628,6 +1717,11 @@ function applyLanguage(lang) {
     meth.options[0].textContent = t('optLab');
     meth.options[1].textContent = t('optInhouse');
     meth.options[2].textContent = t('optBoth');
+  }
+  var arch = $('archType');
+  if (arch) {
+    arch.options[0].textContent = t('optDualArch');
+    arch.options[1].textContent = t('optSingleArch');
   }
 
   /* Hints */
@@ -1658,6 +1752,7 @@ function applyLanguage(lang) {
     else if (forAttr === 'materialCostPerAligner') h.textContent = t('hintMatCost');
     else if (forAttr === 'softwareCost') h.textContent = t('hintSoftware');
     else if (forAttr === 'consumablesPerAligner') h.textContent = t('hintConsumables');
+    else if (forAttr === 'retainerCost') h.textContent = t('hintRetainer');
     else if (forAttr === 'postProcessingEquip') h.textContent = t('hintPostProc');
   });
 
@@ -1719,7 +1814,7 @@ function applyLanguage(lang) {
   BAR_LABELS = {
     labor: t('barLabor'), material: t('barMaterial'), equipment: t('barEquipment'),
     software: t('barSoftware'), rent: t('barRent'), consumables: t('barConsumables'),
-    postProcessing: t('barPostProc'), scanner: t('barScanner')
+    retainer: t('barRetainer'), postProcessing: t('barPostProc'), scanner: t('barScanner')
   };
 
   /* PDF & Copy buttons */
@@ -1865,29 +1960,34 @@ function calcInHouseCost(ihFraction) {
 
   var consumables = Math.max(0, parseFloat($('consumablesPerAligner').value) || 0) * aligners;
 
+  var retainer = Math.max(0, parseFloat($('retainerCost').value) || 0);
+
   var ppEquip = Math.max(0, parseFloat($('postProcessingEquip').value) || 0);
-  var ppPerCase = annual > 0 ? ppEquip / (pLife * annual) : 0;
+  var ppLife = Math.max(1, parseInt($('ppLifespan').value) || 7);
+  var ppPerCase = annual > 0 ? ppEquip / (ppLife * annual) : 0;
 
   var scanCost = Math.max(0, parseFloat($('scannerCost').value) || 0);
-  var scanPerCase = annual > 0 ? scanCost / (5 * annual) : 0; /* 5yr amortization */
+  var scanLife = Math.max(1, parseInt($('scannerLifespan').value) || 5);
+  var scanPerCase = annual > 0 ? scanCost / (scanLife * annual) : 0;
 
   var costs = {
-    labor: roundC(laborDoctor + laborAssistant),
-    material: roundC(matCost),
-    equipment: roundC(equipPerCase),
-    software: roundC(softwarePerCase),
-    rent: roundC(rentPerCase),
-    consumables: roundC(consumables),
-    postProcessing: roundC(ppPerCase),
-    scanner: roundC(scanPerCase)
+    labor: laborDoctor + laborAssistant,
+    material: matCost,
+    equipment: equipPerCase,
+    software: softwarePerCase,
+    rent: rentPerCase,
+    consumables: consumables,
+    retainer: retainer,
+    postProcessing: ppPerCase,
+    scanner: scanPerCase
   };
-  costs.total = roundC(costs.labor + costs.material + costs.equipment + costs.software + costs.rent + costs.consumables + costs.postProcessing + costs.scanner);
+  costs.total = roundC(costs.labor + costs.material + costs.equipment + costs.software + costs.rent + costs.consumables + costs.retainer + costs.postProcessing + costs.scanner);
   return costs;
 }
 
 /* ===== Bar chart ===== */
-var BAR_COLORS = { labor:'#8b5cf6', material:'#06b0ae', equipment:'#3b82f6', software:'#f59e0b', rent:'#10b981', consumables:'#ef4444', postProcessing:'#f97316', scanner:'#6366f1' };
-var BAR_LABELS = { labor:'Labor', material:'Material (incl. waste)', equipment:'Equipment', software:'Software', rent:'Lab Space', consumables:'Consumables', postProcessing:'Post-Processing', scanner:'Scanner' };
+var BAR_COLORS = { labor:'#8b5cf6', material:'#06b0ae', equipment:'#3b82f6', software:'#f59e0b', rent:'#10b981', consumables:'#ef4444', retainer:'#ec4899', postProcessing:'#f97316', scanner:'#6366f1' };
+var BAR_LABELS = { labor:'Labor', material:'Material (incl. waste)', equipment:'Equipment', software:'Software', rent:'Lab Space', consumables:'Consumables', retainer:'Retainers', postProcessing:'Post-Processing', scanner:'Scanner' };
 
 /* ===== Render ===== */
 function renderResults() {
@@ -1942,7 +2042,7 @@ function renderResults() {
       $('breakdownSection').style.display = '';
       var bar = $('stackedBar'), legend = $('stackedLegend');
       var bh = '', lh = '', total = ihCost.total;
-      var keys = ['labor','material','equipment','software','rent','consumables','postProcessing','scanner'];
+      var keys = ['labor','material','equipment','software','rent','consumables','retainer','postProcessing','scanner'];
       var ariaDesc = [];
       keys.forEach(function(k) {
         if (ihCost[k] <= 0) return;
@@ -1959,7 +2059,14 @@ function renderResults() {
     }
 
     /* Savings teaser — show personalized range */
-    $('savingsRange').textContent = t('savingsRangeText');
+    /* Personalized savings range — show 30-60% estimate */
+    var lowSave = roundC(totalCost * 0.30);
+    var highSave = roundC(totalCost * 0.60);
+    if (totalCost > 0) {
+      $('savingsRange').textContent = fmt(lowSave) + ' — ' + fmt(highSave) + ' / case*';
+    } else {
+      $('savingsRange').textContent = t('savingsRangeText');
+    }
   } catch (err) {
     console.error('Render error:', err);
   }
