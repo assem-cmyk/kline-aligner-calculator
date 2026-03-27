@@ -3,651 +3,479 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K LINE — Aligner Price Comparison Calculator</title>
-<meta name="description" content="Compare dental aligner fulfillment costs across K LINE, In-House, and External Lab options. K LINE Europe — Europe's #1 OEM Clear Aligner Provider.">
+<title>K LINE — Aligner Cost Discovery Tool</title>
+<meta name="description" content="Discover your true aligner production costs. Calculate in-house and external lab expenses, then see how much you could save with K Line Europe.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="https://www.kline-europe.com/favicon.ico">
-<meta property="og:title" content="K LINE — Aligner Price Comparison Calculator">
-<meta property="og:description" content="Compare aligner fulfillment costs and find the best value for your practice. Calculate savings instantly.">
+<meta property="og:title" content="K LINE — Aligner Cost Discovery Tool">
+<meta property="og:description" content="Discover your true aligner costs. See how much you could save with K Line Europe.">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="K LINE — Aligner Price Comparison Calculator">
-<meta name="twitter:description" content="Compare aligner fulfillment costs and find the best value for your practice.">
 <meta name="theme-color" content="#1a1a2e">
-<!-- System font stack — no external font loading (GDPR compliant for EU) -->
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --teal: #06b0ae;
-    --teal-dark: #059290;
-    --teal-glow: rgba(6,176,174,0.15);
-    --teal-subtle: rgba(6,176,174,0.08);
-    --dark-900: #1a1a2e;
-    --dark-800: #212136;
-    --dark-700: #2a2a40;
-    --dark-600: #33334d;
-    --white: #ffffff;
-    --white-90: rgba(255,255,255,0.9);
-    --white-70: rgba(255,255,255,0.7);
-    --white-50: rgba(255,255,255,0.5);
-    --white-20: rgba(255,255,255,0.2);
-    --white-10: rgba(255,255,255,0.1);
-    --white-05: rgba(255,255,255,0.05);
-    --green: #10b981;
-    --green-soft: rgba(16,185,129,0.12);
-    --orange: #f59e0b;
-    --orange-soft: rgba(245,158,11,0.12);
-    --red-soft: rgba(239,68,68,0.12);
-    --red-text: #ef4444;
-    --surface: #f8f9fb;
-    --surface-border: #e5e7eb;
-    --text: #374151;
-    --text-light: #6b7280;
-    --text-muted: #6b7280;
-    --radius: 14px;
-    --radius-sm: 8px;
-    --shadow: 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
-    --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
-    --transition: 0.2s ease;
-  }
+:root {
+  --teal: #06b0ae;
+  --teal-dark: #059290;
+  --teal-glow: rgba(6,176,174,0.15);
+  --teal-subtle: rgba(6,176,174,0.08);
+  --dark-900: #1a1a2e;
+  --dark-800: #212136;
+  --dark-700: #2a2a40;
+  --white: #ffffff;
+  --white-90: rgba(255,255,255,0.9);
+  --white-70: rgba(255,255,255,0.7);
+  --white-50: rgba(255,255,255,0.5);
+  --white-20: rgba(255,255,255,0.2);
+  --white-10: rgba(255,255,255,0.1);
+  --white-05: rgba(255,255,255,0.05);
+  --green: #10b981;
+  --green-soft: rgba(16,185,129,0.12);
+  --orange: #f59e0b;
+  --orange-soft: rgba(245,158,11,0.12);
+  --red-soft: rgba(239,68,68,0.12);
+  --red-text: #ef4444;
+  --surface: #f8f9fb;
+  --surface-border: #e5e7eb;
+  --text: #374151;
+  --text-light: #6b7280;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
+  --transition: 0.2s ease;
+}
 
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-    }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
+}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: var(--surface);
-    color: var(--text);
-    line-height: 1.55;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--surface);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
 
-  /* ===== NAVBAR ===== */
-  nav {
-    background: var(--dark-900);
-    padding: 0 2rem;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .navbar-brand {
-    display: flex; align-items: center; gap: 0.85rem; text-decoration: none;
-  }
-  .navbar-brand .logo { height: 20px; width: auto; filter: brightness(0) invert(1); }
-  .logo-white { filter: brightness(0) invert(1); }
-  .navbar-brand .sep { width: 1px; height: 18px; background: var(--white-20); }
-  .navbar-brand .label { font-size: 0.78rem; font-weight: 600; color: var(--white-70); }
-  .nav-right { display: flex; gap: 0.5rem; align-items: center; }
+/* ===== NAVBAR ===== */
+nav {
+  background: var(--dark-900);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 0.85rem; text-decoration: none;
+}
+.navbar-brand .logo { height: 20px; width: auto; filter: brightness(0) invert(1); }
+.logo-white { filter: brightness(0) invert(1); }
+.navbar-brand .sep { width: 1px; height: 18px; background: var(--white-20); }
+.navbar-brand .label { font-size: 0.78rem; font-weight: 600; color: var(--white-70); }
+.nav-right { display: flex; gap: 0.5rem; align-items: center; }
 
-  /* ===== CURRENCY SELECT ===== */
-  .currency-select {
-    color: var(--white-70);
-    border: 1.5px solid var(--white-20);
-    background: transparent;
-    min-height: 36px;
-    padding: 0.35rem 0.6rem;
-    font-family: inherit;
-    font-size: 0.78rem;
-    cursor: pointer;
-  }
-  .currency-note {
-    font-size: 0.62rem; color: var(--white-50); max-width: 120px; line-height: 1.3; text-align: right;
-  }
+/* ===== CURRENCY SELECT ===== */
+.currency-select {
+  color: var(--white-70);
+  border: 1.5px solid var(--white-20);
+  background: transparent;
+  min-height: 36px;
+  padding: 0.35rem 0.6rem;
+  font-family: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
 
-  /* ===== HERO ===== */
+/* ===== HERO ===== */
+header {
+  background: var(--dark-900);
+  color: var(--white);
+  padding: 3rem 2rem 2.75rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 100% at 30% 100%, var(--teal-glow) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 80% at 70% 0%, rgba(6,176,174,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-logo { margin-bottom: 1.25rem; position: relative; }
+header h1 {
+  font-size: 2rem; font-weight: 800; letter-spacing: -0.02em;
+  line-height: 1.2; position: relative;
+}
+header h1 .accent { color: var(--teal); }
+header p {
+  color: var(--white-70); margin-top: 0.45rem;
+  font-size: 0.95rem; position: relative;
+}
+
+/* ===== STEPS INDICATOR ===== */
+.steps-bar {
+  display: flex; justify-content: center; gap: 0; margin: 2rem auto 1.5rem;
+  max-width: 600px;
+}
+.step-item {
+  flex: 1; text-align: center; position: relative; cursor: pointer;
+}
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--surface-border); color: var(--text-light);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem;
+  transition: all var(--transition);
+}
+.step-item.active .step-num {
+  background: var(--teal); color: var(--dark-900);
+}
+.step-item.completed .step-num {
+  background: var(--green); color: white;
+}
+.step-label {
+  display: block; font-size: 0.7rem; font-weight: 600;
+  color: var(--text-light); margin-top: 0.35rem;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.step-item.active .step-label { color: var(--teal); }
+.step-item.completed .step-label { color: var(--green); }
+.step-connector {
+  position: absolute; top: 18px; left: 50%; width: 100%;
+  height: 2px; background: var(--surface-border);
+}
+.step-item:last-child .step-connector { display: none; }
+.step-item.completed .step-connector { background: var(--green); }
+
+/* ===== MAIN LAYOUT ===== */
+main { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+
+/* ===== STEP PANELS ===== */
+.step-panel { display: none; }
+.step-panel.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SECTION ===== */
+section { margin-bottom: 1.75rem; }
+.section-header {
+  display: flex; align-items: center; gap: 0.65rem; margin-bottom: 1rem;
+}
+.section-header h2 {
+  font-size: 0.85rem; font-weight: 700; color: var(--text-light);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.section-header .line { flex: 1; height: 1px; background: var(--surface-border); }
+
+/* ===== PANEL ===== */
+.panel {
+  background: var(--white); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1.5rem;
+}
+
+/* ===== ONBOARDING TEXT ===== */
+.onboarding-text {
+  font-size: 0.85rem; color: var(--text-light); margin-bottom: 1.25rem;
+  padding: 0.85rem 1rem; background: var(--teal-subtle); border-radius: var(--radius-sm);
+  border-left: 3px solid var(--teal); line-height: 1.5;
+}
+
+/* ===== INPUT GRID ===== */
+.input-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem;
+}
+.input-grid-3 {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem;
+}
+.field label {
+  display: block; font-size: 0.72rem; font-weight: 700;
+  color: var(--text-light); text-transform: uppercase;
+  letter-spacing: 0.05em; margin-bottom: 0.35rem;
+}
+.field select,
+.field input[type="number"],
+.field input[type="text"],
+.field input[type="email"],
+.field textarea {
+  width: 100%; padding: 0.6rem 0.75rem;
+  border: 1.5px solid var(--surface-border); border-radius: var(--radius-sm);
+  font-size: 0.88rem; font-family: inherit; color: var(--text);
+  background: var(--white);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  appearance: none; -webkit-appearance: none;
+}
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M8 12l-6-6h12l-6 6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.65rem center;
+  padding-right: 2rem;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-glow);
+}
+.field .pre { position: relative; }
+.field .pre::before {
+  content: attr(data-symbol);
+  position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
+  color: var(--text-light); font-weight: 700; font-size: 0.82rem; pointer-events: none;
+}
+.field .pre input { padding-left: 1.5rem; }
+.field .hint { font-size: 0.68rem; color: var(--text-light); margin-top: 0.2rem; }
+.divider-row {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 0.6rem; padding: 0.1rem 0;
+}
+.divider-row span {
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-light); white-space: nowrap;
+}
+.divider-row::after { content: ''; flex: 1; height: 1px; background: var(--surface-border); }
+
+/* ===== RESULTS CARD ===== */
+.results-hero {
+  background: var(--dark-900); border-radius: var(--radius);
+  padding: 2rem; text-align: center; color: var(--white);
+  position: relative; overflow: hidden; margin-bottom: 1.5rem;
+}
+.results-hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--teal-dark), var(--teal));
+}
+.results-hero .rh-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--white-50); margin-bottom: 0.5rem;
+}
+.results-hero .rh-big {
+  font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1;
+}
+.results-hero .rh-big.red { color: var(--red-text); }
+.results-hero .rh-sub {
+  font-size: 0.9rem; color: var(--white-70); margin-top: 0.4rem;
+}
+
+/* ===== COST CARDS ===== */
+.cost-cards {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.cost-card {
+  background: var(--white); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1.5rem; text-align: center;
+}
+.cost-card .cc-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-light); margin-bottom: 0.3rem;
+}
+.cost-card .cc-val {
+  font-size: 2rem; font-weight: 900; color: var(--text);
+  letter-spacing: -0.02em;
+}
+.cost-card .cc-sub { font-size: 0.78rem; color: var(--text-light); margin-top: 0.15rem; }
+.cost-card.highlight { background: var(--dark-900); color: var(--white); }
+.cost-card.highlight .cc-label { color: var(--white-50); }
+.cost-card.highlight .cc-val { color: var(--red-text); }
+.cost-card.highlight .cc-sub { color: var(--white-70); }
+
+/* ===== ANNUAL SPEND ===== */
+.annual-spend {
+  background: var(--white); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 1.5rem;
+}
+.annual-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  text-align: center;
+}
+.annual-item .ai-label {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-light);
+}
+.annual-item .ai-val {
+  font-size: 1.6rem; font-weight: 900; color: var(--text);
+  letter-spacing: -0.02em; margin-top: 0.15rem;
+}
+.annual-item .ai-val.red { color: var(--red-text); }
+.annual-item .ai-sub { font-size: 0.72rem; color: var(--text-light); margin-top: 0.1rem; }
+
+/* ===== STACKED BAR ===== */
+.stacked-bar-wrap { margin: 1.25rem 0; }
+.stacked-bar-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 0.5rem;
+}
+.stacked-bar {
+  display: flex; height: 28px; border-radius: 6px; overflow: hidden;
+  background: var(--surface);
+}
+.stacked-bar-segment {
+  height: 100%; transition: width 0.3s ease; min-width: 0;
+}
+.stacked-bar-legend {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1rem;
+  width: 100%; margin-top: 0.75rem;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem;
+}
+.legend-dot {
+  width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
+}
+.legend-label { color: var(--text-light); flex: 1; }
+.legend-val { font-weight: 700; color: var(--text); white-space: nowrap; }
+
+/* ===== SAVINGS TEASER ===== */
+.savings-teaser {
+  background: linear-gradient(135deg, var(--dark-900) 0%, var(--dark-800) 100%);
+  border-radius: var(--radius); padding: 2.5rem 2rem;
+  text-align: center; color: var(--white);
+  position: relative; overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.savings-teaser::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 100% at 50% 100%, var(--teal-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+.savings-teaser .st-icon {
+  font-size: 2.5rem; margin-bottom: 0.75rem; position: relative;
+}
+.savings-teaser .st-headline {
+  font-size: 1.4rem; font-weight: 800; position: relative;
+  line-height: 1.3; margin-bottom: 0.5rem;
+}
+.savings-teaser .st-headline .teal { color: var(--teal); }
+.savings-teaser .st-sub {
+  font-size: 0.9rem; color: var(--white-70); position: relative;
+  max-width: 500px; margin: 0 auto 1.5rem; line-height: 1.5;
+}
+.savings-teaser .st-range {
+  font-size: 2.2rem; font-weight: 900; color: var(--teal);
+  position: relative; margin-bottom: 1.5rem; letter-spacing: -0.02em;
+}
+
+/* ===== CTA BUTTONS ===== */
+.cta-group {
+  display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
+  position: relative;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.4rem; padding: 0.65rem 1.25rem; border: none;
+  border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600;
+  font-family: inherit; cursor: pointer; transition: all var(--transition);
+  text-decoration: none; white-space: nowrap; min-height: 44px;
+}
+.btn:active { transform: scale(0.97); }
+.btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.btn-teal { background: var(--teal); color: var(--dark-900); }
+.btn-teal:hover { background: var(--teal-dark); }
+.btn-dark { background: var(--dark-900); color: var(--white); }
+.btn-dark:hover { background: var(--dark-700); }
+.btn-outline { background: var(--white); color: var(--text); border: 1.5px solid var(--surface-border); }
+.btn-outline:hover { background: var(--surface); border-color: #d1d5db; }
+.btn-sm { padding: 0.45rem 0.85rem; font-size: 0.78rem; min-height: 36px; }
+.btn-lg { padding: 0.85rem 2rem; font-size: 1rem; font-weight: 700; }
+.btn-whatsapp { background: #25D366; color: white; }
+.btn-whatsapp:hover { background: #1fb855; }
+
+/* ===== STEP NAV BUTTONS ===== */
+.step-nav {
+  display: flex; justify-content: space-between; margin-top: 1.5rem; gap: 1rem;
+}
+.step-nav .spacer { flex: 1; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--dark-900); text-align: center;
+  padding: 1.75rem 1.5rem; border-top: 3px solid var(--teal);
+}
+.footer-logo { margin-bottom: 0.4rem; }
+.footer-social {
+  display: flex; justify-content: center; gap: 0.85rem; margin: 0.75rem 0;
+}
+.social-link {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--white-10); color: var(--white-70);
+  transition: all var(--transition); text-decoration: none;
+}
+.social-link:hover {
+  background: var(--teal); color: var(--dark-900); transform: translateY(-2px);
+}
+.footer-text { font-size: 0.75rem; color: var(--white-70); }
+.footer-text a { color: var(--teal); text-decoration: none; }
+.footer-text a:hover { text-decoration: underline; }
+.footer-disclaimer { font-size: 0.68rem; color: var(--white-50); margin-top: 0.5rem; max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  background: var(--dark-900); color: var(--white);
+  padding: 0.75rem 1.1rem; border-radius: var(--radius-sm);
+  font-size: 0.82rem; font-weight: 600; box-shadow: var(--shadow-lg);
+  z-index: 2000; display: none; gap: 0.4rem; align-items: center;
+  border-left: 3px solid var(--teal);
+}
+.toast.show { display: flex; animation: toastIn 0.2s ease; }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .cost-cards { grid-template-columns: 1fr; }
+  .annual-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .input-grid { grid-template-columns: 1fr; }
+  .input-grid-3 { grid-template-columns: 1fr; }
+  nav { padding: 0 1rem; }
+  .navbar-brand .label { display: none; }
+  main { padding: 0 1rem 2.5rem; }
+  header { padding: 2rem 1.15rem 1.75rem; }
+  header h1 { font-size: 1.5rem; }
+  .results-hero .rh-big { font-size: 2.2rem; }
+  .savings-teaser .st-range { font-size: 1.6rem; }
+  .savings-teaser { padding: 2rem 1.25rem; }
+  .cta-group { flex-direction: column; }
+  .cta-group .btn { width: 100%; }
+  .steps-bar { gap: 0; }
+  .step-label { font-size: 0.6rem; }
+}
+
+/* ===== PRINT ===== */
+@media print {
+  body { background: white !important; }
+  nav, .step-nav, .toast, .no-print, .savings-teaser, .steps-bar { display: none !important; }
   header {
-    background: var(--dark-900);
-    color: var(--white);
-    padding: 3rem 2rem 2.75rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 60% 100% at 30% 100%, var(--teal-glow) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 80% at 70% 0%, rgba(6,176,174,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-logo { margin-bottom: 1.25rem; position: relative; }
-  header h1 {
-    font-size: 2rem; font-weight: 800; letter-spacing: -0.02em;
-    line-height: 1.2; position: relative;
-  }
-  header h1 .accent { color: var(--teal); }
-  header p {
-    color: var(--white-70); margin-top: 0.45rem;
-    font-size: 0.95rem; position: relative;
-  }
-
-  /* ===== MAIN LAYOUT ===== */
-  main { max-width: 1280px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
-  .main-grid {
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 1.5rem;
-    align-items: start;
-  }
-  .main-left { min-width: 0; }
-  .main-right { position: sticky; top: 72px; }
-
-  /* ===== TABS ===== */
-  .tabs {
-    display: flex; gap: 0; margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--surface-border);
-  }
-  .tab-btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.85rem; font-weight: 700;
-    color: var(--text-light);
-    background: none; border: none;
-    cursor: pointer; font-family: inherit;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    transition: all var(--transition);
-    min-height: 44px;
-  }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active {
-    color: var(--teal);
-    border-bottom-color: var(--teal);
-  }
-  .tab-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-
-  /* ===== SECTION ===== */
-  section { margin-bottom: 1.75rem; }
-  .section-header {
-    display: flex; align-items: center; gap: 0.65rem; margin-bottom: 1rem;
-  }
-  .section-header h2 {
-    font-size: 0.85rem; font-weight: 700; color: var(--text-light);
-    text-transform: uppercase; letter-spacing: 0.06em;
-  }
-  .section-header .line { flex: 1; height: 1px; background: var(--surface-border); }
-
-  /* ===== PANEL ===== */
-  .panel {
-    background: var(--white); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 1.5rem;
-  }
-
-  /* ===== ONBOARDING TEXT ===== */
-  .onboarding-text {
-    font-size: 0.82rem; color: var(--text-light); margin-bottom: 1.25rem;
-    padding: 0.75rem 1rem; background: var(--teal-subtle); border-radius: var(--radius-sm);
-    border-left: 3px solid var(--teal);
-  }
-
-  /* ===== INPUT GRID ===== */
-  .input-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem;
-  }
-  .input-grid-4 {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem;
-  }
-  .field label {
-    display: block; font-size: 0.72rem; font-weight: 700;
-    color: var(--text-light); text-transform: uppercase;
-    letter-spacing: 0.05em; margin-bottom: 0.35rem;
-  }
-  .field select,
-  .field input[type="number"],
-  .field input[type="text"],
-  .field input[type="email"],
-  .field textarea {
-    width: 100%; padding: 0.6rem 0.75rem;
-    border: 1.5px solid var(--surface-border); border-radius: var(--radius-sm);
-    font-size: 0.88rem; font-family: inherit; color: var(--text);
-    background: var(--white);
-    transition: border-color var(--transition), box-shadow var(--transition);
-    appearance: none; -webkit-appearance: none;
-  }
-  .field select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M8 12l-6-6h12l-6 6z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.65rem center;
-    padding-right: 2rem;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus {
-    outline: none; border-color: var(--teal);
-    box-shadow: 0 0 0 3px var(--teal-glow);
-  }
-  .field input.invalid {
-    border-color: var(--red-text);
-    box-shadow: 0 0 0 3px var(--red-soft);
-  }
-  .field .pre { position: relative; }
-  .field .pre::before {
-    content: attr(data-symbol);
-    position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
-    color: var(--text-light); font-weight: 700; font-size: 0.82rem; pointer-events: none;
-  }
-  .field .pre input { padding-left: 1.5rem; }
-  .field .hint { font-size: 0.68rem; color: var(--text-light); margin-top: 0.2rem; }
-  .divider-row {
-    grid-column: 1 / -1;
-    display: flex; align-items: center; gap: 0.6rem; padding: 0.1rem 0;
-  }
-  .divider-row span {
-    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.06em; color: var(--text-light); white-space: nowrap;
-  }
-  .divider-row::after { content: ''; flex: 1; height: 1px; background: var(--surface-border); }
-
-  /* ===== RATE DISPLAY ===== */
-  .rate-display {
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .rate-display input { flex: 1; }
-  .rate-edit-btn {
-    background: none; border: none; cursor: pointer; color: var(--text-light);
-    padding: 0.3rem; min-width: 30px; min-height: 30px;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 4px; transition: all var(--transition);
-  }
-  .rate-edit-btn:hover { color: var(--teal); background: var(--teal-subtle); }
-
-  /* ===== STICKY RESULTS PANEL ===== */
-  .results-panel {
-    background: var(--white); border-radius: var(--radius);
-    box-shadow: var(--shadow); overflow: hidden;
-  }
-  .results-header {
-    background: var(--dark-900); color: var(--white);
-    padding: 1.25rem 1.5rem; text-align: center;
-    position: relative; overflow: hidden;
-  }
-  .results-header::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--teal), var(--teal-dark), var(--teal));
-  }
-  .results-header .results-label {
-    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; color: var(--white-70); margin-bottom: 0.3rem;
-  }
-  .results-header .results-big {
-    font-size: 2.4rem; font-weight: 900; color: var(--teal);
-    letter-spacing: -0.03em; line-height: 1;
-  }
-  .results-header .results-sub {
-    font-size: 0.8rem; color: var(--white-70); margin-top: 0.3rem;
-  }
-  .results-body { padding: 1.25rem 1.5rem; }
-
-  /* ===== EMPTY STATE ===== */
-  .empty-state {
-    text-align: center; padding: 1.5rem 1rem; color: var(--text-light);
-    font-size: 0.82rem; font-style: italic;
-  }
-
-  /* ===== HORIZONTAL STACKED BAR ===== */
-  .stacked-bar-wrap {
-    margin-bottom: 1.25rem;
-  }
-  .stacked-bar-label {
-    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 0.5rem;
-  }
-  .stacked-bar {
-    display: flex; height: 28px; border-radius: 6px; overflow: hidden;
-    background: var(--surface);
-  }
-  .stacked-bar-segment {
-    height: 100%; transition: width 0.3s ease; min-width: 0;
-  }
-  .stacked-bar-legend {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1rem;
-    width: 100%; margin-top: 0.75rem;
-  }
-  .legend-item {
-    display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem;
-  }
-  .legend-dot {
-    width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
-  }
-  .legend-label { color: var(--text-light); flex: 1; }
-  .legend-val { font-weight: 700; color: var(--text); white-space: nowrap; }
-
-  /* ===== LINE ITEMS ===== */
-  .line-items { border-top: 1px solid var(--surface-border); padding-top: 0.75rem; }
-  .line-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0.4rem 0; font-size: 0.8rem;
-  }
-  .line-item .li-label { color: var(--text-light); }
-  .line-item .li-val { font-weight: 700; }
-  .line-item.total-line {
-    border-top: 2px solid var(--dark-900);
-    margin-top: 0.3rem; padding-top: 0.6rem;
-    font-weight: 800; font-size: 0.85rem;
-  }
-  .line-item.total-line .li-val { color: var(--teal-dark); }
-
-  /* ===== HIDDEN COSTS NOTE ===== */
-  .hidden-costs-note {
-    font-size: 0.68rem; color: var(--text-light); margin-top: 0.75rem;
-    padding: 0.5rem 0.65rem; background: var(--surface); border-radius: var(--radius-sm);
-    line-height: 1.4;
-  }
-
-  /* ===== SUMMARY BAR ===== */
-  .summary-bar {
-    background: var(--dark-900); border-radius: var(--radius);
-    padding: 1.35rem 1.5rem; display: flex; align-items: center;
-    justify-content: space-between; flex-wrap: wrap; gap: 1.25rem;
-    color: var(--white); margin-bottom: 1.75rem;
-    position: relative; overflow: hidden;
-  }
-  .summary-bar::before {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--teal), var(--teal-dark), var(--teal));
-    opacity: 0.6;
-  }
-  .s-item { text-align: center; flex: 1; min-width: 110px; }
-  .s-item .s-label {
-    font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.07em;
-    color: var(--white-70); font-weight: 700;
-  }
-  .s-item .s-val {
-    font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-top: 0.1rem;
-  }
-  .s-item .s-val.teal { color: var(--teal); }
-  .s-item .s-note { font-size: 0.68rem; color: var(--white-70); }
-  .s-item .s-disclaimer { font-size: 0.58rem; color: var(--white-50); margin-top: 0.15rem; }
-
-  /* ===== CARDS ===== */
-  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-  .card {
-    background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
-    overflow: hidden; display: flex; flex-direction: column;
-    transition: transform var(--transition), box-shadow var(--transition);
-    position: relative;
-  }
-  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-  .card.featured {
-    background: var(--dark-900); color: var(--white);
-    box-shadow: 0 0 0 1px var(--teal-glow), var(--shadow);
-  }
-  .card.featured:hover { box-shadow: 0 0 0 1px rgba(6,176,174,0.3), 0 16px 48px rgba(0,0,0,0.15); }
-  .card.featured::after {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--teal), rgba(6,176,174,0.4));
-  }
-  .card.featured .card-top { border-bottom-color: var(--white-10); }
-  .card.featured .card-top .sub { color: var(--white-70); }
-  .card.featured .price { color: var(--teal); }
-  .card.featured .row { border-top-color: var(--white-05); }
-  .card.featured .row .lbl { color: var(--white-70); }
-  .card.featured .row .val { color: var(--white-90); }
-  .card.featured .kline-features li { color: var(--white-70); }
-  .card-top {
-    padding: 1.25rem 1.25rem 1rem; text-align: center;
-    border-bottom: 1px solid #f3f4f6;
-  }
-  .tag {
-    display: inline-flex; align-items: center; gap: 0.25rem;
-    font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.07em; padding: 0.25rem 0.65rem;
-    border-radius: 999px; margin-bottom: 0.5rem;
-  }
-  .tag-kline { background: var(--teal); color: var(--dark-900); }
-  .tag-best { background: #d1fae5; color: #047857; }
-  .tag-inhouse { background: #fef3c7; color: #b45309; }
-  .tag-comp { background: #f3f4f6; color: var(--text-light); }
-  .tag-neutral { background: #f3f4f6; color: var(--text-light); }
-  .card-top h3 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; }
-  .card-top .sub { font-size: 0.75rem; color: var(--text-light); margin-top: 0.1rem; }
-  .card-body {
-    padding: 1.25rem; flex: 1; display: flex; flex-direction: column; gap: 0.75rem;
-  }
-  .price-block { text-align: center; padding: 0.35rem 0; }
-  .price {
-    font-size: 2.25rem; font-weight: 900; color: #111827;
-    letter-spacing: -0.03em; line-height: 1;
-  }
-  .price-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem; }
-  .row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0.5rem 0; border-top: 1px solid #f3f4f6; font-size: 0.8rem;
-  }
-  .row .lbl { color: var(--text-light); }
-  .row .val { font-weight: 700; }
-  .val.green { color: var(--green); }
-  .val.red { color: var(--red-text); }
-  .pill {
-    display: flex; align-items: center; justify-content: center;
-    gap: 0.3rem; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm);
-    font-weight: 700; font-size: 0.78rem; margin-top: auto;
-  }
-  .pill-green { background: var(--green-soft); color: var(--green); }
-  .pill-red { background: var(--red-soft); color: var(--red-text); }
-  .pill-neutral { background: #f3f4f6; color: var(--text-light); }
-  .roi-box {
-    background: var(--surface); border: 1px solid var(--surface-border);
-    border-radius: var(--radius-sm); padding: 0.7rem 0.8rem; margin-top: auto;
-  }
-  .roi-box .roi-h {
-    font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.06em; color: var(--text-light); margin-bottom: 0.35rem;
-  }
-  .roi-box .roi-row {
-    display: flex; justify-content: space-between; font-size: 0.78rem; padding: 0.2rem 0;
-  }
-  .roi-box .roi-row .rv { font-weight: 700; color: var(--text); }
-  .roi-box .roi-row.bt {
-    border-top: 1px solid var(--surface-border);
-    padding-top: 0.35rem; margin-top: 0.15rem;
-  }
-  .roi-box .roi-row.bt .rv { color: var(--teal-dark); }
-
-  /* ===== K LINE FEATURES ===== */
-  .kline-features {
-    list-style: none; padding: 0; margin: 0.25rem 0 0 0;
-  }
-  .kline-features li {
-    font-size: 0.72rem; color: var(--text-light); padding: 0.2rem 0;
-    display: flex; align-items: center; gap: 0.35rem;
-  }
-  .kline-features li::before {
-    content: '\2713'; color: var(--teal); font-weight: 700; font-size: 0.7rem;
-  }
-
-  /* ===== CHART ===== */
-  .chart-section { margin-top: 0.5rem; }
-  .chart-bars { display: flex; align-items: flex-end; gap: 1.5rem; justify-content: center; height: 160px; padding: 1rem 2rem; }
-  .chart-bar {
-    display: flex; flex-direction: column; align-items: center; gap: 0.35rem; flex: 1; max-width: 180px;
-  }
-  .chart-bar .bar-val { font-size: 0.82rem; font-weight: 800; color: var(--text); }
-  .chart-bar .bar-fill {
-    width: 100%; border-radius: 6px 6px 0 0; min-height: 8px;
-    transition: height 0.4s ease;
-  }
-  .chart-bar .bar-label { font-size: 0.7rem; font-weight: 600; color: var(--text-light); margin-top: 0.25rem; }
-
-  /* ===== BUTTONS ===== */
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    gap: 0.4rem; padding: 0.65rem 1.25rem; border: none;
-    border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600;
-    font-family: inherit; cursor: pointer; transition: all var(--transition);
-    text-decoration: none; white-space: nowrap; min-height: 44px;
-  }
-  .btn:active { transform: scale(0.97); }
-  .btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-  .btn-teal { background: var(--teal); color: var(--dark-900); }
-  .btn-teal:hover { background: var(--teal-dark); }
-  .btn-dark { background: var(--dark-900); color: var(--white); }
-  .btn-dark:hover { background: var(--dark-700); }
-  .btn-outline { background: var(--white); color: var(--text); border: 1.5px solid var(--surface-border); }
-  .btn-outline:hover { background: var(--surface); border-color: #d1d5db; }
-  .btn-sm { padding: 0.45rem 0.85rem; font-size: 0.78rem; min-height: 36px; }
-  .btn-cta { background: var(--teal); color: var(--dark-900); font-size: 0.9rem; padding: 0.75rem 1.5rem; }
-  .btn-cta:hover { background: var(--teal-dark); box-shadow: 0 4px 16px rgba(6,176,174,0.3); }
-  .modal-x:focus { outline: 2px solid var(--teal); outline-offset: 2px; }
-
-  .action-bar { display: flex; gap: 0.65rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem; }
-  .cta-bar {
-    text-align: center; margin-top: 2rem; padding: 1.5rem;
-    background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
-  }
-  .cta-bar p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.75rem; }
-
-  /* ===== FOOTER ===== */
-  footer {
-    background: var(--dark-900); text-align: center;
-    padding: 1.75rem 1.5rem; border-top: 3px solid var(--teal);
-  }
-  .footer-logo { margin-bottom: 0.4rem; }
-  .footer-social {
-    display: flex; justify-content: center; gap: 0.85rem; margin: 0.75rem 0;
-  }
-  .social-link {
-    display: flex; align-items: center; justify-content: center;
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--white-10); color: var(--white-70);
-    transition: all var(--transition); text-decoration: none;
-  }
-  .social-link:hover {
-    background: var(--teal); color: var(--dark-900); transform: translateY(-2px);
-  }
-  .footer-text { font-size: 0.75rem; color: var(--white-70); }
-  .footer-text a { color: var(--teal); text-decoration: none; }
-  .footer-text a:hover { text-decoration: underline; }
-  .footer-disclaimer { font-size: 0.68rem; color: var(--white-50); margin-top: 0.5rem; max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.5; }
-
-  /* ===== MODAL ===== */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
-    backdrop-filter: blur(4px); z-index: 1000;
-    display: none; align-items: center; justify-content: center; padding: 1rem;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal {
-    background: var(--white); border-radius: var(--radius);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2); width: 100%; max-width: 440px;
-    animation: modalIn 0.2s ease;
-  }
-  .modal[role="dialog"] { outline: none; }
-  @keyframes modalIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .modal-head {
-    padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--surface-border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .modal-head h3 { font-size: 0.95rem; font-weight: 700; }
-  .modal-x {
-    background: none; border: none; font-size: 1.4rem;
-    cursor: pointer; color: var(--text-light); line-height: 1;
-    padding: 0.3rem; min-width: 44px; min-height: 44px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .modal-x:hover { color: var(--text); }
-  .modal-body { padding: 1.25rem; }
-  .modal-body .field + .field { margin-top: 0.85rem; }
-  .modal-foot {
-    padding: 0.85rem 1.25rem; border-top: 1px solid var(--surface-border);
-    display: flex; gap: 0.6rem; justify-content: flex-end;
-  }
-  .modal-error { color: var(--red-text); font-size: 0.75rem; margin-top: 0.25rem; display: none; }
-
-  .toast {
-    position: fixed; bottom: 1.5rem; right: 1.5rem;
-    background: var(--dark-900); color: var(--white);
-    padding: 0.75rem 1.1rem; border-radius: var(--radius-sm);
-    font-size: 0.82rem; font-weight: 600; box-shadow: var(--shadow-lg);
-    z-index: 2000; display: none; gap: 0.4rem; align-items: center;
-    border-left: 3px solid var(--teal);
-  }
-  .toast.show { display: flex; animation: toastIn 0.2s ease; }
-  @keyframes toastIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ===== AUTO-FILL INDICATOR ===== */
-  .auto-fill-badge {
-    display: inline-flex; align-items: center; gap: 0.25rem;
-    font-size: 0.62rem; font-weight: 700; color: var(--teal);
-    background: var(--teal-subtle); padding: 0.15rem 0.45rem;
-    border-radius: 4px; margin-left: 0.35rem; vertical-align: middle;
-  }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 1024px) {
-    .main-grid { grid-template-columns: 1fr; }
-    .main-right { position: static; }
-  }
-  @media (max-width: 900px) {
-    .cards { grid-template-columns: 1fr; }
-    .input-grid-4 { grid-template-columns: repeat(2, 1fr); }
-    .summary-bar { flex-direction: column; text-align: center; gap: 0.8rem; padding: 1.1rem; }
-    .s-item .s-val { font-size: 1.25rem; }
-    header h1 { font-size: 1.5rem; }
-    .chart-bars { height: 120px; gap: 1rem; padding: 1rem; }
-  }
-  @media (max-width: 600px) {
-    .input-grid { grid-template-columns: 1fr; }
-    .input-grid-4 { grid-template-columns: 1fr; }
-    nav { padding: 0 1rem; }
-    .navbar-brand .label { display: none; }
-    .currency-note { display: none; }
-    main { padding: 1.15rem 1rem 2.5rem; }
-    header { padding: 2rem 1.15rem 1.75rem; }
-    .tabs { gap: 0; }
-    .tab-btn { padding: 0.65rem 0.85rem; font-size: 0.78rem; }
-  }
-
-  /* ===== PRINT ===== */
-  @media print {
-    body { background: white !important; }
-    nav, .action-bar, .modal-overlay, .toast, .no-print, .cta-bar, .tabs, .onboarding-text { display: none !important; }
-    /* Fix #9: Hide input forms on Tab 1, show only results */
-    #tabCalc .panel { display: none !important; }
-    #tabCalc .section-header { display: none !important; }
-    .print-report-title { display: block !important; }
-    header {
-      background: var(--dark-900) !important;
-      -webkit-print-color-adjust: exact; print-color-adjust: exact;
-      padding: 1.25rem;
-    }
-    main { padding: 1rem; }
-    .main-grid { grid-template-columns: 1fr 1fr; }
-    .main-right { position: static; }
-    .tab-content { display: block !important; }
-    .panel, .card, .results-panel { box-shadow: none; border: 1px solid #e5e7eb; page-break-inside: avoid; }
-    .card:hover { transform: none; }
-    .cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important; }
-    .card-top, .tag, .summary-bar, .pill, .roi-box, .card.featured, footer, .results-header {
-      -webkit-print-color-adjust: exact; print-color-adjust: exact;
-    }
-    .logo-white, .navbar-brand .logo { filter: brightness(0) invert(1) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .print-only { display: block !important; }
-  }
-  .print-only { display: none; }
-  .print-report-title { display: none; font-size: 1.3rem; font-weight: 800; text-align: center; margin-bottom: 1rem; color: var(--dark-900); }
-
-  /* ===== NOSCRIPT ===== */
-  .noscript-msg {
-    text-align: center; padding: 3rem 2rem; font-size: 1.1rem; color: var(--text-light);
-  }
+    background: var(--dark-900) !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 1.25rem;
+  }
+  main { padding: 1rem; max-width: 100%; }
+  .step-panel { display: block !important; }
+  .panel, .cost-card, .results-hero, .annual-spend { box-shadow: none; border: 1px solid #e5e7eb; page-break-inside: avoid; }
+  .results-hero, .cost-card.highlight, footer {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .logo-white { filter: brightness(0) invert(1) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
 </style>
 </head>
 <body>
@@ -657,18 +485,16 @@
   <a href="https://www.kline-europe.com" target="_blank" rel="noopener noreferrer" class="navbar-brand" aria-label="K LINE Europe website">
     <img class="logo" alt="K LINE" style="height:22px;" id="navLogo" src="">
     <div class="sep"></div>
-    <span class="label">Price Calculator</span>
+    <span class="label">Cost Discovery Tool</span>
   </a>
   <div class="nav-right">
-    <!-- Fix #13: Currency note -->
-    <div class="currency-note">Prices are EUR estimates. Adjust for local pricing.</div>
     <select id="currency" class="btn btn-sm currency-select" aria-label="Currency">
-      <option value="EUR" style="color:#111;">EUR</option>
-      <option value="USD" style="color:#111;">USD</option>
-      <option value="GBP" style="color:#111;">GBP</option>
-      <option value="CHF" style="color:#111;">CHF</option>
+      <option value="EUR" style="color:#111;">EUR (€)</option>
+      <option value="USD" style="color:#111;">USD ($)</option>
+      <option value="GBP" style="color:#111;">GBP (£)</option>
+      <option value="CHF" style="color:#111;">CHF (Fr)</option>
     </select>
-    <button type="button" class="btn btn-sm" style="color:var(--white-70);border:1.5px solid var(--white-20);background:transparent;" onclick="resetDefaults()" aria-label="Reset to defaults">&#8634; Reset</button>
+    <button type="button" class="btn btn-sm" style="color:var(--white-70);border:1.5px solid var(--white-20);background:transparent;" onclick="resetAll()" aria-label="Reset to defaults">&#8634; Reset</button>
   </div>
 </nav>
 
@@ -677,400 +503,299 @@
   <div class="hero-logo">
     <img alt="" class="logo-white" style="height:34px;" id="heroLogo" src="">
   </div>
-  <h1>Aligner <span class="accent">Price Comparison</span> Calculator</h1>
-  <p>Compare fulfillment costs and discover the best value for your practice</p>
+  <h1>Aligner <span class="accent">Cost Discovery</span> Tool</h1>
+  <p>Discover your true aligner production costs — then see how much you could save</p>
 </header>
 
 <main>
-  <noscript><div class="noscript-msg">This calculator requires JavaScript to function. Please enable JavaScript in your browser.</div></noscript>
+  <noscript><div style="text-align:center;padding:3rem 2rem;font-size:1.1rem;color:var(--text-light);">This tool requires JavaScript. Please enable JavaScript in your browser.</div></noscript>
 
-  <!-- Fix #9: Print-only report title -->
-  <div class="print-report-title print-only">Aligner Cost Comparison Report</div>
+  <!-- Steps indicator -->
+  <div class="steps-bar" id="stepsBar">
+    <div class="step-item active" onclick="goToStep(1)">
+      <span class="step-num">1</span>
+      <span class="step-label">Your Practice</span>
+      <div class="step-connector"></div>
+    </div>
+    <div class="step-item" onclick="goToStep(2)">
+      <span class="step-num">2</span>
+      <span class="step-label">Current Costs</span>
+      <div class="step-connector"></div>
+    </div>
+    <div class="step-item" onclick="goToStep(3)">
+      <span class="step-num">3</span>
+      <span class="step-label">Your Results</span>
+    </div>
+  </div>
 
-  <div class="main-grid">
-    <div class="main-left">
-
-      <!-- Tabs — Fix #8: Renamed tabs -->
-      <div class="tabs" role="tablist" aria-label="Calculator sections">
-        <button type="button" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tabCalc" id="tabBtnCalc" onclick="switchTab('calc')">In-House Cost Model</button>
-        <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="tabCompare" id="tabBtnCompare" onclick="switchTab('compare')">Provider Comparison</button>
-      </div>
-
-      <!-- TAB 1: In-House Cost Model -->
-      <div class="tab-content active" id="tabCalc" role="tabpanel" aria-labelledby="tabBtnCalc">
-
-        <!-- Fix #6: Onboarding text -->
-        <div class="onboarding-text">
-          Configure your in-house production parameters below. The cost per aligner updates in real-time on the right.
-        </div>
-
-        <!-- Labor Costs -->
-        <section>
-          <div class="section-header">
-            <h2>Labor Costs</h2>
-            <div class="line"></div>
-          </div>
-          <div class="panel">
-            <div class="input-grid">
-              <div class="field">
-                <label for="doctorRate">Doctor Hourly Rate</label>
-                <div class="rate-display">
-                  <div class="pre" data-symbol="$" id="preDoctorRate"><input type="number" id="doctorRate" value="120" min="0" max="9999" step="5"></div>
-                  <button type="button" class="rate-edit-btn" title="Edit rate" aria-label="Edit doctor rate" onclick="this.previousElementSibling.querySelector('input').focus()">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                  </button>
-                </div>
-                <!-- Fix #14: Doctor rate clarification -->
-                <div class="hint">Hourly cost to practice (salary or opportunity cost)</div>
-              </div>
-              <div class="field">
-                <label for="assistantRate">Assistant Hourly Rate</label>
-                <div class="rate-display">
-                  <div class="pre" data-symbol="$" id="preAssistantRate"><input type="number" id="assistantRate" value="22" min="0" max="9999" step="1"></div>
-                  <button type="button" class="rate-edit-btn" title="Edit rate" aria-label="Edit assistant rate" onclick="this.previousElementSibling.querySelector('input').focus()">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                  </button>
-                </div>
-                <div class="hint">Per hour, before tax</div>
-              </div>
-              <div class="field">
-                <!-- Fix #19: Doctor minutes 30 -> 45 -->
-                <label for="doctorMinutes">Doctor Minutes / Case</label>
-                <input type="number" id="doctorMinutes" value="45" min="0" max="600" step="5">
-                <div class="hint">Treatment planning time</div>
-              </div>
-              <div class="field">
-                <!-- Fix #19: Assistant minutes 45 -> 90 -->
-                <label for="assistantMinutes">Assistant Minutes / Case</label>
-                <input type="number" id="assistantMinutes" value="90" min="0" max="600" step="5">
-                <div class="hint">Fabrication &amp; finishing</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Case Parameters -->
-        <section>
-          <div class="section-header">
-            <h2>Case Parameters</h2>
-            <div class="line"></div>
-          </div>
-          <div class="panel">
-            <div class="input-grid">
-              <div class="field">
-                <label for="alignersPerCase">Aligners per Case</label>
-                <input type="number" id="alignersPerCase" value="30" min="1" max="200">
-                <div class="hint">Average aligner count</div>
-              </div>
-              <div class="field">
-                <label for="calcMonthlyCases">Monthly Cases</label>
-                <input type="number" id="calcMonthlyCases" value="10" min="1" max="10000">
-                <div class="hint">Average production volume</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Material -->
-        <section>
-          <div class="section-header">
-            <h2>Material</h2>
-            <div class="line"></div>
-          </div>
-          <div class="panel">
-            <div class="input-grid">
-              <div class="field" style="grid-column:1/-1;">
-                <label for="material">Material Selection</label>
-                <select id="material"></select>
-              </div>
-              <div class="field" id="fieldCustomMaterialCost" style="display:none;">
-                <label for="customMaterialCost">Cost per Aligner</label>
-                <div class="pre" data-symbol="$"><input type="number" id="customMaterialCost" value="3.00" min="0" max="999" step="0.25"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 3D Printer -->
-        <section>
-          <div class="section-header">
-            <h2>3D Printer</h2>
-            <div class="line"></div>
-          </div>
-          <div class="panel">
-            <div class="input-grid">
-              <div class="field" style="grid-column:1/-1;">
-                <label for="printer">3D Printer</label>
-                <select id="printer"></select>
-              </div>
-              <div id="customPrinterFields" style="display:none;grid-column:1/-1;">
-                <div class="input-grid" style="margin-top:0.5rem;">
-                  <div class="field">
-                    <label for="customPrinterPrice">Printer Price</label>
-                    <div class="pre" data-symbol="$"><input type="number" id="customPrinterPrice" value="10000" min="0" max="500000" step="500"></div>
-                  </div>
-                  <div class="field">
-                    <label for="customPrinterLifespan">Lifespan (years)</label>
-                    <input type="number" id="customPrinterLifespan" value="5" min="1" max="20">
-                  </div>
-                  <div class="field">
-                    <label for="customPrinterMaintenance">Annual Maintenance</label>
-                    <div class="pre" data-symbol="$"><input type="number" id="customPrinterMaintenance" value="500" min="0" max="50000" step="100"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Software -->
-        <section>
-          <div class="section-header">
-            <h2>Planning Software</h2>
-            <div class="line"></div>
-          </div>
-          <div class="panel">
-            <div class="input-grid">
-              <div class="field" style="grid-column:1/-1;">
-                <label for="software">Software</label>
-                <select id="software"></select>
-              </div>
-              <div id="customSoftwareFields" style="display:none;grid-column:1/-1;">
-                <div class="input-grid" style="margin-top:0.5rem;">
-                  <div class="field">
-                    <label for="customSoftwarePrice">Cost</label>
-                    <div class="pre" data-symbol="$"><input type="number" id="customSoftwarePrice" value="0" min="0" max="99999" step="5"></div>
-                  </div>
-                  <div class="field">
-                    <label for="customSoftwareModel">Pricing Model</label>
-                    <select id="customSoftwareModel">
-                      <option value="monthly">Monthly</option>
-                      <option value="perCase">Per Case</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Lab Overhead -->
-        <section>
-          <div class="section-header">
-            <h2>Lab Overhead</h2>
-            <div class="line"></div>
-          </div>
-          <div class="panel">
-            <div class="input-grid">
-              <div class="field">
-                <label for="labRent">Monthly Lab Space Rent</label>
-                <div class="pre" data-symbol="$"><input type="number" id="labRent" value="200" min="0" max="50000" step="25"></div>
-                <div class="hint">Proportion used for aligners</div>
-              </div>
-              <div class="field">
-                <label for="consumablesPolishing">Polishing Supplies / Aligner</label>
-                <div class="pre" data-symbol="$"><input type="number" id="consumablesPolishing" value="0.50" min="0" max="100" step="0.10"></div>
-              </div>
-              <div class="field">
-                <label for="consumablesCutting">Cutting Discs / Aligner</label>
-                <div class="pre" data-symbol="$"><input type="number" id="consumablesCutting" value="0.30" min="0" max="100" step="0.10"></div>
-              </div>
-              <div class="field">
-                <label for="thermoMaintenance">Thermoformer Annual Maint.</label>
-                <div class="pre" data-symbol="$"><input type="number" id="thermoMaintenance" value="300" min="0" max="50000" step="50"></div>
-                <div class="hint">If sheet material is used</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Fix #17: Post-Processing section -->
-        <section>
-          <div class="section-header">
-            <h2>Post-Processing</h2>
-            <div class="line"></div>
-          </div>
-          <div class="panel">
-            <div class="input-grid">
-              <div class="field">
-                <label for="washStationCost">Wash Station Cost</label>
-                <div class="pre" data-symbol="$"><input type="number" id="washStationCost" value="300" min="0" max="50000" step="50"></div>
-                <div class="hint">Amortized over annual volume</div>
-              </div>
-              <div class="field">
-                <label for="uvCuringCost">UV Curing Unit Cost</label>
-                <div class="pre" data-symbol="$"><input type="number" id="uvCuringCost" value="700" min="0" max="50000" step="50"></div>
-                <div class="hint">Amortized over annual volume</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- TAB 2: Provider Comparison -->
-      <div class="tab-content" id="tabCompare" role="tabpanel" aria-labelledby="tabBtnCompare">
-
-        <!-- Configuration -->
-        <section class="no-print">
-          <div class="section-header">
-            <h2>Comparison Configuration</h2>
-            <div class="line"></div>
-          </div>
-          <div class="panel">
-            <div class="input-grid-4">
-              <div class="field">
-                <label for="complexity">Case Complexity</label>
-                <select id="complexity">
-                  <option value="14">Mild (14 aligners)</option>
-                  <option value="30" selected>Moderate (30 aligners)</option>
-                  <option value="50">Complex (50 aligners)</option>
-                  <option value="custom">Custom</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="alignerCount">Aligner Count</label>
-                <input type="number" id="alignerCount" value="30" min="1" max="200" aria-describedby="hintAlignerCount">
-                <div class="hint" id="hintAlignerCount">Manual override</div>
-              </div>
-              <div class="field">
-                <label for="patientName">Patient Name</label>
-                <input type="text" id="patientName" placeholder="Optional — for quotes" maxlength="80">
-              </div>
-              <div class="field">
-                <label for="clinicName">Clinic Name</label>
-                <input type="text" id="clinicName" placeholder="Your clinic name" maxlength="80">
-              </div>
-
-              <div class="divider-row"><span>Price Per Aligner</span></div>
-
-              <div class="field">
-                <label for="priceKLine">K Line</label>
-                <div class="pre" data-symbol="$"><input type="number" id="priceKLine" value="6.50" min="0" max="9999" step="0.25" aria-describedby="hintKLine"></div>
-                <!-- Fix #2: K Line price inclusions hint -->
-                <div class="hint" id="hintKLine">Includes design, manufacturing &amp; shipping</div>
-              </div>
-              <div class="field">
-                <label for="priceInHouse">In-House <span class="auto-fill-badge" id="autoFillBadge" title="Auto-calculated from In-House Cost Model tab">AUTO</span></label>
-                <div class="pre" data-symbol="$"><input type="number" id="priceInHouse" value="4.00" min="0" max="9999" step="0.25" aria-describedby="hintInHouse"></div>
-                <div class="hint" id="hintInHouse">Auto-filled from In-House Cost Model</div>
-              </div>
-              <div class="field">
-                <label for="priceCompetitor"><span id="compLabelText">External Lab</span></label>
-                <div class="pre" data-symbol="$"><input type="number" id="priceCompetitor" value="12.00" min="0" max="9999" step="0.25" aria-describedby="hintComp"></div>
-                <div class="hint" id="hintComp">External lab cost</div>
-              </div>
-              <div class="field">
-                <label for="equipmentCost">Equipment Investment</label>
-                <div class="pre" data-symbol="$"><input type="number" id="equipmentCost" value="15000" min="0" max="500000" step="500" aria-describedby="hintEquip"></div>
-                <div class="hint" id="hintEquip">In-House ROI calc</div>
-              </div>
-
-              <div class="divider-row"><span>Additional Settings</span></div>
-
-              <div class="field">
-                <label for="competitorName">Competitor Name</label>
-                <input type="text" id="competitorName" value="External Lab" placeholder="e.g. External Lab" maxlength="40" aria-describedby="hintCompName">
-                <div class="hint" id="hintCompName">Used in comparison cards</div>
-              </div>
-              <div class="field">
-                <label for="monthlyCases">Monthly Cases</label>
-                <input type="number" id="monthlyCases" value="10" min="1" max="10000" aria-describedby="hintMonthlyCases">
-                <div class="hint" id="hintMonthlyCases">For annual savings calc</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Print-Only Header -->
-        <div class="print-only" id="printHeader" style="margin-bottom:1rem;padding:0.65rem 0;border-bottom:1px solid #e5e7eb;">
-          <div style="font-size:0.82rem;color:var(--text-light);">Prepared for: <strong id="printPatient" style="color:#111827;">—</strong></div>
-          <div style="font-size:0.82rem;color:var(--text-light);">Clinic: <strong id="printClinic" style="color:#111827;">—</strong></div>
-          <div style="font-size:0.72rem;color:var(--text-light);margin-top:0.25rem;" id="printDate"></div>
-        </div>
-
-        <!-- Summary Bar -->
-        <div class="summary-bar" id="summaryBar" role="region" aria-label="Cost summary">
-          <div class="s-item"><div class="s-label">Loading</div><div class="s-val">...</div></div>
-        </div>
-
-        <!-- Comparison Cards -->
-        <section>
-          <div class="section-header">
-            <h2>Cost Comparison</h2>
-            <div class="line"></div>
-          </div>
-          <div class="cards" id="cardsGrid" role="region" aria-label="Price comparison cards">
-            <div class="card"><div class="card-body" style="justify-content:center;align-items:center;min-height:200px;"><span style="color:var(--text-light);">Loading...</span></div></div>
-          </div>
-        </section>
-
-        <!-- Visual Chart -->
-        <section class="chart-section">
-          <div class="section-header">
-            <h2>Visual Comparison</h2>
-            <div class="line"></div>
-          </div>
-          <div class="panel">
-            <div class="chart-bars" id="chartBars" role="img" aria-label="Bar chart comparing costs"></div>
-          </div>
-        </section>
-      </div>
-
+  <!-- ========== STEP 1: Your Practice ========== -->
+  <div class="step-panel active" id="step1">
+    <div class="onboarding-text">
+      Tell us about your aligner volume. This helps us calculate your true costs accurately.
     </div>
 
-    <!-- STICKY RESULTS PANEL (right column) -->
-    <div class="main-right">
-      <div class="results-panel" id="resultsPanel">
-        <div class="results-header">
-          <div class="results-label">In-House Cost per Aligner</div>
-          <div class="results-big" id="resultsBigCost">---</div>
-          <div class="results-sub" id="resultsCaseCost">--- per case</div>
+    <section>
+      <div class="section-header">
+        <h2>Case Volume</h2>
+        <div class="line"></div>
+      </div>
+      <div class="panel">
+        <div class="input-grid">
+          <div class="field">
+            <label for="complexity">Case Complexity</label>
+            <select id="complexity">
+              <option value="14">Mild (14 aligners)</option>
+              <option value="30" selected>Moderate (30 aligners)</option>
+              <option value="50">Complex (50 aligners)</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="alignersPerCase">Aligners per Case</label>
+            <input type="number" id="alignersPerCase" value="30" min="1" max="200">
+            <div class="hint">Average number of aligners per case</div>
+          </div>
+          <div class="field">
+            <label for="monthlyCases">Monthly Cases</label>
+            <input type="number" id="monthlyCases" value="10" min="1" max="10000">
+            <div class="hint">How many aligner cases per month?</div>
+          </div>
+          <div class="field">
+            <label for="clinicName">Clinic Name</label>
+            <input type="text" id="clinicName" placeholder="Your clinic name" maxlength="80">
+            <div class="hint">Optional — for your results report</div>
+          </div>
         </div>
-        <div class="results-body">
-          <!-- Fix #10: Empty state guidance (hidden once calc runs) -->
-          <div class="empty-state" id="emptyState">Adjust the parameters on the left to see your cost breakdown here.</div>
-          <!-- Fix #7: Horizontal stacked bar (replaces donut) -->
-          <div class="stacked-bar-wrap" id="stackedBarWrap" style="display:none;">
-            <div class="stacked-bar-label">Cost Breakdown</div>
-            <div class="stacked-bar" id="stackedBar"></div>
-            <div class="stacked-bar-legend" id="stackedBarLegend"></div>
+      </div>
+    </section>
+
+    <div class="step-nav">
+      <div class="spacer"></div>
+      <button type="button" class="btn btn-teal btn-lg" onclick="goToStep(2)">
+        Next: Your Current Costs →
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== STEP 2: Current Costs ========== -->
+  <div class="step-panel" id="step2">
+    <div class="onboarding-text">
+      How do you currently get your aligners? Enter your costs below — we'll calculate the full picture.
+    </div>
+
+    <!-- Method Selection -->
+    <section>
+      <div class="section-header">
+        <h2>Your Current Method</h2>
+        <div class="line"></div>
+      </div>
+      <div class="panel">
+        <div class="input-grid">
+          <div class="field" style="grid-column:1/-1;">
+            <label for="currentMethod">How do you currently fulfill aligner cases?</label>
+            <select id="currentMethod">
+              <option value="lab">External Lab / Competitor</option>
+              <option value="inhouse">In-House (3D Printing)</option>
+              <option value="both">Both — Lab + In-House</option>
+            </select>
           </div>
-          <div class="line-items" id="lineItems"></div>
-          <!-- Fix #12: Hidden costs note -->
-          <div class="hidden-costs-note" id="hiddenCostsNote" style="display:none;">
-            Note: Excludes electricity, IPA/washing, UV curing consumables, failed prints (~5-10%), and staff training.
+        </div>
+      </div>
+    </section>
+
+    <!-- External Lab Costs -->
+    <section id="sectionLabCost">
+      <div class="section-header">
+        <h2>External Lab Costs</h2>
+        <div class="line"></div>
+      </div>
+      <div class="panel">
+        <div class="input-grid">
+          <div class="field">
+            <label for="labName">Lab / Provider Name</label>
+            <input type="text" id="labName" placeholder="e.g. Invisalign, SmileDirectClub" maxlength="40">
+            <div class="hint">Who is your current provider?</div>
           </div>
+          <div class="field">
+            <label for="labCostPerCase">Total Cost per Case</label>
+            <div class="pre" data-symbol="€"><input type="number" id="labCostPerCase" value="360" min="0" max="99999" step="5"></div>
+            <div class="hint">What you pay per complete case</div>
+          </div>
+          <div class="field">
+            <label for="labShipping">Shipping per Case</label>
+            <div class="pre" data-symbol="€"><input type="number" id="labShipping" value="25" min="0" max="9999" step="5"></div>
+            <div class="hint">Average shipping / handling fees</div>
+          </div>
+          <div class="field">
+            <label for="labTurnaround">Turnaround (Business Days)</label>
+            <input type="number" id="labTurnaround" value="14" min="1" max="90">
+            <div class="hint">Average production + delivery time</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- In-House Costs -->
+    <section id="sectionInHouseCost">
+      <div class="section-header">
+        <h2>In-House Production Costs</h2>
+        <div class="line"></div>
+      </div>
+      <div class="panel">
+        <div class="input-grid">
+          <div class="divider-row"><span>Labor</span></div>
+          <div class="field">
+            <label for="doctorRate">Doctor Hourly Rate</label>
+            <div class="pre" data-symbol="€"><input type="number" id="doctorRate" value="120" min="0" max="9999" step="5"></div>
+            <div class="hint">Hourly cost to practice</div>
+          </div>
+          <div class="field">
+            <label for="assistantRate">Assistant Hourly Rate</label>
+            <div class="pre" data-symbol="€"><input type="number" id="assistantRate" value="22" min="0" max="9999" step="1"></div>
+            <div class="hint">Per hour, before tax</div>
+          </div>
+          <div class="field">
+            <label for="doctorMinutes">Doctor Minutes / Case</label>
+            <input type="number" id="doctorMinutes" value="45" min="0" max="600" step="5">
+            <div class="hint">Treatment planning time</div>
+          </div>
+          <div class="field">
+            <label for="assistantMinutes">Assistant Minutes / Case</label>
+            <input type="number" id="assistantMinutes" value="90" min="0" max="600" step="5">
+            <div class="hint">Fabrication & finishing</div>
+          </div>
+
+          <div class="divider-row"><span>Materials & Equipment</span></div>
+          <div class="field">
+            <label for="materialCostPerAligner">Material Cost / Aligner</label>
+            <div class="pre" data-symbol="€"><input type="number" id="materialCostPerAligner" value="3.00" min="0" max="999" step="0.25"></div>
+            <div class="hint">Resin, sheets, or other material</div>
+          </div>
+          <div class="field">
+            <label for="printerCost">3D Printer Investment</label>
+            <div class="pre" data-symbol="€"><input type="number" id="printerCost" value="16000" min="0" max="500000" step="500"></div>
+            <div class="hint">Total printer purchase price</div>
+          </div>
+          <div class="field">
+            <label for="printerLifespan">Printer Lifespan (Years)</label>
+            <input type="number" id="printerLifespan" value="5" min="1" max="20">
+          </div>
+          <div class="field">
+            <label for="annualMaintenance">Annual Maintenance</label>
+            <div class="pre" data-symbol="€"><input type="number" id="annualMaintenance" value="1000" min="0" max="50000" step="100"></div>
+            <div class="hint">Printer + post-processing upkeep</div>
+          </div>
+
+          <div class="divider-row"><span>Software & Overhead</span></div>
+          <div class="field">
+            <label for="softwareCost">Software Monthly Cost</label>
+            <div class="pre" data-symbol="€"><input type="number" id="softwareCost" value="450" min="0" max="99999" step="25"></div>
+            <div class="hint">Planning software subscription</div>
+          </div>
+          <div class="field">
+            <label for="labRent">Monthly Lab Space Cost</label>
+            <div class="pre" data-symbol="€"><input type="number" id="labRent" value="200" min="0" max="50000" step="25"></div>
+            <div class="hint">Proportion used for aligners</div>
+          </div>
+          <div class="field">
+            <label for="consumablesPerAligner">Consumables / Aligner</label>
+            <div class="pre" data-symbol="€"><input type="number" id="consumablesPerAligner" value="0.80" min="0" max="100" step="0.10"></div>
+            <div class="hint">Polishing, cutting, washing, etc.</div>
+          </div>
+          <div class="field">
+            <label for="postProcessingEquip">Post-Processing Equipment</label>
+            <div class="pre" data-symbol="€"><input type="number" id="postProcessingEquip" value="1000" min="0" max="50000" step="100"></div>
+            <div class="hint">Wash station, UV curing, thermoformer</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="step-nav">
+      <button type="button" class="btn btn-outline btn-lg" onclick="goToStep(1)">
+        ← Back
+      </button>
+      <button type="button" class="btn btn-teal btn-lg" onclick="goToStep(3)">
+        See My Results →
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== STEP 3: Results ========== -->
+  <div class="step-panel" id="step3">
+
+    <!-- Main Result -->
+    <div class="results-hero" id="resultsHero">
+      <div class="rh-label">Your Current Cost Per Case</div>
+      <div class="rh-big red" id="resultTotal">€360.00</div>
+      <div class="rh-sub" id="resultSub">30 aligners · External Lab</div>
+    </div>
+
+    <!-- Cost Cards -->
+    <div class="cost-cards" id="costCards"></div>
+
+    <!-- Annual Spend -->
+    <div class="annual-spend">
+      <div class="section-header" style="margin-bottom:0.75rem;">
+        <h2>Annual Projection</h2>
+        <div class="line"></div>
+      </div>
+      <div class="annual-grid" id="annualGrid"></div>
+    </div>
+
+    <!-- Breakdown (in-house only) -->
+    <div id="breakdownSection" style="display:none;">
+      <div class="panel" style="margin-bottom:1.5rem;">
+        <div class="section-header" style="margin-bottom:0.75rem;">
+          <h2>In-House Cost Breakdown</h2>
+          <div class="line"></div>
+        </div>
+        <div class="stacked-bar-wrap">
+          <div class="stacked-bar" id="stackedBar"></div>
+          <div class="stacked-bar-legend" id="stackedLegend"></div>
         </div>
       </div>
     </div>
 
+    <!-- Savings Teaser -->
+    <div class="savings-teaser" id="savingsTeaser">
+      <div class="st-icon">💡</div>
+      <div class="st-headline">K Line clients <span class="teal">typically save 40–60%</span> per case</div>
+      <div class="st-sub">
+        Based on your current costs, switching to K Line could save you a significant amount per case.
+        Get a custom quote to see your exact savings.
+      </div>
+      <div class="st-range" id="savingsRange">Save €144 – €216 per case</div>
+      <div class="cta-group">
+        <a href="https://www.kline-europe.com/contact-us" target="_blank" rel="noopener noreferrer" class="btn btn-teal btn-lg">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Get Your Custom K Line Quote
+        </a>
+        <a href="https://wa.me/message/K_LINE_EUROPE" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="step-nav no-print">
+      <button type="button" class="btn btn-outline btn-lg" onclick="goToStep(2)">
+        ← Adjust Costs
+      </button>
+      <div style="display:flex;gap:0.5rem;">
+        <button type="button" class="btn btn-dark" onclick="window.print()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M14 2v6h6"/></svg>
+          Save PDF
+        </button>
+        <button type="button" class="btn btn-outline" onclick="copyLink()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+          Copy Link
+        </button>
+      </div>
+    </div>
   </div>
 
-  <!-- Actions -->
-  <div class="action-bar no-print">
-    <button type="button" class="btn btn-teal" onclick="savePDF()" aria-label="Print or save as PDF">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
-      Print / Save PDF
-    </button>
-    <button type="button" class="btn btn-dark" onclick="openEmailModal()" aria-label="Email this quote">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M22 6l-10 7L2 6"/></svg>
-      Email Quote
-    </button>
-    <button type="button" class="btn btn-outline" onclick="copyLink()" aria-label="Copy shareable link">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-      Copy Shareable Link
-    </button>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-bar no-print" id="ctaBar">
-    <p id="ctaText">Ready to switch to K LINE and start saving?</p>
-    <a href="https://www.kline-europe.com/contact-us" target="_blank" rel="noopener noreferrer" class="btn btn-cta">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-      Get in Touch with K LINE
-    </a>
-  </div>
 </main>
 
 <!-- Footer -->
@@ -1078,122 +803,36 @@
   <div class="footer-logo"><img alt="K LINE" class="logo-white" style="height:16px;" id="footerLogo" src=""></div>
   <div class="footer-social">
     <a href="https://www.kline-europe.com" target="_blank" rel="noopener noreferrer" title="Website" class="social-link" aria-label="K LINE website">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
     </a>
     <a href="https://www.facebook.com/klineurope" target="_blank" rel="noopener noreferrer" title="Facebook" class="social-link" aria-label="K LINE on Facebook">
-      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
     </a>
     <a href="https://www.instagram.com/kline_europe" target="_blank" rel="noopener noreferrer" title="Instagram" class="social-link" aria-label="K LINE on Instagram">
-      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
     </a>
     <a href="https://www.linkedin.com/company/k-line-europe-gmbh/" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="social-link" aria-label="K LINE on LinkedIn">
-      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
     </a>
   </div>
   <div class="footer-text">
     Europe's #1 OEM Clear Aligner Provider &mdash;
     <a href="https://www.kline-europe.com" target="_blank" rel="noopener noreferrer">kline-europe.com</a>
-    &mdash; &copy; <span id="year"></span>
+    &mdash; &copy; <script>document.write(new Date().getFullYear())</script>
   </div>
-  <!-- Fix #3: Updated footer disclaimer with "What's not included" -->
-  <div class="footer-disclaimer">Prices shown are estimates. Contact K Line Europe for an accurate quote. Estimates exclude: failed prints, post-processing consumables (IPA, UV curing), electricity, staff training, regulatory compliance, and opportunity cost of chair time.</div>
+  <div class="footer-disclaimer">Prices shown are estimates based on your inputs. Actual costs may vary. Savings projections are illustrative ranges — contact K Line Europe for an accurate, personalized quote.</div>
 </footer>
-
-<!-- Email Modal -->
-<div class="modal-overlay" id="emailModal">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="emailModalTitle">
-    <div class="modal-head">
-      <h3 id="emailModalTitle">Email Quote</h3>
-      <button type="button" class="modal-x" onclick="closeEmailModal()" aria-label="Close">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div class="field">
-        <label for="emailTo">Recipient Email</label>
-        <input type="email" id="emailTo" placeholder="patient@example.com">
-        <div class="modal-error" id="emailError">Please enter a valid email address</div>
-      </div>
-      <div class="field">
-        <label for="emailFrom">Your Name / Clinic</label>
-        <input type="text" id="emailFrom" placeholder="Dr. Smith — Bright Dental" maxlength="80">
-      </div>
-      <div class="field">
-        <label for="emailMsg">Message (optional)</label>
-        <textarea id="emailMsg" rows="3" placeholder="Here's your aligner price comparison..."></textarea>
-      </div>
-    </div>
-    <div class="modal-foot">
-      <button type="button" class="btn btn-outline" onclick="closeEmailModal()">Cancel</button>
-      <button type="button" class="btn btn-teal" onclick="sendEmail()">
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-        Send via Email
-      </button>
-    </div>
-  </div>
-</div>
 
 <div class="toast" id="toast" role="status"></div>
 
 <script>
 var $ = function(id) { return document.getElementById(id); };
 
-/* ===== Logo base64 ===== */
+/* ===== Logo ===== */
 var LOGO_BASE64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqgAAABYCAYAAAA5tQVsAAAF00lEQVR42u3dsXLUVhQG4D+Z9MZPALM8AMzYvV2QOjSmjWlMCR3ucDq7M+W6sltchNRsAQ/gGecBIM4TGL9B2uRCdDG70kqr7+sOM6y0VyvPmat/jn7I8Dwu6t8D/fFbUR/0/Hw/dny8zaK+nvPzNor6zZLX80lRX4z8evd9Pca2fh+XvH7nRb0/sPt/v/J9hnY9+ub+v4sfrQcAAH2iQQUAQIMKAAD/56cBnvPbov5Q1FsuK3yzScfHW89iM6jTJX+fZxlWxnLZ19v9stz1myx5/faK+mjOvwfrHX+/VbsesYMKAAAaVAAANKgAAJDxZVBLu0X9l8sKK2tamYPYtjIzd+KSQL43w1nLpBI7qAAAoEEFAAANKgAAkUFt11VRvy7q5y4zDNZOmjNrGdi7wwEZVGIHFQAADSoAAGhQAQCIDGpfHaR5Tuqayw4ZyrvOpx0ff1bUT1wS6Ox+36lkwIkdVAAA0KACAIAGFQCAyKC263NRHxf1K5cdemtaeXf3on2KzCmkp3NRZVDnc51+z3G+jh1UAADiET8AAGhQAQDI8DOoD4t/u1yx7yiD2i83ld/bliUalZdF/SjdZp5+vk0mCmhVef9vFPWFJZrr791J7KACAIAGFQAADSoAAGThGdQyo7md1Z6LelbUv/oZdOpFUR9YklEpM2WHWW7m9JNLAhlKRt2c4thBBQAADSoAAGhQAQBI3zKoW5WM4PGKfeeDyKB26WmaM8F3LdGoTDs+3rOYowhZ0tzN9Tk/b2fBnzc2k6J+17PzmxX1UeygAgAQj/gBAECDCgBAhpdBTSWjeZrmDOHQXBX1h3gX/CK9rvx+3luiUVvvOAM3s+TQmfOi3ku7c1FPLPmtPOrZ+XyygwoAQDziBwAADSoAAFnBDOpamueg7q7YGhzLoM7lLM1zdLetL1lexvUwzXNRgbSWKZwtOAO5J4MaO6gAAKBBBQBAg2oJAABIzzOoqbyrvsxsXg58Dd4W9U2aM7kx5zRNmdNU5upCl2qZtQtLBGkrA36UxWZQy8/fseSxgwoAABpUAAA0qAAAkJ5nUFPJoG6v2JqcFvXzkf9GnlbWJ+aeMiDTot60JJC2MqizypzUSVbr3fLEDioAABpUAADQoAIAEBnUmq1K5vB9ZFAzosxpKhll6JONon6Z5rmNwOKUc4gPI4Papuue/327sIMKAEA84gcAAA0qAAAZYQY1lczhw4GvyWVR/13Udwf+/W7SnCG+vOXnvSjqB24r8u2ZqHIO6Zs0Z0YXrcygnqd5biOQ3mRQGXYGNXZQAQDQoAIAgAYVAIDIoH6ZOdzNfHM0++Zthj0X9c+iflzUV7f8vHtFfeA24haepDnjuV/U79Ltu8MPK+cLZGGZyDKTumeJiB1UAAA0qAAAoEEFACAjy6Cmkkk8HfganQ4sg3qW5jmln7PYTO6a24hbqM0VnaV5LulOy+e3U3nX98wlzDwZ38nAfo+060gGtVOTDCijbAcVAIB4xA8AABpUAAAy0gzq3RWbi3pZeZd91xnMm0rG9LTlTPEDtw0d2u84g1qaFvVmmuc68l9ven5+9yOTmh5lgGeVDDiZK3P6sefnO7ODCgBAPOIHAAANKgAAkUH9wm5Way7q+6L+peXjfais59WCj/e4qF+5TUh/Mmpdv7u7zHC9THNGltWay0uWOhdVBnVcLmIHFQCAeMQPAAAaVAAAIoNa2irq7TRnOjOyDOpNZe7occvf52FWKyNMRj0Xdb3l45cZ1PM0ZKiIzCn53jmYX7leE0s0nvvTDioAAPGIHwAANKgAAEQG9ateDDyDejnn/z+rrMfnls//Tpozp2tuC3rsOs1zEw87Pp9pUW+6RJFBJS3NRZ1aEhlUAACIR/wAAGhQLQEAABl5BrWcG3ov7b5bPi3PQS39kea5ppcdn++dyvk/cBuQ1cmo7aXbuYkbleOfuETp7bu+6b2TSsZ83RKt7v1pBxUAgHjEDwAAGlQAAIbgH5UGx/EwHjDMAAAAAElFTkSuQmCC';
 $('navLogo').src = LOGO_BASE64;
 $('heroLogo').src = LOGO_BASE64;
 $('footerLogo').src = LOGO_BASE64;
-
-/* ===== Year ===== */
-$('year').textContent = new Date().getFullYear();
-
-/* ===== DATABASES ===== */
-
-/* Fix #11 & #16: Resin mL/aligner changed from 95-100 to 30 */
-var MATERIALS = [
-  { name: 'DCA Resin (LuxCreo)', type: 'Resin', costPerLiter: 299, mlPerAligner: 30, desc: 'Direct clear aligner resin' },
-  { name: 'Dental LT Clear Resin V2 (Formlabs)', type: 'Resin', costPerLiter: 299, mlPerAligner: 30, desc: 'Biocompatible clear resin' },
-  { name: 'Essix ACE Plastic (Dentsply)', type: 'Sheet', costPerSheet: 2.50, desc: 'Thermoforming sheet' },
-  { name: 'Zendura FLX (Bay Materials)', type: 'Sheet', costPerSheet: 3.00, desc: 'Multi-layer aligner sheet' },
-  { name: 'GT FLEX PRO (Goodfit)', type: 'Sheet', costPerSheet: 2.00, desc: 'Professional thermoforming sheet' },
-  { name: 'Tera Harz TC-85 DAC (Graphy)', type: 'Resin', costPerLiter: 350, mlPerAligner: 30, desc: '3D printing dental resin' },
-  { name: 'Custom Material', type: 'Custom', costPerAligner: 0, desc: 'Enter your own cost' }
-];
-
-/* Fix #18: Removed Anycubic (consumer grade), added Asiga MAX UV and Ackuretta SOL */
-var PRINTERS = [
-  /* thermoforming removed from printers — driven by material type instead (Sheet = needs thermoformer) */
-  { name: 'Formlabs Form 4B', price: 16000, technology: 'MSLA', lifespan: 5, maintenance: 1000 },
-  { name: 'SprintRay Pro 95 S', price: 18000, technology: 'DLP', lifespan: 5, maintenance: 800 },
-  { name: 'LuxCreo iLux Pro Dental', price: 25000, technology: 'DLP', lifespan: 5, maintenance: 1200 },
-  { name: 'Phrozen Sonic XL 4K', price: 3500, technology: 'MSLA', lifespan: 4, maintenance: 300 },
-  { name: 'Structo DentaForm', price: 20000, technology: 'MSLA', lifespan: 5, maintenance: 1000 },
-  { name: 'Asiga MAX UV', price: 8000, technology: 'DLP', lifespan: 5, maintenance: 600 },
-  { name: 'Ackuretta SOL', price: 5000, technology: 'DLP', lifespan: 4, maintenance: 400 },
-  { name: 'Custom Printer', price: 0, technology: '-', lifespan: 5, maintenance: 0 }
-];
-
-var SOFTWARE = [
-  { name: '3Shape Clear Aligner Studio', priceModel: 'monthly', price: 450 },
-  { name: 'Archform', priceModel: 'perCase', price: 45 },
-  { name: 'BlueSkyBio Plan', priceModel: 'monthly', price: 300 },
-  { name: 'SoftSmile', priceModel: 'perCase', price: 55 },
-  { name: 'uLab Systems', priceModel: 'perCase', price: 60 },
-  { name: 'Custom Software', priceModel: 'perCase', price: 0 }
-];
-
-/* Fix #7: Colors now for stacked bar */
-var BAR_COLORS = [
-  '#06b0ae', /* Material - teal */
-  '#3b82f6', /* Equipment - blue */
-  '#8b5cf6', /* Doctor Labor - purple */
-  '#ec4899', /* Assistant Labor - pink */
-  '#f59e0b', /* Software - amber */
-  '#10b981', /* Lab Space - emerald */
-  '#ef4444', /* Consumables - red */
-  '#6366f1', /* Maintenance - indigo */
-  '#f97316', /* Post-Processing - orange */
-];
-
-var COST_LABELS = ['Material', 'Equipment', 'Doctor Labor', 'Assistant Labor', 'Software', 'Lab Space', 'Consumables', 'Maintenance', 'Post-Processing'];
 
 /* ===== Currency ===== */
 var currencies = {
@@ -1204,7 +843,7 @@ var currencies = {
 };
 var curCurrency = currencies.EUR;
 
-function updateCurrencySymbols() {
+function updateSymbols() {
   document.querySelectorAll('.pre').forEach(function(el) {
     el.setAttribute('data-symbol', curCurrency.symbol);
   });
@@ -1212,735 +851,250 @@ function updateCurrencySymbols() {
 
 $('currency').addEventListener('change', function() {
   curCurrency = currencies[this.value] || currencies.EUR;
-  updateCurrencySymbols();
-  renderAll();
+  updateSymbols();
+  if (currentStep === 3) renderResults();
 });
 
-/* ===== Populate dropdowns ===== */
-function populateDropdowns() {
-  var matSelect = $('material');
-  MATERIALS.forEach(function(m, i) {
-    var opt = document.createElement('option');
-    opt.value = i;
-    var priceStr = m.type === 'Resin' ? ' — ' + curCurrency.symbol + m.costPerLiter + '/L'
-                 : m.type === 'Sheet' ? ' — ' + curCurrency.symbol + m.costPerSheet + '/sheet'
-                 : '';
-    opt.textContent = m.name + priceStr;
-    matSelect.appendChild(opt);
-  });
+/* ===== Formatting ===== */
+function roundC(n) { return Math.round(n * 100) / 100; }
 
-  var printerSelect = $('printer');
-  PRINTERS.forEach(function(p, i) {
-    var opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = p.name + (p.price > 0 ? ' — ' + curCurrency.symbol + p.price.toLocaleString() : '');
-    printerSelect.appendChild(opt);
-  });
-
-  var swSelect = $('software');
-  SOFTWARE.forEach(function(s, i) {
-    var opt = document.createElement('option');
-    opt.value = i;
-    var model = s.priceModel === 'monthly' ? '/mo' : '/case';
-    opt.textContent = s.name + (s.price > 0 ? ' — ' + curCurrency.symbol + s.price + model : '');
-    swSelect.appendChild(opt);
-  });
-}
-
-/* ===== XSS escape ===== */
-function esc(s) {
-  var d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
-
-/* ===== Currency formatting ===== */
-function roundCurrency(n) {
-  return Math.round(n * 100) / 100;
-}
-
-/* Fix #21: NaN/Infinity guard in fmt() */
 function fmt(n) {
-  if (typeof n !== 'number' || isNaN(n) || !isFinite(n)) { return '\u2014'; }
-  return Math.abs(n).toLocaleString(curCurrency.locale, {
+  if (typeof n !== 'number' || isNaN(n) || !isFinite(n)) return '\u2014';
+  return n.toLocaleString(curCurrency.locale, {
+    style: 'currency', currency: curCurrency.code, minimumFractionDigits: 0, maximumFractionDigits: 0
+  });
+}
+
+function fmt2(n) {
+  if (typeof n !== 'number' || isNaN(n) || !isFinite(n)) return '\u2014';
+  return n.toLocaleString(curCurrency.locale, {
     style: 'currency', currency: curCurrency.code, minimumFractionDigits: 2
   });
 }
 
-function pct(a, b) {
-  if (b === 0 && a !== 0) { return 'N/A'; }
-  if (b === 0) { return '0%'; }
-  return Math.round(Math.abs((b - a) / b) * 100) + '%';
-}
+/* ===== Step Navigation ===== */
+var currentStep = 1;
 
-function fmtNum(n) {
-  if (typeof n !== 'number' || isNaN(n) || !isFinite(n)) { return '\u2014'; }
-  return n.toLocaleString(curCurrency.locale);
-}
+function goToStep(step) {
+  if (step < 1 || step > 3) return;
+  currentStep = step;
 
-/* ===== Tab switching ===== */
-function switchTab(tab) {
-  var isCalc = tab === 'calc';
-  $('tabBtnCalc').classList.toggle('active', isCalc);
-  $('tabBtnCalc').setAttribute('aria-selected', isCalc ? 'true' : 'false');
-  $('tabBtnCompare').classList.toggle('active', !isCalc);
-  $('tabBtnCompare').setAttribute('aria-selected', !isCalc ? 'true' : 'false');
-  $('tabCalc').classList.toggle('active', isCalc);
-  $('tabCompare').classList.toggle('active', !isCalc);
-}
-
-/* ===== Material change ===== */
-$('material').addEventListener('change', function() {
-  var m = MATERIALS[parseInt(this.value)];
-  $('fieldCustomMaterialCost').style.display = (m && m.type === 'Custom') ? '' : 'none';
-  renderAll();
-});
-
-/* ===== Printer change ===== */
-$('printer').addEventListener('change', function() {
-  var p = PRINTERS[parseInt(this.value)];
-  $('customPrinterFields').style.display = (p && p.name === 'Custom Printer') ? '' : 'none';
-  renderAll();
-});
-
-/* ===== Software change ===== */
-$('software').addEventListener('change', function() {
-  var s = SOFTWARE[parseInt(this.value)];
-  $('customSoftwareFields').style.display = (s && s.name === 'Custom Software') ? '' : 'none';
-  renderAll();
-});
-
-/* ===== In-House cost calculation ===== */
-function calcInHouse() {
-  var matIdx = parseInt($('material').value) || 0;
-  var mat = MATERIALS[matIdx];
-  var printerIdx = parseInt($('printer').value) || 0;
-  var printer = PRINTERS[printerIdx];
-  var swIdx = parseInt($('software').value) || 0;
-  var sw = SOFTWARE[swIdx];
-
-  var alignersPerCase = Math.min(200, Math.max(1, parseInt($('alignersPerCase').value) || 1));
-  var monthlyCases = Math.min(10000, Math.max(1, parseInt($('calcMonthlyCases').value) || 1));
-  var alignersPerYear = monthlyCases * 12 * alignersPerCase;
-
-  /* Fix #21: Guard for alignersPerYear === 0 */
-  if (alignersPerYear === 0) { alignersPerYear = 1; }
-
-  var doctorRate = Math.min(9999, Math.max(0, parseFloat($('doctorRate').value) || 0));
-  var assistantRate = Math.min(9999, Math.max(0, parseFloat($('assistantRate').value) || 0));
-  var doctorMin = Math.min(600, Math.max(0, parseFloat($('doctorMinutes').value) || 0));
-  var assistantMin = Math.min(600, Math.max(0, parseFloat($('assistantMinutes').value) || 0));
-
-  /* 1. Material cost */
-  var materialCost = 0;
-  if (mat.type === 'Resin') {
-    materialCost = (mat.costPerLiter / 1000) * mat.mlPerAligner;
-  } else if (mat.type === 'Sheet') {
-    materialCost = mat.costPerSheet;
-  } else {
-    materialCost = Math.max(0, parseFloat($('customMaterialCost').value) || 0);
-  }
-
-  /* 2. Equipment amortization */
-  var pPrice = printer.name === 'Custom Printer' ? (parseFloat($('customPrinterPrice').value) || 0) : printer.price;
-  var pLifespan = printer.name === 'Custom Printer' ? (parseInt($('customPrinterLifespan').value) || 5) : printer.lifespan;
-  var pMaint = printer.name === 'Custom Printer' ? (parseFloat($('customPrinterMaintenance').value) || 0) : printer.maintenance;
-  var equipmentCost = (pPrice / (pLifespan * alignersPerYear)) + (pMaint / alignersPerYear);
-
-  /* 3. Doctor labor */
-  var doctorLabor = alignersPerCase > 0 ? (doctorRate / 60) * doctorMin / alignersPerCase : 0;
-
-  /* 4. Assistant labor */
-  var assistantLabor = alignersPerCase > 0 ? (assistantRate / 60) * assistantMin / alignersPerCase : 0;
-
-  /* 5. Software */
-  var swPrice = sw.name === 'Custom Software' ? (parseFloat($('customSoftwarePrice').value) || 0) : sw.price;
-  var swModel = sw.name === 'Custom Software' ? $('customSoftwareModel').value : sw.priceModel;
-  var softwareCost = 0;
-  if (swModel === 'monthly') {
-    softwareCost = (swPrice * 12) / alignersPerYear;
-  } else {
-    softwareCost = alignersPerCase > 0 ? swPrice / alignersPerCase : 0;
-  }
-
-  /* 6. Lab space */
-  var labRent = Math.max(0, parseFloat($('labRent').value) || 0);
-  var labSpaceCost = (labRent * 12) / alignersPerYear;
-
-  /* 7. Consumables */
-  var polishing = Math.max(0, parseFloat($('consumablesPolishing').value) || 0);
-  var cutting = Math.max(0, parseFloat($('consumablesCutting').value) || 0);
-  var consumablesCost = polishing + cutting;
-
-  /* 8. Thermoforming maintenance */
-  var thermoMaint = Math.max(0, parseFloat($('thermoMaintenance').value) || 0);
-  var needsThermo = (mat.type === 'Sheet'); /* Only sheet materials need thermoforming, not resin */
-  var thermoMaintenanceCost = needsThermo ? thermoMaint / alignersPerYear : 0;
-
-  /* 9. Post-processing (wash station + UV curing — one-time costs amortized over lifespan) */
-  var washCost = Math.max(0, parseFloat($('washStationCost').value) || 0);
-  var uvCost = Math.max(0, parseFloat($('uvCuringCost').value) || 0);
-  var ppLifespan = printer.lifespan || 5; /* Assume same lifespan as printer */
-  var postProcessingCost = alignersPerYear > 0 ? (washCost + uvCost) / (ppLifespan * alignersPerYear) : 0;
-
-  var total = materialCost + equipmentCost + doctorLabor + assistantLabor + softwareCost + labSpaceCost + consumablesCost + thermoMaintenanceCost + postProcessingCost;
-
-  return {
-    costs: [materialCost, equipmentCost, doctorLabor, assistantLabor, softwareCost, labSpaceCost, consumablesCost, thermoMaintenanceCost, postProcessingCost],
-    total: roundCurrency(total),
-    alignersPerCase: alignersPerCase,
-    alignersPerYear: alignersPerYear
-  };
-}
-
-/* ===== Fix #7: Horizontal stacked bar chart (replaces donut) ===== */
-function renderStackedBar(costs, total) {
-  var bar = $('stackedBar');
-  var legend = $('stackedBarLegend');
-  var wrap = $('stackedBarWrap');
-  var emptyState = $('emptyState');
-
-  if (total <= 0) {
-    wrap.style.display = 'none';
-    emptyState.style.display = '';
-    legend.innerHTML = '';
-    bar.innerHTML = '';
-    return;
-  }
-
-  wrap.style.display = '';
-  emptyState.style.display = 'none';
-
-  var barHtml = '';
-  for (var i = 0; i < costs.length; i++) {
-    if (costs[i] <= 0) continue;
-    var widthPct = (costs[i] / total) * 100;
-    barHtml += '<div class="stacked-bar-segment" style="width:' + widthPct + '%;background:' + BAR_COLORS[i] + ';" title="' + COST_LABELS[i] + ': ' + Math.round(widthPct) + '%"></div>';
-  }
-  bar.innerHTML = barHtml;
-
-  /* Legend */
-  var legendHtml = '';
-  for (var j = 0; j < costs.length; j++) {
-    if (costs[j] <= 0) continue;
-    var p = total > 0 ? Math.round((costs[j] / total) * 100) : 0;
-    legendHtml += '<div class="legend-item"><div class="legend-dot" style="background:' + BAR_COLORS[j] + ';"></div><span class="legend-label">' + COST_LABELS[j] + '</span><span class="legend-val">' + p + '%</span></div>';
-  }
-  legend.innerHTML = legendHtml;
-}
-
-/* ===== Render line items ===== */
-function renderLineItems(costs, total, alignersPerCase) {
-  var el = $('lineItems');
-  var html = '';
-  for (var i = 0; i < costs.length; i++) {
-    if (costs[i] <= 0) continue;
-    html += '<div class="line-item"><span class="li-label">' + COST_LABELS[i] + '</span><span class="li-val">' + fmt(costs[i]) + '</span></div>';
-  }
-  html += '<div class="line-item total-line"><span class="li-label">Total per Aligner</span><span class="li-val">' + fmt(total) + '</span></div>';
-  html += '<div class="line-item"><span class="li-label">Total per Case (' + alignersPerCase + ' aligners)</span><span class="li-val">' + fmt(roundCurrency(total * alignersPerCase)) + '</span></div>';
-  el.innerHTML = html;
-
-  /* Fix #3: Show "What's not included" disclaimer in results */
-  $('hiddenCostsNote').style.display = total > 0 ? '' : 'none';
-}
-
-/* ===== Render results panel ===== */
-function renderResults() {
-  var result = calcInHouse();
-  var total = result.total;
-  var caseCost = roundCurrency(total * result.alignersPerCase);
-
-  $('resultsBigCost').textContent = fmt(total);
-  $('resultsCaseCost').textContent = fmt(caseCost) + ' per case (' + result.alignersPerCase + ' aligners)';
-
-  renderStackedBar(result.costs, total);
-  renderLineItems(result.costs, total, result.alignersPerCase);
-
-  /* Auto-fill into comparison tab */
-  $('priceInHouse').value = total.toFixed(2);
-
-  return total;
-}
-
-/* ===== Comparison tab values ===== */
-var defaults = { complexity: '30', alignerCount: 30, priceKLine: 6.50, priceInHouse: 4.00, priceCompetitor: 12.00, equipmentCost: 15000, competitorName: 'External Lab', monthlyCases: 10 };
-
-function getValues() {
-  return {
-    count: Math.min(200, Math.max(1, parseInt($('alignerCount').value) || 1)),
-    kline: Math.min(9999, Math.max(0, parseFloat($('priceKLine').value) || 0)),
-    inhouse: Math.min(9999, Math.max(0, parseFloat($('priceInHouse').value) || 0)),
-    competitor: Math.min(9999, Math.max(0, parseFloat($('priceCompetitor').value) || 0)),
-    equipment: Math.min(500000, Math.max(0, parseFloat($('equipmentCost').value) || 0)),
-    patient: $('patientName').value.trim().substring(0, 80),
-    clinic: $('clinicName').value.trim().substring(0, 80),
-    compName: $('competitorName').value.trim().substring(0, 40) || 'External Lab',
-    monthlyCases: Math.min(10000, Math.max(1, parseInt($('monthlyCases').value) || 1))
-  };
-}
-
-/* ===== Render comparison tab ===== */
-function renderComparison() {
-  var v = getValues();
-  var tK = roundCurrency(v.count * v.kline);
-  var tI = roundCurrency(v.count * v.inhouse);
-  var tC = roundCurrency(v.count * v.competitor);
-  var compName = v.compName;
-  var compNameH = esc(compName); /* HTML-safe for innerHTML */
-
-  $('compLabelText').textContent = compName;
-
-  var totals = [{name: 'K Line', total: tK}, {name: 'In-House', total: tI}, {name: compNameH, total: tC}];
-  var cheapest = totals.reduce(function(a, b) { return a.total < b.total ? a : b; });
-  /* Fix tie-breaking bias: show "Tied" when multiple options have the same lowest price */
-  var minTotal = cheapest.total;
-  var tiedCount = totals.filter(function(t) { return t.total === minTotal; }).length;
-  var bestLabel = tiedCount > 1 ? 'Tied (' + tiedCount + ' options)' : cheapest.name;
-  var kIsBest = tK <= tI && tK <= tC;
-  var saveVsComp = roundCurrency(tC - tK);
-  var diff = roundCurrency(tK - tI);
-  var be = diff > 0 ? Math.ceil(v.equipment / diff) : null;
-  var beFormatted;
-  if (be !== null) {
-    if (be > 99999) {
-      beFormatted = '99,999+ <span style="font-size:0.68rem;color:var(--red-text);">(not cost-effective)</span>';
-    } else {
-      beFormatted = fmtNum(be);
-    }
-  } else {
-    beFormatted = 'N/A';
-  }
-
-  var annualSavings = roundCurrency(saveVsComp * v.monthlyCases * 12);
-
-  /* Fix #15: Annual savings disclaimer */
-  var annualSavingsDisclaimer = '<div class="s-disclaimer">Simplified estimate. Contact K Line for a detailed proposal.</div>';
-
-  $('summaryBar').innerHTML =
-    '<div class="s-item"><div class="s-label">Aligners</div><div class="s-val">' + v.count + '</div></div>' +
-    '<div class="s-item"><div class="s-label">K Line Total</div><div class="s-val teal">' + fmt(tK) + '</div><div class="s-note">' + (kIsBest ? 'Best value' : 'Per case') + '</div></div>' +
-    '<div class="s-item"><div class="s-label">' + (saveVsComp >= 0 ? 'You Save vs ' + compNameH : 'K Line Premium') + '</div><div class="s-val' + (saveVsComp >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(saveVsComp)) + '</div><div class="s-note">' + (saveVsComp >= 0 ? pct(tK, tC) + ' less' : 'more') + ' per case</div></div>' +
-    '<div class="s-item"><div class="s-label">Best Option</div><div class="s-val teal">' + bestLabel + '</div><div class="s-note">' + fmt(minTotal) + ' total</div></div>' +
-    '<div class="s-item"><div class="s-label">' + (annualSavings >= 0 ? 'Annual Savings' : 'Annual Extra Cost') + '</div><div class="s-val' + (annualSavings >= 0 ? ' teal' : '') + '">' + fmt(Math.abs(annualSavings)) + '</div><div class="s-note">' + v.monthlyCases + ' cases/mo vs ' + compNameH + '</div>' + annualSavingsDisclaimer + '</div>';
-
-  var kTag = kIsBest
-    ? '<div class="tag tag-kline">&#9733; Best Value</div>'
-    : '<div class="tag tag-kline">K Line</div>';
-  var kVsComp = saveVsComp >= 0
-    ? '<span class="val green">' + fmt(saveVsComp) + ' saved</span>'
-    : '<span class="val red">' + fmt(Math.abs(saveVsComp)) + ' more</span>';
-  var kPill = saveVsComp >= 0
-    ? '<div class="pill pill-green" style="background:var(--teal-subtle);color:var(--teal);"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Save ' + fmt(saveVsComp) + ' per case with K Line</div>'
-    : '<div class="pill pill-neutral">K Line costs ' + fmt(Math.abs(saveVsComp)) + ' more than ' + compNameH + '</div>';
-  var kCardClass = kIsBest ? 'card featured' : 'card';
-  var kPriceSub = kIsBest
-    ? '<div class="price-sub" style="color:var(--white-70);">Total for ' + v.count + ' aligners</div>'
-    : '<div class="price-sub">Total for ' + v.count + ' aligners</div>';
-
-  /* Fix #1: Changed "High Overhead" to "External Lab" tag */
-  var compTag = tC > tK ? '<div class="tag tag-comp">External Lab</div>'
-    : tC < tK ? '<div class="tag tag-best">Lower Cost</div>'
-    : '<div class="tag tag-neutral">Same Price</div>';
-  var compDiff = roundCurrency(tC - tK);
-  var compRow = compDiff > 0
-    ? '<span class="val red">+' + fmt(compDiff) + '</span>'
-    : compDiff < 0 ? '<span class="val green">' + fmt(Math.abs(compDiff)) + ' less</span>'
-    : '<span class="val">&mdash;</span>';
-  /* Fix #1: Changed "Overpaying X per case vs K Line" to "X more per case vs K Line" */
-  var compPill = compDiff > 0
-    ? '<div class="pill pill-red">' + fmt(compDiff) + ' more per case vs K Line</div>'
-    : compDiff < 0 ? '<div class="pill pill-green">Saving ' + fmt(Math.abs(compDiff)) + ' per case vs K Line</div>'
-    : '<div class="pill pill-neutral">Same price as K Line</div>';
-
-  var ihVsK = tI < tK ? fmt(roundCurrency(tK - tI)) + ' less' : tI > tK ? fmt(roundCurrency(tI - tK)) + ' more' : 'Same';
-  var ihVsComp = roundCurrency(tC - tI);
-
-  /* Fix #2 & #5 & #20: K Line card subtitle and features */
-  var klineFeaturesHtml =
-    '<ul class="kline-features">' +
-      '<li>Includes design, manufacturing &amp; QC</li>' +
-      '<li>Price includes digital treatment planning</li>' +
-      '<li>Expert orthodontist review</li>' +
-      '<li>Lowest refinement rates (15.8%)</li>' +
-      '<li>FDA &amp; EU-MDR certified</li>' +
-    '</ul>';
-
-  $('cardsGrid').innerHTML =
-    '<div class="' + kCardClass + '">' +
-      /* Fix #2: Changed subtitle from "K Line Europe — Premium Quality" to "Includes design, manufacturing & QC" */
-      '<div class="card-top">' + kTag + '<h3>K Line</h3><div class="sub">Includes design, manufacturing &amp; QC</div></div>' +
-      '<div class="card-body">' +
-        '<div class="price-block"><div class="price">' + fmt(tK) + '</div>' + kPriceSub + '</div>' +
-        '<div class="row"><span class="lbl">Price per aligner</span><span class="val">' + fmt(v.kline) + '</span></div>' +
-        '<div class="row"><span class="lbl">vs ' + compNameH + '</span>' + kVsComp + '</div>' +
-        '<div class="row"><span class="lbl">Difference</span><span class="val' + (saveVsComp >= 0 ? ' green' : ' red') + '">' + pct(tK, tC) + '</span></div>' +
-        klineFeaturesHtml +
-        kPill +
-      '</div>' +
-    '</div>' +
-    '<div class="card">' +
-      '<div class="card-top"><div class="tag tag-inhouse">In-House</div><h3>In-House</h3><div class="sub">Total Aligner Cost</div></div>' +
-      '<div class="card-body">' +
-        '<div class="price-block"><div class="price">' + fmt(tI) + '</div><div class="price-sub">Total for ' + v.count + ' aligners</div></div>' +
-        '<div class="row"><span class="lbl">Price per aligner</span><span class="val">' + fmt(v.inhouse) + '</span></div>' +
-        '<div class="row"><span class="lbl">vs ' + compNameH + '</span><span class="val' + (ihVsComp >= 0 ? ' green' : ' red') + '">' + (ihVsComp >= 0 ? fmt(ihVsComp) + ' saved' : fmt(Math.abs(ihVsComp)) + ' more') + '</span></div>' +
-        '<div class="row"><span class="lbl">vs K Line</span><span class="val">' + ihVsK + '</span></div>' +
-        '<div class="roi-box">' +
-          '<div class="roi-h">ROI Breakdown</div>' +
-          '<div class="roi-row"><span>Equipment investment</span><span class="rv">' + fmt(v.equipment) + '</span></div>' +
-          '<div class="roi-row"><span>Savings/case vs K Line</span><span class="rv">' + (diff > 0 ? fmt(diff) : '&mdash;') + '</span></div>' +
-          '<div class="roi-row bt"><span><strong>Break-even point</strong></span><span class="rv">' + beFormatted + ' cases</span></div>' +
-        '</div>' +
-      '</div>' +
-    '</div>' +
-    '<div class="card">' +
-      '<div class="card-top">' + compTag + '<h3>' + compNameH + '</h3><div class="sub">' + fmt(v.competitor) + ' per aligner</div></div>' +
-      '<div class="card-body">' +
-        '<div class="price-block"><div class="price">' + fmt(tC) + '</div><div class="price-sub">Total for ' + v.count + ' aligners</div></div>' +
-        '<div class="row"><span class="lbl">Price per aligner</span><span class="val">' + fmt(v.competitor) + '</span></div>' +
-        '<div class="row"><span class="lbl">' + (compDiff >= 0 ? 'Premium over' : 'Savings vs') + ' K Line</span>' + compRow + '</div>' +
-        '<div class="row"><span class="lbl">' + (compDiff >= 0 ? 'Premium' : 'Savings') + ' rate</span><span class="val' + (compDiff > 0 ? ' red' : compDiff < 0 ? ' green' : '') + '">' + pct(tK, tC) + '</span></div>' +
-        compPill +
-      '</div>' +
-    '</div>';
-
-  /* Bar chart */
-  var maxTotal = Math.max(tK, tI, tC, 1);
-  var chartHeight = 130;
-  function barH(t) { return Math.max(4, (t / maxTotal) * chartHeight); }
-  $('chartBars').setAttribute('aria-label', 'Bar chart: K Line ' + fmt(tK) + ', In-House ' + fmt(tI) + ', ' + compName + ' ' + fmt(tC)); /* aria-label is safe, not innerHTML */
-  $('chartBars').innerHTML =
-    '<div class="chart-bar"><div class="bar-val">' + fmt(tK) + '</div><div class="bar-fill" style="height:' + barH(tK) + 'px;background:var(--teal);"></div><div class="bar-label">K Line</div></div>' +
-    '<div class="chart-bar"><div class="bar-val">' + fmt(tI) + '</div><div class="bar-fill" style="height:' + barH(tI) + 'px;background:var(--orange);"></div><div class="bar-label">In-House</div></div>' +
-    '<div class="chart-bar"><div class="bar-val">' + fmt(tC) + '</div><div class="bar-fill" style="height:' + barH(tC) + 'px;background:' + (tC > tK ? 'var(--red-text)' : 'var(--green)') + ';"></div><div class="bar-label">' + compNameH + '</div></div>';
-
-  if (kIsBest) {
-    $('ctaText').textContent = 'Ready to switch to K LINE and start saving?';
-  } else {
-    $('ctaText').textContent = 'Want to learn more about K LINE?';
-  }
-
-  $('printPatient').textContent = v.patient || '\u2014';
-  $('printClinic').textContent = v.clinic || '\u2014';
-  $('printDate').textContent = 'Generated: ' + new Date().toLocaleDateString(curCurrency.locale, {year: 'numeric', month: 'long', day: 'numeric'});
-}
-
-/* ===== Fix #22: requestAnimationFrame debounce ===== */
-var rafPending = false;
-function renderAll() {
-  if (rafPending) { return; }
-  rafPending = true;
-  requestAnimationFrame(function() {
-    rafPending = false;
-    /* Fix #23 & #25: try/catch with console.error and toast */
-    try {
-      renderResults();
-      renderComparison();
-      debouncedUpdateURL();
-    } catch (err) {
-      console.error('Calculation error:', err);
-      showToast('Calculation error');
-    }
+  // Update panels
+  document.querySelectorAll('.step-panel').forEach(function(p, i) {
+    p.classList.toggle('active', i === step - 1);
   });
+
+  // Update step indicators
+  document.querySelectorAll('.step-item').forEach(function(s, i) {
+    s.classList.remove('active', 'completed');
+    if (i + 1 === step) s.classList.add('active');
+    else if (i + 1 < step) s.classList.add('completed');
+  });
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Render results when going to step 3
+  if (step === 3) renderResults();
 }
 
-/* ===== Debounced URL update ===== */
-var urlTimer;
-function debouncedUpdateURL() {
-  clearTimeout(urlTimer);
-  urlTimer = setTimeout(updateURL, 400);
-}
+/* ===== Method Toggle ===== */
+$('currentMethod').addEventListener('change', function() {
+  var v = this.value;
+  $('sectionLabCost').style.display = (v === 'lab' || v === 'both') ? '' : 'none';
+  $('sectionInHouseCost').style.display = (v === 'inhouse' || v === 'both') ? '' : 'none';
+});
 
-/* ===== URL State ===== */
-var lastURL = '';
-function updateURL() {
-  var v = getValues();
-  var p = new URLSearchParams();
-  p.set('n', v.count);
-  p.set('k', v.kline);
-  p.set('i', v.inhouse);
-  p.set('c', v.competitor);
-  p.set('e', v.equipment);
-  p.set('cur', curCurrency.code);
-  p.set('cn', v.compName);
-  p.set('mc', v.monthlyCases);
-  p.set('mat', $('material').value);
-  p.set('printer', $('printer').value);
-  p.set('sw', $('software').value);
-  p.set('apc', $('alignersPerCase').value);
-  p.set('cmc', $('calcMonthlyCases').value);
-  p.set('dr', $('doctorRate').value);
-  p.set('ar', $('assistantRate').value);
-  p.set('dm', $('doctorMinutes').value);
-  p.set('am', $('assistantMinutes').value);
-  p.set('rent', $('labRent').value);
-  p.set('pol', $('consumablesPolishing').value);
-  p.set('cut', $('consumablesCutting').value);
-  p.set('thm', $('thermoMaintenance').value);
-  /* Custom field values */
-  p.set('cmat', $('customMaterialCost').value);
-  p.set('cpp', $('customPrinterPrice').value);
-  p.set('cpl', $('customPrinterLifespan').value);
-  p.set('cpm', $('customPrinterMaintenance').value);
-  p.set('csp', $('customSoftwarePrice').value);
-  p.set('csm', $('customSoftwareModel').value);
-  /* Post-processing fields */
-  p.set('wash', $('washStationCost').value);
-  p.set('uv', $('uvCuringCost').value);
-  var newURL = location.pathname + '?' + p.toString();
-  if (newURL !== lastURL) {
-    lastURL = newURL;
-    history.replaceState(null, '', newURL);
-  }
-}
-
-function loadFromURL() {
-  var p = new URLSearchParams(location.search);
-  if (p.has('mat')) { $('material').value = p.get('mat'); }
-  if (p.has('printer')) { $('printer').value = p.get('printer'); }
-  if (p.has('sw')) { $('software').value = p.get('sw'); }
-  if (p.has('n')) { $('alignerCount').value = p.get('n'); }
-  if (p.has('k')) { $('priceKLine').value = p.get('k'); }
-  if (p.has('i')) { $('priceInHouse').value = p.get('i'); }
-  if (p.has('c')) { $('priceCompetitor').value = p.get('c'); }
-  if (p.has('e')) { $('equipmentCost').value = p.get('e'); }
-  if (p.has('cn')) { $('competitorName').value = p.get('cn').substring(0, 40); }
-  if (p.has('mc')) { $('monthlyCases').value = p.get('mc'); }
-  if (p.has('apc')) { $('alignersPerCase').value = p.get('apc'); }
-  if (p.has('cmc')) { $('calcMonthlyCases').value = p.get('cmc'); }
-  if (p.has('dr')) { $('doctorRate').value = p.get('dr'); }
-  if (p.has('ar')) { $('assistantRate').value = p.get('ar'); }
-  if (p.has('dm')) { $('doctorMinutes').value = p.get('dm'); }
-  if (p.has('am')) { $('assistantMinutes').value = p.get('am'); }
-  if (p.has('rent')) { $('labRent').value = p.get('rent'); }
-  if (p.has('pol')) { $('consumablesPolishing').value = p.get('pol'); }
-  if (p.has('cut')) { $('consumablesCutting').value = p.get('cut'); }
-  if (p.has('thm')) { $('thermoMaintenance').value = p.get('thm'); }
-  if (p.has('wash')) { $('washStationCost').value = p.get('wash'); }
-  if (p.has('uv')) { $('uvCuringCost').value = p.get('uv'); }
-  if (p.has('cur') && currencies[p.get('cur')]) {
-    curCurrency = currencies[p.get('cur')];
-    $('currency').value = curCurrency.code;
-  }
-  var c = parseInt($('alignerCount').value);
-  $('complexity').value = c === 14 ? '14' : c === 30 ? '30' : c === 50 ? '50' : 'custom';
-
-  /* Load custom field values */
-  if (p.has('cmat')) { $('customMaterialCost').value = p.get('cmat'); }
-  if (p.has('cpp')) { $('customPrinterPrice').value = p.get('cpp'); }
-  if (p.has('cpl')) { $('customPrinterLifespan').value = p.get('cpl'); }
-  if (p.has('cpm')) { $('customPrinterMaintenance').value = p.get('cpm'); }
-  if (p.has('csp')) { $('customSoftwarePrice').value = p.get('csp'); }
-  if (p.has('csm')) { $('customSoftwareModel').value = p.get('csm'); }
-  /* Show custom fields if needed */
-  var matIdx = parseInt($('material').value);
-  if (MATERIALS[matIdx] && MATERIALS[matIdx].type === 'Custom') {
-    $('fieldCustomMaterialCost').style.display = '';
-  }
-  var printerIdx = parseInt($('printer').value);
-  if (PRINTERS[printerIdx] && PRINTERS[printerIdx].name === 'Custom Printer') {
-    $('customPrinterFields').style.display = '';
-  }
-  var swIdx = parseInt($('software').value);
-  if (SOFTWARE[swIdx] && SOFTWARE[swIdx].name === 'Custom Software') {
-    $('customSoftwareFields').style.display = '';
-  }
-}
-
-/* ===== Events ===== */
+/* ===== Complexity Sync ===== */
 $('complexity').addEventListener('change', function() {
   if (this.value !== 'custom') {
-    $('alignerCount').value = this.value;
     $('alignersPerCase').value = this.value;
   }
-  renderAll();
 });
-$('alignerCount').addEventListener('input', function() {
+$('alignersPerCase').addEventListener('input', function() {
   var v = parseInt(this.value);
   $('complexity').value = v === 14 ? '14' : v === 30 ? '30' : v === 50 ? '50' : 'custom';
-  /* Sync Tab 1 alignersPerCase with Tab 2 alignerCount */
-  $('alignersPerCase').value = v || 30;
-  renderAll();
 });
 
-/* Tab 1 inputs — includes post-processing fields */
-['doctorRate', 'assistantRate', 'doctorMinutes', 'assistantMinutes', 'alignersPerCase', 'calcMonthlyCases', 'customMaterialCost', 'customPrinterPrice', 'customPrinterLifespan', 'customPrinterMaintenance', 'customSoftwarePrice', 'labRent', 'consumablesPolishing', 'consumablesCutting', 'thermoMaintenance', 'washStationCost', 'uvCuringCost'].forEach(function(id) {
-  $(id).addEventListener('input', renderAll);
-});
-$('customSoftwareModel').addEventListener('change', renderAll);
-
-/* Tab 2 inputs */
-['priceKLine', 'priceInHouse', 'priceCompetitor', 'equipmentCost', 'patientName', 'clinicName', 'competitorName', 'monthlyCases'].forEach(function(id) {
-  $(id).addEventListener('input', renderAll);
-});
-
-/* Red border on invalid */
-document.querySelectorAll('input[type="number"]').forEach(function(input) {
-  input.addEventListener('change', function() {
-    var val = parseFloat(this.value);
-    var min = parseFloat(this.min);
-    var max = parseFloat(this.max);
-    if (isNaN(val) || (this.min !== '' && val < min) || (this.max !== '' && val > max)) {
-      this.classList.add('invalid');
-    } else {
-      this.classList.remove('invalid');
-    }
-  });
-});
-
-/* ===== Actions ===== */
-function savePDF() { window.print(); }
-
-function openEmailModal() {
-  $('emailModal').classList.add('active');
-  $('emailError').style.display = 'none';
-  var v = getValues();
-  if (v.clinic) { $('emailFrom').value = v.clinic; }
-  $('emailTo').focus();
-}
-function closeEmailModal() {
-  $('emailModal').classList.remove('active');
+/* ===== Calculate Costs ===== */
+function calcLabCost() {
+  var caseCost = Math.max(0, parseFloat($('labCostPerCase').value) || 0);
+  var shipping = Math.max(0, parseFloat($('labShipping').value) || 0);
+  return roundC(caseCost + shipping);
 }
 
-/* Modal focus trap */
-$('emailModal').addEventListener('keydown', function(e) {
-  if (e.key !== 'Tab') { return; }
-  var modal = this.querySelector('.modal');
-  var focusable = modal.querySelectorAll('input, textarea, button, [tabindex]:not([tabindex="-1"])');
-  if (focusable.length === 0) { return; }
-  var first = focusable[0];
-  var last = focusable[focusable.length - 1];
-  if (e.shiftKey) {
-    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+function calcInHouseCost() {
+  var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
+  var monthly = Math.max(1, parseInt($('monthlyCases').value) || 10);
+  var annual = monthly * 12;
+  var annualAligners = annual * aligners;
+  if (annualAligners === 0) annualAligners = 1;
+
+  var drRate = Math.max(0, parseFloat($('doctorRate').value) || 0);
+  var asRate = Math.max(0, parseFloat($('assistantRate').value) || 0);
+  var drMin = Math.max(0, parseFloat($('doctorMinutes').value) || 0);
+  var asMin = Math.max(0, parseFloat($('assistantMinutes').value) || 0);
+
+  var laborDoctor = (drRate / 60) * drMin;
+  var laborAssistant = (asRate / 60) * asMin;
+
+  var matCost = Math.max(0, parseFloat($('materialCostPerAligner').value) || 0) * aligners;
+
+  var pCost = Math.max(0, parseFloat($('printerCost').value) || 0);
+  var pLife = Math.max(1, parseInt($('printerLifespan').value) || 5);
+  var maint = Math.max(0, parseFloat($('annualMaintenance').value) || 0);
+  var equipPerCase = (pCost / (pLife * annual)) + (maint / annual);
+
+  var swCost = Math.max(0, parseFloat($('softwareCost').value) || 0);
+  var softwarePerCase = (swCost * 12) / annual;
+
+  var rent = Math.max(0, parseFloat($('labRent').value) || 0);
+  var rentPerCase = (rent * 12) / annual;
+
+  var consumables = Math.max(0, parseFloat($('consumablesPerAligner').value) || 0) * aligners;
+
+  var ppEquip = Math.max(0, parseFloat($('postProcessingEquip').value) || 0);
+  var ppPerCase = ppEquip / (pLife * annual);
+
+  var costs = {
+    labor: roundC(laborDoctor + laborAssistant),
+    material: roundC(matCost),
+    equipment: roundC(equipPerCase),
+    software: roundC(softwarePerCase),
+    rent: roundC(rentPerCase),
+    consumables: roundC(consumables),
+    postProcessing: roundC(ppPerCase)
+  };
+
+  costs.total = roundC(costs.labor + costs.material + costs.equipment + costs.software + costs.rent + costs.consumables + costs.postProcessing);
+  return costs;
+}
+
+/* ===== Stacked Bar Colors ===== */
+var BAR_COLORS = {
+  labor: '#8b5cf6',
+  material: '#06b0ae',
+  equipment: '#3b82f6',
+  software: '#f59e0b',
+  rent: '#10b981',
+  consumables: '#ef4444',
+  postProcessing: '#f97316'
+};
+var BAR_LABELS = {
+  labor: 'Labor',
+  material: 'Material',
+  equipment: 'Equipment',
+  software: 'Software',
+  rent: 'Lab Space',
+  consumables: 'Consumables',
+  postProcessing: 'Post-Processing'
+};
+
+/* ===== Render Results ===== */
+function renderResults() {
+  var method = $('currentMethod').value;
+  var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
+  var monthly = Math.max(1, parseInt($('monthlyCases').value) || 10);
+  var annual = monthly * 12;
+
+  var labCost = 0, ihCost = null, totalCost = 0;
+  var methodLabel = '';
+
+  if (method === 'lab') {
+    labCost = calcLabCost();
+    totalCost = labCost;
+    methodLabel = aligners + ' aligners · ' + ($('labName').value.trim() || 'External Lab');
+  } else if (method === 'inhouse') {
+    ihCost = calcInHouseCost();
+    totalCost = ihCost.total;
+    methodLabel = aligners + ' aligners · In-House Production';
   } else {
-    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    labCost = calcLabCost();
+    ihCost = calcInHouseCost();
+    totalCost = roundC((labCost + ihCost.total) / 2);
+    methodLabel = aligners + ' aligners · Blended (Lab + In-House)';
   }
-});
 
-var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  // Main result
+  $('resultTotal').textContent = fmt(totalCost);
+  $('resultSub').textContent = methodLabel;
 
-function sendEmail() {
-  var to = $('emailTo').value.trim();
-  if (!to || !emailRegex.test(to)) {
-    $('emailError').style.display = 'block';
-    $('emailTo').focus();
-    return;
+  // Cost cards
+  var cardsHtml = '';
+  if (method === 'lab' || method === 'both') {
+    cardsHtml += '<div class="cost-card highlight"><div class="cc-label">External Lab Cost / Case</div><div class="cc-val">' + fmt(labCost) + '</div><div class="cc-sub">' + fmt2(labCost / aligners) + ' per aligner</div></div>';
   }
-  $('emailError').style.display = 'none';
-  var v = getValues();
-  var tK = roundCurrency(v.count * v.kline);
-  var tI = roundCurrency(v.count * v.inhouse);
-  var tC = roundCurrency(v.count * v.competitor);
-  var from = $('emailFrom').value.trim();
-  var msg = $('emailMsg').value.trim();
-  var subj = encodeURIComponent('Aligner Price Comparison' + (v.patient ? ' \u2014 ' + v.patient : ''));
-
-  /* Include in-house breakdown */
-  var result = calcInHouse();
-
-  var b = '';
-  if (msg) { b += msg + '\n\n---\n\n'; }
-  b += 'ALIGNER PRICE COMPARISON\n========================\n';
-  if (v.patient) { b += 'Patient: ' + v.patient + '\n'; }
-  if (from) { b += 'Prepared by: ' + from + '\n'; }
-  b += 'Date: ' + new Date().toLocaleDateString(curCurrency.locale, {year: 'numeric', month: 'long', day: 'numeric'}) + '\n';
-  b += 'Aligners: ' + v.count + '\n\n';
-  b += 'K Line:        ' + fmt(tK) + '  (' + fmt(v.kline) + '/aligner)\n';
-  b += 'In-House:      ' + fmt(tI) + '  (' + fmt(v.inhouse) + '/aligner)\n';
-  var rawCompName = $('competitorName').value.trim().substring(0, 40) || 'External Lab';
-  b += rawCompName + ':    ' + fmt(tC) + '  (' + fmt(v.competitor) + '/aligner)\n\n';
-  b += 'SAVINGS WITH K LINE: ' + fmt(Math.abs(roundCurrency(tC - tK))) + ' per case\n\n';
-  b += 'IN-HOUSE COST BREAKDOWN (per aligner):\n';
-  for (var i = 0; i < result.costs.length; i++) {
-    if (result.costs[i] > 0) {
-      b += '  ' + COST_LABELS[i] + ': ' + fmt(result.costs[i]) + '\n';
-    }
+  if (method === 'inhouse' || method === 'both') {
+    cardsHtml += '<div class="cost-card highlight"><div class="cc-label">In-House Cost / Case</div><div class="cc-val">' + fmt(ihCost.total) + '</div><div class="cc-sub">' + fmt2(ihCost.total / aligners) + ' per aligner</div></div>';
   }
-  b += '  TOTAL: ' + fmt(result.total) + '/aligner\n\n';
-  b += '---\nK Line Europe | kline-europe.com\n';
-  location.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + subj + '&body=' + encodeURIComponent(b);
-  closeEmailModal();
-  showToast('Opening email client...');
+  cardsHtml += '<div class="cost-card"><div class="cc-label">Monthly Spend</div><div class="cc-val">' + fmt(roundC(totalCost * monthly)) + '</div><div class="cc-sub">' + monthly + ' cases/month</div></div>';
+  cardsHtml += '<div class="cost-card"><div class="cc-label">Annual Spend</div><div class="cc-val">' + fmt(roundC(totalCost * annual)) + '</div><div class="cc-sub">' + annual + ' cases/year</div></div>';
+  $('costCards').innerHTML = cardsHtml;
+
+  // Annual projection
+  var annualSpend = roundC(totalCost * annual);
+  var save40 = roundC(annualSpend * 0.40);
+  var save60 = roundC(annualSpend * 0.60);
+  $('annualGrid').innerHTML =
+    '<div class="annual-item"><div class="ai-label">Current Annual Spend</div><div class="ai-val red">' + fmt(annualSpend) + '</div><div class="ai-sub">' + annual + ' cases × ' + fmt(totalCost) + '</div></div>' +
+    '<div class="annual-item"><div class="ai-label">Potential Annual Savings</div><div class="ai-val" style="color:var(--teal);">' + fmt(save40) + ' – ' + fmt(save60) + '</div><div class="ai-sub">Estimated 40–60% savings</div></div>' +
+    '<div class="annual-item"><div class="ai-label">Potential New Cost</div><div class="ai-val" style="color:var(--green);">' + fmt(roundC(annualSpend - save60)) + ' – ' + fmt(roundC(annualSpend - save40)) + '</div><div class="ai-sub">With K Line Europe</div></div>';
+
+  // Breakdown (in-house)
+  if (ihCost && (method === 'inhouse' || method === 'both')) {
+    $('breakdownSection').style.display = '';
+    var bar = $('stackedBar');
+    var legend = $('stackedLegend');
+    var barHtml = '', legendHtml = '';
+    var total = ihCost.total;
+    var keys = ['labor', 'material', 'equipment', 'software', 'rent', 'consumables', 'postProcessing'];
+    keys.forEach(function(k) {
+      if (ihCost[k] <= 0) return;
+      var pct = total > 0 ? (ihCost[k] / total) * 100 : 0;
+      barHtml += '<div class="stacked-bar-segment" style="width:' + pct + '%;background:' + BAR_COLORS[k] + ';" title="' + BAR_LABELS[k] + ': ' + Math.round(pct) + '%"></div>';
+      legendHtml += '<div class="legend-item"><div class="legend-dot" style="background:' + BAR_COLORS[k] + ';"></div><span class="legend-label">' + BAR_LABELS[k] + '</span><span class="legend-val">' + Math.round(pct) + '% · ' + fmt(ihCost[k]) + '</span></div>';
+    });
+    bar.innerHTML = barHtml;
+    legend.innerHTML = legendHtml;
+  } else {
+    $('breakdownSection').style.display = 'none';
+  }
+
+  // Savings teaser
+  var perCaseSave40 = roundC(totalCost * 0.40);
+  var perCaseSave60 = roundC(totalCost * 0.60);
+  $('savingsRange').textContent = 'Save ' + fmt(perCaseSave40) + ' – ' + fmt(perCaseSave60) + ' per case';
 }
 
+/* ===== Toast ===== */
+var toastTimer;
+function showToast(msg) {
+  clearTimeout(toastTimer);
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 3000);
+}
+
+/* ===== Copy Link ===== */
 function copyLink() {
   navigator.clipboard.writeText(location.href).then(function() {
     showToast('Link copied!');
   }).catch(function() {
-    showToast('Could not copy link. Please copy the URL manually.');
+    showToast('Please copy the URL manually.');
   });
 }
 
-function resetDefaults() {
-  if (!confirm('Reset all values to defaults?')) { return; }
-  $('complexity').value = defaults.complexity;
-  $('alignerCount').value = defaults.alignerCount;
-  $('priceKLine').value = defaults.priceKLine.toFixed(2);
-  $('priceInHouse').value = defaults.priceInHouse.toFixed(2);
-  $('priceCompetitor').value = defaults.priceCompetitor.toFixed(2);
-  $('equipmentCost').value = defaults.equipmentCost;
-  $('patientName').value = '';
-  $('clinicName').value = '';
-  $('competitorName').value = defaults.competitorName;
-  $('monthlyCases').value = defaults.monthlyCases;
-  $('currency').value = 'EUR';
-  curCurrency = currencies.EUR;
-  /* Reset Tab 1 fields */
-  $('doctorRate').value = 120;
-  $('assistantRate').value = 22;
-  $('doctorMinutes').value = 45;
-  $('assistantMinutes').value = 90;
-  $('alignersPerCase').value = 30;
-  $('calcMonthlyCases').value = 10;
-  $('material').value = 0;
-  $('printer').value = 0;
-  $('software').value = 0;
-  $('labRent').value = 200;
-  $('consumablesPolishing').value = 0.50;
-  $('consumablesCutting').value = 0.30;
-  $('thermoMaintenance').value = 300;
-  $('customMaterialCost').value = 3.00;
-  $('customPrinterPrice').value = 10000;
-  $('customPrinterLifespan').value = 5;
-  $('customPrinterMaintenance').value = 500;
-  $('customSoftwarePrice').value = 0;
-  $('customSoftwareModel').value = 'monthly';
-  $('washStationCost').value = 300;
-  $('uvCuringCost').value = 700;
-  $('fieldCustomMaterialCost').style.display = 'none';
-  $('customPrinterFields').style.display = 'none';
-  $('customSoftwareFields').style.display = 'none';
-  updateCurrencySymbols();
-  document.querySelectorAll('input.invalid').forEach(function(el) { el.classList.remove('invalid'); });
-  renderAll();
-  showToast('Reset to defaults');
-}
-
-function showToast(m) {
-  var t = $('toast');
-  t.classList.remove('show');
-  void t.offsetWidth;
-  t.textContent = m;
-  t.classList.add('show');
-  clearTimeout(t._to);
-  t._to = setTimeout(function() { t.classList.remove('show'); }, 2500);
+/* ===== Reset ===== */
+function resetAll() {
+  if (!confirm('Reset all values to defaults?')) return;
+  location.href = location.pathname;
 }
 
 /* ===== Init ===== */
-populateDropdowns();
-loadFromURL();
-updateCurrencySymbols();
-/* Direct initial render (bypasses rAF for first paint) */
-try {
-  renderResults();
-  renderComparison();
-  debouncedUpdateURL();
-} catch (err) {
-  console.error('Initial calculation error:', err);
-}
-$('emailModal').addEventListener('click', function(e) { if (e.target === this) { closeEmailModal(); } });
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeEmailModal(); } });
+updateSymbols();
+// Set initial visibility
+$('sectionInHouseCost').style.display = 'none';
 </script>
 </body>
 </html>
