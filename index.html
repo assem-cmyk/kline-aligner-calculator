@@ -25,7 +25,7 @@
   --white: #ffffff;
   --white-90: rgba(255,255,255,0.9);
   --white-70: rgba(255,255,255,0.7);
-  --white-60: rgba(255,255,255,0.6);
+  --white-60: rgba(255,255,255,0.75);
   --white-20: rgba(255,255,255,0.2);
   --white-10: rgba(255,255,255,0.1);
   --green: #10b981;
@@ -36,7 +36,7 @@
   --surface: #f8f9fb;
   --surface-border: #e5e7eb;
   --text: #374151;
-  --text-muted: #6b7280;
+  --text-muted: #586069;
   --radius: 14px;
   --radius-sm: 8px;
   --shadow: 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
@@ -336,7 +336,7 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
   body { background: white !important; }
   nav, .step-nav, .toast, .no-print, .steps-bar { display: none !important; }
   /* Only show step 3 results */
-  #step1, #step2 { display: none !important; }
+  .step-panel { display: none !important; }
   #step3 { display: block !important; }
   header { background: var(--dark-900) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 1.25rem; }
   main { padding: 1rem; max-width: 100%; }
@@ -624,17 +624,21 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
       <div class="st-range" id="savingsRange">—</div>
       <div class="st-disclaimer">*Savings vary by case volume, complexity, and region. Contact K Line for a personalized proposal.</div>
       <div class="cta-group">
-        <a href="https://www.kline-europe.com/contact-us" target="_blank" rel="noopener noreferrer" class="btn btn-teal btn-lg">
+        <a href="https://www.kline-europe.com/contact-us?utm_source=calculator&utm_medium=tool&utm_campaign=cost_discovery" target="_blank" rel="noopener noreferrer" class="btn btn-teal btn-lg" id="ctaLink">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
           Get Your Custom K Line Quote
         </a>
+        <button type="button" class="btn btn-outline" style="color:var(--white-90);border-color:var(--white-20);" onclick="printResults()" id="ctaDownload">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          Download Cost Report
+        </button>
       </div>
     </div>
 
     <div class="step-nav no-print">
       <button type="button" class="btn btn-outline btn-lg" onclick="goToStep(2)">← Adjust Costs</button>
       <div style="display:flex;gap:0.5rem;">
-        <button type="button" class="btn btn-dark" onclick="window.print()">
+        <button type="button" class="btn btn-dark" onclick="printResults()">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M14 2v6h6"/></svg>
           Save PDF
         </button>
@@ -788,6 +792,8 @@ var T = {
     casesYearSuffix: 'cases/year',
     alignersCase: 'aligners/case',
     savingsRangeText: 'Request your personalized quote to see exact savings',
+    ctaDownload: 'Download Cost Report',
+    currencyNote: 'All values are in the selected currency. Adjust amounts if switching currencies.',
     barLabor: 'Labor', barMaterial: 'Material (incl. waste)', barEquipment: 'Equipment',
     barSoftware: 'Software', barRent: 'Lab Space', barConsumables: 'Consumables',
     barPostProc: 'Post-Processing', barScanner: 'Scanner',
@@ -831,13 +837,13 @@ var T = {
     phLabName: 'ex: Align Technology, SureSmile',
     hintLab: 'Quel est votre fournisseur actuel ?',
     lblLabCostCase: 'Coût par Cas',
-    hintLabCost: 'Frais de labo par cas complet (hors retouches)',
+    hintLabCost: 'Frais de labo par cas complet (hors ajustements)',
     lblShipping: 'Livraison par Cas',
     lblRefinements: 'Coût Moyen de Retouche',
-    hintRef: 'Coût supplémentaire si retouches non incluses',
+    hintRef: 'Coût supplémentaire si ajustements non inclus',
     secInHouse: 'Coûts de Production Interne',
     divLabor: 'Main-d\'Œuvre',
-    lblDoctorRate: 'Taux Horaire du Médecin',
+    lblDoctorRate: 'Taux Horaire du Docteur',
     hintDoctorRate: 'Salaire ou coût d\'opportunité du fauteuil',
     lblAssistantRate: 'Taux Horaire de l\'Assistant',
     lblDoctorMin: 'Minutes Médecin / Cas',
@@ -872,7 +878,7 @@ var T = {
     savingsDisclaimer: '*Les économies varient selon le volume, la complexité et la région. Contactez K Line Europe pour une proposition personnalisée.',
     ctaQuote: 'Obtenez Votre Devis K Line',
     btnAdjust: '← Ajuster les Coûts',
-    btnPDF: 'Sauver PDF',
+    btnPDF: 'Enregistrer PDF',
     btnCopy: 'Copier le Lien',
     footerTagline: 'Le #1 Européen en Aligneurs Transparents OEM',
     footerDisclaimer: 'Tous les chiffres sont des estimations basées sur vos données. Les coûts réels peuvent varier. Les projections d\'économies sont indicatives — contactez K Line Europe pour un devis précis et personnalisé. Cet outil ne constitue pas un conseil financier.',
@@ -891,6 +897,8 @@ var T = {
     casesYearSuffix: 'cas/an',
     alignersCase: 'aligneurs/cas',
     savingsRangeText: 'Demandez votre devis personnalisé pour voir les économies exactes',
+    ctaDownload: 'Télécharger le rapport',
+    currencyNote: 'Toutes les valeurs sont dans la devise sélectionnée. Ajustez les montants si vous changez de devise.',
     barLabor: 'Main-d\'Œuvre', barMaterial: 'Matériau (incl. déchets)', barEquipment: 'Équipement',
     barSoftware: 'Logiciel', barRent: 'Espace Labo', barConsumables: 'Consommables',
     barPostProc: 'Post-Traitement', barScanner: 'Scanner',
@@ -994,6 +1002,8 @@ var T = {
     casesYearSuffix: 'casos/año',
     alignersCase: 'alineadores/caso',
     savingsRangeText: 'Solicite su presupuesto personalizado para ver los ahorros exactos',
+    ctaDownload: 'Descargar informe de costes',
+    currencyNote: 'Todos los valores están en la divisa seleccionada. Ajuste los importes si cambia de divisa.',
     barLabor: 'Mano de Obra', barMaterial: 'Material (incl. residuos)', barEquipment: 'Equipos',
     barSoftware: 'Software', barRent: 'Espacio Lab', barConsumables: 'Consumibles',
     barPostProc: 'Post-Procesado', barScanner: 'Escáner',
@@ -1005,12 +1015,12 @@ var T = {
     toolLabel: 'Strumento Analisi Costi',
     reset: '↺ Ripristina',
     heroTitle: 'Strumento di <span class="accent">Analisi dei Costi</span> degli Allineatori',
-    heroSub: 'Scopri i tuoi veri costi di produzione degli allineatori — poi vedi quanto potresti risparmiare',
+    heroSub: 'Scopra i Suoi veri costi di produzione degli allineatori — poi veda quanto potrebbe risparmiare',
     step1Label: 'Il Tuo Studio',
     step2Label: 'Costi Attuali',
     step3Label: 'I Tuoi Risultati',
-    onboard1: 'Parlaci del tuo volume di allineatori. Questo ci aiuta a calcolare i tuoi costi reali con precisione.',
-    onboard2: 'Come ottieni attualmente i tuoi allineatori? Inserisci i tuoi costi qui sotto — calcoleremo il quadro completo.',
+    onboard1: 'Ci indichi il Suo volume di allineatori. Questo ci aiuta a calcolare i Suoi costi reali con precisione.',
+    onboard2: 'Come ottiene attualmente i Suoi allineatori? Inserisca i Suoi costi qui sotto — calcoleremo il quadro completo.',
     secCaseVol: 'Volume Casi',
     lblComplexity: 'Complessità del Caso',
     optMild: 'Lieve (14 allineatori)',
@@ -1022,8 +1032,8 @@ var T = {
     lblMonthlyCases: 'Casi Mensili',
     hintMC: 'Quanti casi di allineatori al mese?',
     lblClinicName: 'Nome dello Studio',
-    hintCN: 'Opzionale — per il tuo rapporto risultati',
-    phClinic: 'Nome del tuo studio',
+    hintCN: 'Opzionale — per il Suo rapporto risultati',
+    phClinic: 'Nome del Suo studio',
     btnNext: 'Avanti: I Tuoi Costi Attuali →',
     secMethod: 'Il Tuo Metodo Attuale',
     lblMethod: 'Come realizzi attualmente i tuoi casi di allineatori?',
@@ -1035,7 +1045,7 @@ var T = {
     secLabCost: 'Costi del Laboratorio Esterno',
     lblLabName: 'Nome Lab / Fornitore',
     phLabName: 'es: Align Technology, SureSmile',
-    hintLab: 'Chi è il tuo fornitore attuale?',
+    hintLab: 'Chi è il Suo fornitore attuale?',
     lblLabCostCase: 'Costo per Caso',
     hintLabCost: 'Tariffa lab per caso completo (esclusi ritocchi)',
     lblShipping: 'Spedizione per Caso',
@@ -1074,14 +1084,14 @@ var T = {
     secAnnual: 'Proiezione Annuale',
     secBreakdown: 'Dettaglio Costi Interni',
     savingsHeadline: 'I clienti K Line riportano <span class="teal">risparmi significativi</span> per caso',
-    savingsSub: 'In base ai tuoi costi attuali, passare a K Line potrebbe ridurre significativamente la tua spesa per caso. Richiedi un preventivo personalizzato per vedere i tuoi risparmi esatti.',
+    savingsSub: 'In base ai Suoi costi attuali, passare a K Line potrebbe ridurre significativamente la Sua spesa per caso. Richieda un preventivo personalizzato per vedere i Suoi risparmi esatti.',
     savingsDisclaimer: '*I risparmi variano per volume, complessità e regione. Contatta K Line Europe per una proposta personalizzata.',
     ctaQuote: 'Ottieni il Tuo Preventivo K Line',
     btnAdjust: '← Modifica Costi',
     btnPDF: 'Salva PDF',
     btnCopy: 'Copia Link',
     footerTagline: 'Il #1 in Europa per Allineatori Trasparenti OEM',
-    footerDisclaimer: 'Tutti i dati sono stime basate sui tuoi input. I costi reali possono variare. Le proiezioni di risparmio sono indicative — contatta K Line Europe per un preventivo preciso e personalizzato. Questo strumento non costituisce consulenza finanziaria.',
+    footerDisclaimer: 'Tutti i dati sono stime basate sui Suoi input. I costi reali possono variare. Le proiezioni di risparmio sono indicative — contatti K Line Europe per un preventivo preciso e personalizzato. Questo strumento non costituisce consulenza finanziaria.',
     toastCopied: 'Link copiato!',
     toastCopyFail: 'Copia l\'URL manualmente.',
     confirmReset: 'Ripristinare tutti i valori predefiniti?',
@@ -1097,12 +1107,14 @@ var T = {
     casesYearSuffix: 'casi/anno',
     alignersCase: 'allineatori/caso',
     savingsRangeText: 'Richiedi il tuo preventivo personalizzato per vedere i risparmi esatti',
+    ctaDownload: 'Scarica il rapporto costi',
+    currencyNote: 'Tutti i valori sono nella valuta selezionata. Modifichi gli importi se cambia valuta.',
     barLabor: 'Manodopera', barMaterial: 'Materiale (incl. scarti)', barEquipment: 'Attrezzature',
     barSoftware: 'Software', barRent: 'Spazio Lab', barConsumables: 'Consumabili',
     barPostProc: 'Post-Lavorazione', barScanner: 'Scanner',
     aligners: 'allineatori', externalLab: 'Lab Esterno', inHouseProd: 'Produzione Interna',
     blended: 'Misto', lab: 'lab', inhouse: 'interno',
-    noJS: 'Questo strumento richiede JavaScript. Attiva JavaScript nel tuo browser.'
+    noJS: 'Questo strumento richiede JavaScript. Attivi JavaScript nel Suo browser.'
   },
   pt: {
     toolLabel: 'Ferramenta de Análise de Custos',
@@ -1112,7 +1124,7 @@ var T = {
     step1Label: 'Sua Clínica',
     step2Label: 'Custos Atuais',
     step3Label: 'Seus Resultados',
-    onboard1: 'Conte-nos sobre seu volume de alinhadores. Isso nos ajuda a calcular seus custos reais com precisão.',
+    onboard1: 'Indique-nos o seu volume de alinhadores. Isto ajuda-nos a calcular os seus custos reais com precisão.',
     onboard2: 'Como você obtém seus alinhadores atualmente? Insira seus custos abaixo — calcularemos o quadro completo.',
     secCaseVol: 'Volume de Casos',
     lblComplexity: 'Complexidade do Caso',
@@ -1141,7 +1153,7 @@ var T = {
     hintLab: 'Quem é seu fornecedor atual?',
     lblLabCostCase: 'Custo por Caso',
     hintLabCost: 'Taxa do lab por caso completo (excl. refinamentos)',
-    lblShipping: 'Frete por Caso',
+    lblShipping: 'Envio por Caso',
     lblRefinements: 'Custo Médio de Refinamento',
     hintRef: 'Custo adicional se refinamentos não incluídos',
     secInHouse: 'Custos de Produção Própria',
@@ -1200,6 +1212,8 @@ var T = {
     casesYearSuffix: 'casos/ano',
     alignersCase: 'alinhadores/caso',
     savingsRangeText: 'Solicite seu orçamento personalizado para ver as economias exatas',
+    ctaDownload: 'Descarregar relatório de custos',
+    currencyNote: 'Todos os valores estão na moeda selecionada. Ajuste os montantes se mudar de moeda.',
     barLabor: 'Mão de Obra', barMaterial: 'Material (incl. resíduos)', barEquipment: 'Equipamentos',
     barSoftware: 'Software', barRent: 'Espaço Lab', barConsumables: 'Consumíveis',
     barPostProc: 'Pós-Processamento', barScanner: 'Scanner',
@@ -1303,6 +1317,8 @@ var T = {
     casesYearSuffix: 'Fälle/Jahr',
     alignersCase: 'Aligner/Fall',
     savingsRangeText: 'Fordern Sie Ihr individuelles Angebot an, um die genauen Einsparungen zu sehen',
+    ctaDownload: 'Kostenbericht herunterladen',
+    currencyNote: 'Alle Werte sind in der gewählten Währung. Passen Sie die Beträge an, wenn Sie die Währung wechseln.',
     barLabor: 'Arbeitskosten', barMaterial: 'Material (inkl. Ausschuss)', barEquipment: 'Ausrüstung',
     barSoftware: 'Software', barRent: 'Laborraum', barConsumables: 'Verbrauchsmaterial',
     barPostProc: 'Nachbearbeitung', barScanner: 'Scanner',
@@ -1406,6 +1422,8 @@ var T = {
     casesYearSuffix: '例/年',
     alignersCase: '副矫治器/例',
     savingsRangeText: '申请您的个性化报价以查看确切节省',
+    ctaDownload: '下载成本报告',
+    currencyNote: '所有金额均以所选货币显示。如更换货币请调整金额。',
     barLabor: '人工', barMaterial: '材料（含废品）', barEquipment: '设备',
     barSoftware: '软件', barRent: '实验室空间', barConsumables: '消耗品',
     barPostProc: '后处理', barScanner: '扫描仪',
@@ -1436,7 +1454,7 @@ var T = {
     lblClinicName: 'اسم العيادة',
     hintCN: 'اختياري — لتقرير النتائج',
     phClinic: 'اسم عيادتك',
-    btnNext: 'التالي: تكاليفك الحالية ←',
+    btnNext: '← التالي: تكاليفك الحالية',
     secMethod: 'طريقتك الحالية',
     lblMethod: 'كيف تنفذ حالياً حالات المصففات؟',
     optLab: 'مختبر خارجي / منافس',
@@ -1480,7 +1498,7 @@ var T = {
     hintWaste: 'عادة 5-15% من المطبوعات تفشل',
     lblScanner: 'تكلفة الماسح داخل الفم',
     hintScanner: 'أدخل 0 إذا كان مملوكاً بالفعل',
-    btnBack: 'رجوع ←',
+    btnBack: '→ رجوع',
     btnResults: '← عرض نتائجي',
     rhLabel: 'تكلفتك الحالية لكل حالة',
     secAnnual: 'التوقعات السنوية',
@@ -1489,7 +1507,7 @@ var T = {
     savingsSub: 'بناءً على تكاليفك الحالية، التحول إلى K Line يمكن أن يقلل بشكل كبير من إنفاقك لكل حالة. اطلب عرض أسعار مخصص لمعرفة مدخراتك الدقيقة.',
     savingsDisclaimer: '*يختلف التوفير حسب الحجم والتعقيد والمنطقة. اتصل بـ K Line Europe للحصول على عرض مخصص.',
     ctaQuote: 'احصل على عرض K Line المخصص',
-    btnAdjust: 'تعديل التكاليف ←',
+    btnAdjust: '→ تعديل التكاليف',
     btnPDF: 'حفظ PDF',
     btnCopy: 'نسخ الرابط',
     footerTagline: 'المزود الأول في أوروبا للمصففات الشفافة OEM',
@@ -1509,6 +1527,8 @@ var T = {
     casesYearSuffix: 'حالة/سنة',
     alignersCase: 'مصفف/حالة',
     savingsRangeText: 'اطلب عرض أسعار مخصص لمعرفة التوفير الدقيق',
+    ctaDownload: 'تحميل تقرير التكاليف',
+    currencyNote: 'جميع القيم بالعملة المحددة. عدّل المبالغ عند تغيير العملة.',
     barLabor: 'العمالة', barMaterial: 'المواد (شامل الهدر)', barEquipment: 'المعدات',
     barSoftware: 'البرمجيات', barRent: 'مساحة المختبر', barConsumables: 'المستهلكات',
     barPostProc: 'ما بعد المعالجة', barScanner: 'الماسح',
@@ -1562,14 +1582,7 @@ function applyLanguage(lang) {
   if (panels[0]) panels[0].textContent = t('onboard1');
   if (panels[1]) panels[1].textContent = t('onboard2');
 
-  /* Section headers */
-  var secHeaders = document.querySelectorAll('.section-header h2');
-  var secMap = ['secCaseVol','secMethod','secLabCost','secInHouse','secAnnual','secBreakdown'];
-  secHeaders.forEach(function(sh) {
-    var txt = sh.textContent.trim();
-    if (txt === 'Case Volume' || sh.closest('#step1 section:first-of-type')) secMap.forEach(function(){});
-  });
-  /* Direct section header mapping by parent */
+  /* Section headers — direct mapping by parent */
   var step1Sec = document.querySelector('#step1 .section-header h2');
   if (step1Sec) step1Sec.textContent = t('secCaseVol');
 
@@ -1720,6 +1733,11 @@ function applyLanguage(lang) {
     var copySvg = copyBtn.querySelector('svg');
     copyBtn.innerHTML = (copySvg ? copySvg.outerHTML : '') + ' ' + t('btnCopy');
   }
+  var dlBtn = $('ctaDownload');
+  if (dlBtn) {
+    var dlSvg = dlBtn.querySelector('svg');
+    dlBtn.innerHTML = (dlSvg ? dlSvg.outerHTML : '') + ' ' + t('ctaDownload');
+  }
 
   /* Re-render results if on step 3 */
   if (currentStep === 3) renderResults();
@@ -1775,6 +1793,9 @@ function goToStep(step) {
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (step === 3) { renderResults(); updateURL(); }
+  /* Focus management — move focus to active panel */
+  var activePanel = document.querySelector('.step-panel.active');
+  if (activePanel) { activePanel.setAttribute('tabindex', '-1'); activePanel.focus({ preventScroll: true }); }
 }
 // Expose for onclick
 window.goToStep = goToStep;
@@ -1814,10 +1835,11 @@ function calcLabCost() {
   return roundC(caseCost + shipping + refinements);
 }
 
-function calcInHouseCost() {
+function calcInHouseCost(ihFraction) {
   var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
   var monthly = Math.max(1, parseInt($('monthlyCases').value) || 10);
-  var annual = monthly * 12;
+  var frac = typeof ihFraction === 'number' ? ihFraction : 1;
+  var annual = Math.max(1, Math.round(monthly * 12 * frac));
 
   var drRate = Math.max(0, parseFloat($('doctorRate').value) || 0);
   var asRate = Math.max(0, parseFloat($('assistantRate').value) || 0);
@@ -1886,14 +1908,15 @@ function renderResults() {
       methodLabel = aligners + ' ' + t('aligners') + ' \u00b7 ' + t('inHouseProd');
     } else {
       labCost = calcLabCost();
-      ihCost = calcInHouseCost();
       var split = Math.min(100, Math.max(0, parseInt($('labSplitPct').value) || 70)) / 100;
+      ihCost = calcInHouseCost(1 - split); /* amortize fixed costs over in-house volume only */
       totalCost = roundC(labCost * split + ihCost.total * (1 - split));
       methodLabel = aligners + ' ' + t('aligners') + ' \u00b7 ' + t('blended') + ' (' + Math.round(split * 100) + '% ' + t('lab') + ' / ' + Math.round((1 - split) * 100) + '% ' + t('inhouse') + ')';
     }
 
     $('resultTotal').textContent = fmt(totalCost);
-    $('resultSub').textContent = methodLabel;
+    var clinic = $('clinicName').value.trim();
+    $('resultSub').textContent = (clinic ? esc(clinic) + ' — ' : '') + methodLabel;
 
     /* Cost cards */
     var ch = '';
@@ -1979,32 +2002,43 @@ function updateURL() {
   history.replaceState(null, '', location.pathname + '?' + p.toString());
 }
 
+function clampParam(val, min, max) {
+  var n = parseFloat(val);
+  if (isNaN(n)) return null;
+  return Math.min(max, Math.max(min, n));
+}
+function setFromURL(el, val, min, max) {
+  var c = clampParam(val, min, max);
+  if (c !== null) el.value = c;
+}
+
 function loadFromURL() {
   var p = new URLSearchParams(location.search);
   if (!p.has('m')) return;
   if (p.has('lang') && T[p.get('lang')]) { $('langSelect').value = p.get('lang'); applyLanguage(p.get('lang')); }
   if (p.has('cur') && currencies[p.get('cur')]) { curCurrency = currencies[p.get('cur')]; $('currency').value = curCurrency.code; }
-  if (p.has('m')) { $('currentMethod').value = p.get('m'); $('currentMethod').dispatchEvent(new Event('change')); }
-  if (p.has('a')) { $('alignersPerCase').value = p.get('a'); var v = parseInt(p.get('a')); $('complexity').value = v === 14 ? '14' : v === 30 ? '30' : v === 50 ? '50' : 'custom'; }
-  if (p.has('mc')) $('monthlyCases').value = p.get('mc');
-  if (p.has('lc')) $('labCostPerCase').value = p.get('lc');
-  if (p.has('ls')) $('labShipping').value = p.get('ls');
-  if (p.has('lr')) $('labRefinements').value = p.get('lr');
-  if (p.has('sp')) $('labSplitPct').value = p.get('sp');
-  if (p.has('dr')) $('doctorRate').value = p.get('dr');
-  if (p.has('ar')) $('assistantRate').value = p.get('ar');
-  if (p.has('dm')) $('doctorMinutes').value = p.get('dm');
-  if (p.has('am')) $('assistantMinutes').value = p.get('am');
-  if (p.has('mat')) $('materialCostPerAligner').value = p.get('mat');
-  if (p.has('pc')) $('printerCost').value = p.get('pc');
-  if (p.has('pl')) $('printerLifespan').value = p.get('pl');
-  if (p.has('mn')) $('annualMaintenance').value = p.get('mn');
-  if (p.has('sw')) $('softwareCost').value = p.get('sw');
-  if (p.has('rn')) $('labRent').value = p.get('rn');
-  if (p.has('cn')) $('consumablesPerAligner').value = p.get('cn');
-  if (p.has('pp')) $('postProcessingEquip').value = p.get('pp');
-  if (p.has('wr')) $('wasteRate').value = p.get('wr');
-  if (p.has('sc')) $('scannerCost').value = p.get('sc');
+  var validMethods = ['lab','inhouse','both'];
+  if (p.has('m') && validMethods.indexOf(p.get('m')) !== -1) { $('currentMethod').value = p.get('m'); $('currentMethod').dispatchEvent(new Event('change')); }
+  if (p.has('a')) { setFromURL($('alignersPerCase'), p.get('a'), 1, 200); var v = parseInt($('alignersPerCase').value); $('complexity').value = v === 14 ? '14' : v === 30 ? '30' : v === 50 ? '50' : 'custom'; }
+  if (p.has('mc')) setFromURL($('monthlyCases'), p.get('mc'), 1, 10000);
+  if (p.has('lc')) setFromURL($('labCostPerCase'), p.get('lc'), 0, 99999);
+  if (p.has('ls')) setFromURL($('labShipping'), p.get('ls'), 0, 9999);
+  if (p.has('lr')) setFromURL($('labRefinements'), p.get('lr'), 0, 9999);
+  if (p.has('sp')) setFromURL($('labSplitPct'), p.get('sp'), 0, 100);
+  if (p.has('dr')) setFromURL($('doctorRate'), p.get('dr'), 0, 9999);
+  if (p.has('ar')) setFromURL($('assistantRate'), p.get('ar'), 0, 9999);
+  if (p.has('dm')) setFromURL($('doctorMinutes'), p.get('dm'), 0, 600);
+  if (p.has('am')) setFromURL($('assistantMinutes'), p.get('am'), 0, 600);
+  if (p.has('mat')) setFromURL($('materialCostPerAligner'), p.get('mat'), 0, 999);
+  if (p.has('pc')) setFromURL($('printerCost'), p.get('pc'), 0, 500000);
+  if (p.has('pl')) setFromURL($('printerLifespan'), p.get('pl'), 1, 20);
+  if (p.has('mn')) setFromURL($('annualMaintenance'), p.get('mn'), 0, 50000);
+  if (p.has('sw')) setFromURL($('softwareCost'), p.get('sw'), 0, 99999);
+  if (p.has('rn')) setFromURL($('labRent'), p.get('rn'), 0, 50000);
+  if (p.has('cn')) setFromURL($('consumablesPerAligner'), p.get('cn'), 0, 100);
+  if (p.has('pp')) setFromURL($('postProcessingEquip'), p.get('pp'), 0, 50000);
+  if (p.has('wr')) setFromURL($('wasteRate'), p.get('wr'), 0, 50);
+  if (p.has('sc')) setFromURL($('scannerCost'), p.get('sc'), 0, 99999);
   if (p.get('s') === '3') goToStep(3);
 }
 
@@ -2025,10 +2059,20 @@ window.copyLink = function() {
     .catch(function() { showToast(t('toastCopyFail')); });
 };
 
+window.printResults = function() {
+  renderResults();
+  setTimeout(function() { window.print(); }, 100);
+};
+
 window.resetAll = function() {
   if (!confirm(t('confirmReset'))) return;
   location.href = location.pathname;
 };
+
+/* ===== Currency warning ===== */
+$('currency').addEventListener('change', function() {
+  showToast(t('currencyNote'));
+});
 
 /* ===== Init ===== */
 updateSymbols();
