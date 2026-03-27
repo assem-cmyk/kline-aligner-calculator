@@ -292,6 +292,39 @@ footer { background: var(--dark-900); text-align: center; padding: 1.75rem 1.5re
 }
 .toast.show { opacity: 1; pointer-events: auto; }
 
+/* ===== CUSTOM ITEMS ===== */
+.custom-item {
+  display: grid; grid-template-columns: 1fr auto 1fr auto; gap: 0.5rem;
+  align-items: center; margin-bottom: 0.5rem;
+  padding: 0.5rem 0.65rem; background: var(--surface); border-radius: var(--radius-sm);
+  border: 1px solid var(--surface-border);
+}
+.custom-item select {
+  padding: 0.45rem 0.5rem; border: 1.5px solid var(--surface-border);
+  border-radius: var(--radius-sm); font-size: 0.82rem; font-family: inherit;
+  color: var(--text); background: var(--white); min-width: 0;
+}
+.custom-item input[type="text"] {
+  padding: 0.45rem 0.5rem; border: 1.5px solid var(--surface-border);
+  border-radius: var(--radius-sm); font-size: 0.82rem; font-family: inherit;
+  color: var(--text); background: var(--white); min-width: 0;
+}
+.custom-item input[type="number"] {
+  padding: 0.45rem 0.5rem; border: 1.5px solid var(--surface-border);
+  border-radius: var(--radius-sm); font-size: 0.82rem; font-family: inherit;
+  color: var(--text); background: var(--white); width: 100%; min-width: 0;
+}
+.custom-item .remove-btn {
+  background: none; border: none; color: var(--red-text); cursor: pointer;
+  padding: 0.25rem; border-radius: 4px; display: flex; align-items: center;
+  transition: background var(--transition);
+}
+.custom-item .remove-btn:hover { background: var(--red-soft); }
+@media (max-width: 768px) {
+  .custom-item { grid-template-columns: 1fr 1fr auto; }
+  .custom-item select { grid-column: 1 / -2; }
+}
+
 /* ===== RTL ===== */
 html[dir="rtl"] { direction: rtl; }
 html[dir="rtl"] .navbar-brand { flex-direction: row-reverse; }
@@ -602,6 +635,16 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
             <label for="scannerLifespan">Scanner Lifespan (Years)</label>
             <input type="number" id="scannerLifespan" value="5" min="1" max="15">
           </div>
+
+          <div class="divider-row"><span>Custom Cost Items</span></div>
+          <div class="field" style="grid-column:1/-1;">
+            <div id="customItems"></div>
+            <button type="button" class="btn btn-outline btn-sm" onclick="addCustomItem()" style="margin-top:0.5rem;">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              Add Custom Cost
+            </button>
+            <div class="hint" style="margin-top:0.35rem;">Add any unlisted materials, equipment, or costs</div>
+          </div>
         </div>
       </div>
     </section>
@@ -822,7 +865,15 @@ var T = {
     hintRetainer: 'Material cost for retention aligners',
     lblPpLifespan: 'Post-Processing Lifespan (Years)',
     lblScannerLife: 'Scanner Lifespan (Years)',
-    barRetainer: 'Retainers',
+    barRetainer: 'Retainers', barCustom: 'Custom Items',
+    divCustom: 'Custom Cost Items',
+    btnAddCustom: 'Add Custom Cost',
+    hintCustom: 'Add any unlisted materials, equipment, or costs',
+    phCustomName: 'Item name (e.g. UV lamp)',
+    optPerCase: 'Per Case',
+    optPerAligner: 'Per Aligner',
+    optMonthly: 'Monthly',
+    optOneTime: 'One-Time Purchase',
     ctaDownload: 'Download Cost Report',
     currencyNote: 'All values are in the selected currency. Adjust amounts if switching currencies.',
     barLabor: 'Labor', barMaterial: 'Material (incl. waste)', barEquipment: 'Equipment',
@@ -935,7 +986,15 @@ var T = {
     hintRetainer: 'Coût matériau pour les aligneurs de contention',
     lblPpLifespan: 'Durée de Vie Post-Traitement (Années)',
     lblScannerLife: 'Durée de Vie Scanner (Années)',
-    barRetainer: 'Contention',
+    barRetainer: 'Contention', barCustom: 'Éléments personnalisés',
+    divCustom: 'Coûts personnalisés',
+    btnAddCustom: 'Ajouter un coût',
+    hintCustom: 'Ajoutez tout matériau, équipement ou coût non listé',
+    phCustomName: 'Nom (ex: lampe UV)',
+    optPerCase: 'Par cas',
+    optPerAligner: 'Par aligneur',
+    optMonthly: 'Mensuel',
+    optOneTime: 'Achat unique',
     ctaDownload: 'Télécharger le rapport',
     currencyNote: 'Toutes les valeurs sont dans la devise sélectionnée. Ajustez les montants si vous changez de devise.',
     barLabor: 'Main-d\'Œuvre', barMaterial: 'Matériau (incl. déchets)', barEquipment: 'Équipement',
@@ -1048,7 +1107,15 @@ var T = {
     hintRetainer: 'Coste material para alineadores de retención',
     lblPpLifespan: 'Vida Útil Post-Procesado (Años)',
     lblScannerLife: 'Vida Útil Escáner (Años)',
-    barRetainer: 'Retención',
+    barRetainer: 'Retención', barCustom: 'Elementos personalizados',
+    divCustom: 'Costes personalizados',
+    btnAddCustom: 'Añadir coste',
+    hintCustom: 'Añada cualquier material, equipo o coste no listado',
+    phCustomName: 'Nombre (ej: lámpara UV)',
+    optPerCase: 'Por caso',
+    optPerAligner: 'Por alineador',
+    optMonthly: 'Mensual',
+    optOneTime: 'Compra única',
     ctaDownload: 'Descargar informe de costes',
     currencyNote: 'Todos los valores están en la divisa seleccionada. Ajuste los importes si cambia de divisa.',
     barLabor: 'Mano de Obra', barMaterial: 'Material (incl. residuos)', barEquipment: 'Equipos',
@@ -1161,7 +1228,15 @@ var T = {
     hintRetainer: 'Costo materiale per allineatori di contenzione',
     lblPpLifespan: 'Durata Post-Lavorazione (Anni)',
     lblScannerLife: 'Durata Scanner (Anni)',
-    barRetainer: 'Contenzione',
+    barRetainer: 'Contenzione', barCustom: 'Elementi personalizzati',
+    divCustom: 'Costi personalizzati',
+    btnAddCustom: 'Aggiungi costo',
+    hintCustom: 'Aggiunga qualsiasi materiale, attrezzatura o costo non elencato',
+    phCustomName: 'Nome (es: lampada UV)',
+    optPerCase: 'Per caso',
+    optPerAligner: 'Per allineatore',
+    optMonthly: 'Mensile',
+    optOneTime: 'Acquisto unico',
     ctaDownload: 'Scarica il rapporto costi',
     currencyNote: 'Tutti i valori sono nella valuta selezionata. Modifichi gli importi se cambia valuta.',
     barLabor: 'Manodopera', barMaterial: 'Materiale (incl. scarti)', barEquipment: 'Attrezzature',
@@ -1274,7 +1349,15 @@ var T = {
     hintRetainer: 'Custo material para alinhadores de contenção',
     lblPpLifespan: 'Vida Útil Pós-Processamento (Anos)',
     lblScannerLife: 'Vida Útil Scanner (Anos)',
-    barRetainer: 'Contenção',
+    barRetainer: 'Contenção', barCustom: 'Itens personalizados',
+    divCustom: 'Custos personalizados',
+    btnAddCustom: 'Adicionar custo',
+    hintCustom: 'Adicione qualquer material, equipamento ou custo não listado',
+    phCustomName: 'Nome (ex: lâmpada UV)',
+    optPerCase: 'Por caso',
+    optPerAligner: 'Por alinhador',
+    optMonthly: 'Mensal',
+    optOneTime: 'Compra única',
     ctaDownload: 'Descarregar relatório de custos',
     currencyNote: 'Todos os valores estão na moeda selecionada. Ajuste os montantes se mudar de moeda.',
     barLabor: 'Mão de Obra', barMaterial: 'Material (incl. resíduos)', barEquipment: 'Equipamentos',
@@ -1387,7 +1470,15 @@ var T = {
     hintRetainer: 'Materialkosten für Retainer-Aligner',
     lblPpLifespan: 'Nachbearbeitungs-Lebensdauer (Jahre)',
     lblScannerLife: 'Scanner-Lebensdauer (Jahre)',
-    barRetainer: 'Retainer',
+    barRetainer: 'Retainer', barCustom: 'Benutzerdefinierte Posten',
+    divCustom: 'Benutzerdefinierte Kosten',
+    btnAddCustom: 'Kosten hinzufügen',
+    hintCustom: 'Fügen Sie nicht aufgeführte Materialien, Geräte oder Kosten hinzu',
+    phCustomName: 'Name (z.B. UV-Lampe)',
+    optPerCase: 'Pro Fall',
+    optPerAligner: 'Pro Aligner',
+    optMonthly: 'Monatlich',
+    optOneTime: 'Einmaliger Kauf',
     ctaDownload: 'Kostenbericht herunterladen',
     currencyNote: 'Alle Werte sind in der gewählten Währung. Passen Sie die Beträge an, wenn Sie die Währung wechseln.',
     barLabor: 'Arbeitskosten', barMaterial: 'Material (inkl. Ausschuss)', barEquipment: 'Ausrüstung',
@@ -1500,7 +1591,15 @@ var T = {
     hintRetainer: '保持矫治器的材料成本',
     lblPpLifespan: '后处理设备寿命（年）',
     lblScannerLife: '扫描仪寿命（年）',
-    barRetainer: '保持器',
+    barRetainer: '保持器', barCustom: '自定义项目',
+    divCustom: '自定义成本项目',
+    btnAddCustom: '添加自定义成本',
+    hintCustom: '添加任何未列出的材料、设备或成本',
+    phCustomName: '项目名称（例：UV灯）',
+    optPerCase: '每例',
+    optPerAligner: '每副矫治器',
+    optMonthly: '每月',
+    optOneTime: '一次性购买',
     ctaDownload: '下载成本报告',
     currencyNote: '所有金额均以所选货币显示。如更换货币请调整金额。',
     barLabor: '人工', barMaterial: '材料（含废品）', barEquipment: '设备',
@@ -1613,7 +1712,15 @@ var T = {
     hintRetainer: 'تكلفة مواد مصففات التثبيت',
     lblPpLifespan: 'عمر معدات ما بعد المعالجة (سنوات)',
     lblScannerLife: 'عمر الماسح (سنوات)',
-    barRetainer: 'المثبتات',
+    barRetainer: 'المثبتات', barCustom: 'عناصر مخصصة',
+    divCustom: 'تكاليف مخصصة',
+    btnAddCustom: 'إضافة تكلفة',
+    hintCustom: 'أضف أي مواد أو معدات أو تكاليف غير مدرجة',
+    phCustomName: 'اسم العنصر (مثال: مصباح UV)',
+    optPerCase: 'لكل حالة',
+    optPerAligner: 'لكل مصفف',
+    optMonthly: 'شهري',
+    optOneTime: 'شراء لمرة واحدة',
     ctaDownload: 'تحميل تقرير التكاليف',
     currencyNote: 'جميع القيم بالعملة المحددة. عدّل المبالغ عند تغيير العملة.',
     barLabor: 'العمالة', barMaterial: 'المواد (شامل الهدر)', barEquipment: 'المعدات',
@@ -1762,7 +1869,7 @@ function applyLanguage(lang) {
 
   /* Divider rows */
   var dividers = document.querySelectorAll('.divider-row span');
-  var divKeys = ['divLabor', 'divMaterials', 'divSoftware'];
+  var divKeys = ['divLabor', 'divMaterials', 'divSoftware', 'divCustom'];
   dividers.forEach(function(d, i) { if (divKeys[i]) d.textContent = t(divKeys[i]); });
 
   /* Buttons */
@@ -1814,7 +1921,7 @@ function applyLanguage(lang) {
   BAR_LABELS = {
     labor: t('barLabor'), material: t('barMaterial'), equipment: t('barEquipment'),
     software: t('barSoftware'), rent: t('barRent'), consumables: t('barConsumables'),
-    retainer: t('barRetainer'), postProcessing: t('barPostProc'), scanner: t('barScanner')
+    retainer: t('barRetainer'), postProcessing: t('barPostProc'), scanner: t('barScanner'), custom: t('barCustom')
   };
 
   /* PDF & Copy buttons */
@@ -1833,6 +1940,15 @@ function applyLanguage(lang) {
     var dlSvg = dlBtn.querySelector('svg');
     dlBtn.innerHTML = (dlSvg ? dlSvg.outerHTML : '') + ' ' + t('ctaDownload');
   }
+
+  /* Custom items button + hint */
+  var addBtn = document.querySelector('#sectionInHouseCost button[onclick="addCustomItem()"]');
+  if (addBtn) {
+    var addSvg = addBtn.querySelector('svg');
+    addBtn.innerHTML = (addSvg ? addSvg.outerHTML : '') + ' ' + t('btnAddCustom');
+  }
+  var customHint = document.querySelector('#sectionInHouseCost #customItems + button + .hint');
+  if (customHint) customHint.textContent = t('hintCustom');
 
   /* Re-render results if on step 3 */
   if (currentStep === 3) renderResults();
@@ -1981,13 +2097,15 @@ function calcInHouseCost(ihFraction) {
     postProcessing: ppPerCase,
     scanner: scanPerCase
   };
-  costs.total = roundC(costs.labor + costs.material + costs.equipment + costs.software + costs.rent + costs.consumables + costs.retainer + costs.postProcessing + costs.scanner);
+  var custom = calcCustomItems();
+  costs.custom = custom.total;
+  costs.total = roundC(costs.labor + costs.material + costs.equipment + costs.software + costs.rent + costs.consumables + costs.retainer + costs.postProcessing + costs.scanner + costs.custom);
   return costs;
 }
 
 /* ===== Bar chart ===== */
-var BAR_COLORS = { labor:'#8b5cf6', material:'#06b0ae', equipment:'#3b82f6', software:'#f59e0b', rent:'#10b981', consumables:'#ef4444', retainer:'#ec4899', postProcessing:'#f97316', scanner:'#6366f1' };
-var BAR_LABELS = { labor:'Labor', material:'Material (incl. waste)', equipment:'Equipment', software:'Software', rent:'Lab Space', consumables:'Consumables', retainer:'Retainers', postProcessing:'Post-Processing', scanner:'Scanner' };
+var BAR_COLORS = { labor:'#8b5cf6', material:'#06b0ae', equipment:'#3b82f6', software:'#f59e0b', rent:'#10b981', consumables:'#ef4444', retainer:'#ec4899', postProcessing:'#f97316', scanner:'#6366f1', custom:'#a855f7' };
+var BAR_LABELS = { labor:'Labor', material:'Material (incl. waste)', equipment:'Equipment', software:'Software', rent:'Lab Space', consumables:'Consumables', retainer:'Retainers', postProcessing:'Post-Processing', scanner:'Scanner', custom:'Custom Items' };
 
 /* ===== Render ===== */
 function renderResults() {
@@ -2042,7 +2160,7 @@ function renderResults() {
       $('breakdownSection').style.display = '';
       var bar = $('stackedBar'), legend = $('stackedLegend');
       var bh = '', lh = '', total = ihCost.total;
-      var keys = ['labor','material','equipment','software','rent','consumables','retainer','postProcessing','scanner'];
+      var keys = ['labor','material','equipment','software','rent','consumables','retainer','postProcessing','scanner','custom'];
       var ariaDesc = [];
       keys.forEach(function(k) {
         if (ihCost[k] <= 0) return;
@@ -2165,6 +2283,53 @@ window.copyLink = function() {
   navigator.clipboard.writeText(location.href).then(function() { showToast(t('toastCopied')); })
     .catch(function() { showToast(t('toastCopyFail')); });
 };
+
+/* ===== Custom Cost Items ===== */
+var customItemCount = 0;
+
+window.addCustomItem = function() {
+  customItemCount++;
+  var id = 'ci_' + customItemCount;
+  var container = $('customItems');
+  var div = document.createElement('div');
+  div.className = 'custom-item';
+  div.id = id;
+  div.innerHTML =
+    '<input type="text" placeholder="' + esc(t('phCustomName')) + '" class="ci-name" maxlength="40">' +
+    '<select class="ci-type">' +
+      '<option value="perCase">' + esc(t('optPerCase')) + '</option>' +
+      '<option value="perAligner">' + esc(t('optPerAligner')) + '</option>' +
+      '<option value="monthly">' + esc(t('optMonthly')) + '</option>' +
+      '<option value="oneTime">' + esc(t('optOneTime')) + '</option>' +
+    '</select>' +
+    '<div class="pre" data-symbol="' + curCurrency.symbol + '"><input type="number" class="ci-cost" value="0" min="0" max="99999" step="1"></div>' +
+    '<button type="button" class="remove-btn" onclick="removeCustomItem(\'' + id + '\')" aria-label="Remove">' +
+      '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
+    '</button>';
+  container.appendChild(div);
+};
+
+window.removeCustomItem = function(id) {
+  var el = $(id);
+  if (el) el.remove();
+};
+
+function calcCustomItems() {
+  var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
+  var monthly = Math.max(1, parseInt($('monthlyCases').value) || 10);
+  var annual = monthly * 12;
+  var total = 0;
+  var items = document.querySelectorAll('.custom-item');
+  items.forEach(function(item) {
+    var cost = Math.max(0, parseFloat(item.querySelector('.ci-cost').value) || 0);
+    var type = item.querySelector('.ci-type').value;
+    if (type === 'perCase') total += cost;
+    else if (type === 'perAligner') total += cost * aligners;
+    else if (type === 'monthly') total += annual > 0 ? (cost * 12) / annual : 0;
+    else if (type === 'oneTime') total += annual > 0 ? cost / (5 * annual) : 0; /* 5yr amortize */
+  });
+  return { total: roundC(total), count: items.length };
+}
 
 window.printResults = function() {
   renderResults();
