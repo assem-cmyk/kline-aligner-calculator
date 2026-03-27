@@ -25,20 +25,18 @@
   --white: #ffffff;
   --white-90: rgba(255,255,255,0.9);
   --white-70: rgba(255,255,255,0.7);
-  --white-50: rgba(255,255,255,0.5);
+  --white-60: rgba(255,255,255,0.6);
   --white-20: rgba(255,255,255,0.2);
   --white-10: rgba(255,255,255,0.1);
-  --white-05: rgba(255,255,255,0.05);
   --green: #10b981;
   --green-soft: rgba(16,185,129,0.12);
   --orange: #f59e0b;
-  --orange-soft: rgba(245,158,11,0.12);
   --red-soft: rgba(239,68,68,0.12);
   --red-text: #ef4444;
   --surface: #f8f9fb;
   --surface-border: #e5e7eb;
   --text: #374151;
-  --text-light: #6b7280;
+  --text-muted: #6b7280;
   --radius: 14px;
   --radius-sm: 8px;
   --shadow: 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
@@ -55,198 +53,129 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: var(--surface);
-  color: var(--text);
-  line-height: 1.55;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
+  background: var(--surface); color: var(--text); line-height: 1.55;
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
 }
 
 /* ===== NAVBAR ===== */
 nav {
-  background: var(--dark-900);
-  padding: 0 2rem;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  background: var(--dark-900); padding: 0 2rem; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
 }
-.navbar-brand {
-  display: flex; align-items: center; gap: 0.85rem; text-decoration: none;
-}
+.navbar-brand { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; }
 .navbar-brand .logo { height: 20px; width: auto; filter: brightness(0) invert(1); }
 .logo-white { filter: brightness(0) invert(1); }
 .navbar-brand .sep { width: 1px; height: 18px; background: var(--white-20); }
-.navbar-brand .label { font-size: 0.78rem; font-weight: 600; color: var(--white-70); }
+.navbar-brand .label { font-size: 0.8rem; font-weight: 600; color: var(--white-70); }
 .nav-right { display: flex; gap: 0.5rem; align-items: center; }
-
-/* ===== CURRENCY SELECT ===== */
 .currency-select {
-  color: var(--white-70);
-  border: 1.5px solid var(--white-20);
-  background: transparent;
-  min-height: 36px;
-  padding: 0.35rem 0.6rem;
-  font-family: inherit;
-  font-size: 0.78rem;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
+  color: var(--white-70); border: 1.5px solid var(--white-20); background: transparent;
+  min-height: 36px; padding: 0.35rem 0.75rem; font-family: inherit;
+  font-size: 0.8rem; cursor: pointer; border-radius: var(--radius-sm);
 }
 
 /* ===== HERO ===== */
 header {
-  background: var(--dark-900);
-  color: var(--white);
-  padding: 3rem 2rem 2.75rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  background: var(--dark-900); color: var(--white);
+  padding: 3rem 2rem 2.75rem; text-align: center;
+  position: relative; overflow: hidden;
 }
 header::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 100% at 30% 100%, var(--teal-glow) 0%, transparent 70%),
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 100% at 30% 100%, var(--teal-glow) 0%, transparent 70%),
     radial-gradient(ellipse 40% 80% at 70% 0%, rgba(6,176,174,0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 .hero-logo { margin-bottom: 1.25rem; position: relative; }
-header h1 {
-  font-size: 2rem; font-weight: 800; letter-spacing: -0.02em;
-  line-height: 1.2; position: relative;
-}
+header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; position: relative; }
 header h1 .accent { color: var(--teal); }
-header p {
-  color: var(--white-70); margin-top: 0.45rem;
-  font-size: 0.95rem; position: relative;
-}
+header p { color: var(--white-70); margin-top: 0.45rem; font-size: 0.95rem; position: relative; }
 
-/* ===== STEPS INDICATOR ===== */
-.steps-bar {
-  display: flex; justify-content: center; gap: 0; margin: 2rem auto 1.5rem;
-  max-width: 600px;
-}
+/* ===== STEPS ===== */
+.steps-bar { display: flex; justify-content: center; gap: 0; margin: 2rem auto 1.5rem; max-width: 600px; }
 .step-item {
   flex: 1; text-align: center; position: relative; cursor: pointer;
+  background: none; border: none; font-family: inherit; padding: 0.25rem;
 }
+.step-item:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 8px; }
 .step-num {
   width: 36px; height: 36px; border-radius: 50%;
-  background: var(--surface-border); color: var(--text-light);
+  background: var(--surface-border); color: var(--text-muted);
   display: inline-flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 0.85rem;
-  transition: all var(--transition);
+  font-weight: 800; font-size: 0.88rem; transition: all var(--transition);
 }
-.step-item.active .step-num {
-  background: var(--teal); color: var(--dark-900);
-}
-.step-item.completed .step-num {
-  background: var(--green); color: white;
-}
+.step-item.active .step-num { background: var(--teal); color: var(--dark-900); }
+.step-item.completed .step-num { background: var(--green); color: white; }
 .step-label {
-  display: block; font-size: 0.7rem; font-weight: 600;
-  color: var(--text-light); margin-top: 0.35rem;
+  display: block; font-size: 0.75rem; font-weight: 600;
+  color: var(--text-muted); margin-top: 0.35rem;
   text-transform: uppercase; letter-spacing: 0.04em;
 }
 .step-item.active .step-label { color: var(--teal); }
 .step-item.completed .step-label { color: var(--green); }
-.step-connector {
-  position: absolute; top: 18px; left: 50%; width: 100%;
-  height: 2px; background: var(--surface-border);
-}
+.step-connector { position: absolute; top: 18px; left: 50%; width: 100%; height: 2px; background: var(--surface-border); }
 .step-item:last-child .step-connector { display: none; }
 .step-item.completed .step-connector { background: var(--green); }
 
-/* ===== MAIN LAYOUT ===== */
+/* ===== MAIN ===== */
 main { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 3rem; }
-
-/* ===== STEP PANELS ===== */
 .step-panel { display: none; }
 .step-panel.active { display: block; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ===== SECTION ===== */
 section { margin-bottom: 1.75rem; }
-.section-header {
-  display: flex; align-items: center; gap: 0.65rem; margin-bottom: 1rem;
-}
-.section-header h2 {
-  font-size: 0.85rem; font-weight: 700; color: var(--text-light);
-  text-transform: uppercase; letter-spacing: 0.06em;
-}
+.section-header { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 1rem; }
+.section-header h2 { font-size: 0.88rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
 .section-header .line { flex: 1; height: 1px; background: var(--surface-border); }
 
 /* ===== PANEL ===== */
-.panel {
-  background: var(--white); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding: 1.5rem;
-}
+.panel { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; }
 
-/* ===== ONBOARDING TEXT ===== */
 .onboarding-text {
-  font-size: 0.85rem; color: var(--text-light); margin-bottom: 1.25rem;
+  font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem;
   padding: 0.85rem 1rem; background: var(--teal-subtle); border-radius: var(--radius-sm);
   border-left: 3px solid var(--teal); line-height: 1.5;
 }
 
-/* ===== INPUT GRID ===== */
-.input-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem;
-}
-.input-grid-3 {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem;
-}
+/* ===== INPUTS ===== */
+.input-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
 .field label {
-  display: block; font-size: 0.72rem; font-weight: 700;
-  color: var(--text-light); text-transform: uppercase;
-  letter-spacing: 0.05em; margin-bottom: 0.35rem;
+  display: block; font-size: 0.78rem; font-weight: 700;
+  color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.04em; margin-bottom: 0.35rem;
 }
-.field select,
-.field input[type="number"],
-.field input[type="text"],
-.field input[type="email"],
-.field textarea {
+.field select, .field input[type="number"], .field input[type="text"] {
   width: 100%; padding: 0.6rem 0.75rem;
   border: 1.5px solid var(--surface-border); border-radius: var(--radius-sm);
-  font-size: 0.88rem; font-family: inherit; color: var(--text);
-  background: var(--white);
-  transition: border-color var(--transition), box-shadow var(--transition);
+  font-size: 0.9rem; font-family: inherit; color: var(--text);
+  background: var(--white); transition: border-color var(--transition), box-shadow var(--transition);
   appearance: none; -webkit-appearance: none;
 }
 .field select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M8 12l-6-6h12l-6 6z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.65rem center;
-  padding-right: 2rem;
+  background-repeat: no-repeat; background-position: right 0.65rem center; padding-right: 2rem;
 }
-.field input:focus, .field select:focus, .field textarea:focus {
-  outline: none; border-color: var(--teal);
-  box-shadow: 0 0 0 3px var(--teal-glow);
-}
+.field input:focus, .field select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow); }
+.field input.invalid { border-color: var(--red-text); box-shadow: 0 0 0 3px var(--red-soft); }
 .field .pre { position: relative; }
 .field .pre::before {
-  content: attr(data-symbol);
-  position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
-  color: var(--text-light); font-weight: 700; font-size: 0.82rem; pointer-events: none;
+  content: attr(data-symbol); position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); font-weight: 700; font-size: 0.85rem; pointer-events: none;
 }
-.field .pre input { padding-left: 1.5rem; }
-.field .hint { font-size: 0.68rem; color: var(--text-light); margin-top: 0.2rem; }
+.field .pre input { padding-left: 1.75rem; }
+.field .hint { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem; }
 .divider-row {
-  grid-column: 1 / -1;
-  display: flex; align-items: center; gap: 0.6rem; padding: 0.1rem 0;
+  grid-column: 1 / -1; display: flex; align-items: center; gap: 0.6rem; padding: 0.1rem 0;
 }
 .divider-row span {
-  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: var(--text-light); white-space: nowrap;
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-muted); white-space: nowrap;
 }
 .divider-row::after { content: ''; flex: 1; height: 1px; background: var(--surface-border); }
 
-/* ===== RESULTS CARD ===== */
+/* ===== RESULTS ===== */
 .results-hero {
   background: var(--dark-900); border-radius: var(--radius);
   padding: 2rem; text-align: center; color: var(--white);
@@ -257,84 +186,39 @@ section { margin-bottom: 1.75rem; }
   background: linear-gradient(90deg, var(--teal), var(--teal-dark), var(--teal));
 }
 .results-hero .rh-label {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--white-50); margin-bottom: 0.5rem;
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--white-60); margin-bottom: 0.5rem;
 }
-.results-hero .rh-big {
-  font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1;
-}
+.results-hero .rh-big { font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
 .results-hero .rh-big.red { color: var(--red-text); }
-.results-hero .rh-sub {
-  font-size: 0.9rem; color: var(--white-70); margin-top: 0.4rem;
-}
+.results-hero .rh-sub { font-size: 0.9rem; color: var(--white-70); margin-top: 0.4rem; }
 
-/* ===== COST CARDS ===== */
-.cost-cards {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem;
-  margin-bottom: 1.5rem;
-}
-.cost-card {
-  background: var(--white); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding: 1.5rem; text-align: center;
-}
-.cost-card .cc-label {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: var(--text-light); margin-bottom: 0.3rem;
-}
-.cost-card .cc-val {
-  font-size: 2rem; font-weight: 900; color: var(--text);
-  letter-spacing: -0.02em;
-}
-.cost-card .cc-sub { font-size: 0.78rem; color: var(--text-light); margin-top: 0.15rem; }
+.cost-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-bottom: 1.5rem; }
+.cost-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; text-align: center; }
+.cost-card .cc-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.3rem; }
+.cost-card .cc-val { font-size: 2rem; font-weight: 900; color: var(--text); letter-spacing: -0.02em; }
+.cost-card .cc-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; }
 .cost-card.highlight { background: var(--dark-900); color: var(--white); }
-.cost-card.highlight .cc-label { color: var(--white-50); }
+.cost-card.highlight .cc-label { color: var(--white-60); }
 .cost-card.highlight .cc-val { color: var(--red-text); }
 .cost-card.highlight .cc-sub { color: var(--white-70); }
 
-/* ===== ANNUAL SPEND ===== */
-.annual-spend {
-  background: var(--white); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 1.5rem;
-}
-.annual-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
-  text-align: center;
-}
-.annual-item .ai-label {
-  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: var(--text-light);
-}
-.annual-item .ai-val {
-  font-size: 1.6rem; font-weight: 900; color: var(--text);
-  letter-spacing: -0.02em; margin-top: 0.15rem;
-}
+.annual-spend { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 1.5rem; }
+.annual-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; }
+.annual-item .ai-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.annual-item .ai-val { font-size: 1.6rem; font-weight: 900; color: var(--text); letter-spacing: -0.02em; margin-top: 0.15rem; }
 .annual-item .ai-val.red { color: var(--red-text); }
-.annual-item .ai-sub { font-size: 0.72rem; color: var(--text-light); margin-top: 0.1rem; }
+.annual-item .ai-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.1rem; }
 
 /* ===== STACKED BAR ===== */
 .stacked-bar-wrap { margin: 1.25rem 0; }
-.stacked-bar-label {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 0.5rem;
-}
-.stacked-bar {
-  display: flex; height: 28px; border-radius: 6px; overflow: hidden;
-  background: var(--surface);
-}
-.stacked-bar-segment {
-  height: 100%; transition: width 0.3s ease; min-width: 0;
-}
-.stacked-bar-legend {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1rem;
-  width: 100%; margin-top: 0.75rem;
-}
-.legend-item {
-  display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem;
-}
-.legend-dot {
-  width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
-}
-.legend-label { color: var(--text-light); flex: 1; }
+.stacked-bar-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; }
+.stacked-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; background: var(--surface); }
+.stacked-bar-segment { height: 100%; transition: width 0.3s ease; min-width: 0; }
+.stacked-bar-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1rem; width: 100%; margin-top: 0.75rem; }
+.legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; }
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.legend-label { color: var(--text-muted); flex: 1; }
 .legend-val { font-weight: 700; color: var(--text); white-space: nowrap; }
 
 /* ===== SAVINGS TEASER ===== */
@@ -342,43 +226,26 @@ section { margin-bottom: 1.75rem; }
   background: linear-gradient(135deg, var(--dark-900) 0%, var(--dark-800) 100%);
   border-radius: var(--radius); padding: 2.5rem 2rem;
   text-align: center; color: var(--white);
-  position: relative; overflow: hidden;
-  margin-bottom: 1.5rem;
+  position: relative; overflow: hidden; margin-bottom: 1.5rem;
 }
 .savings-teaser::before {
-  content: '';
-  position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0;
   background: radial-gradient(ellipse 60% 100% at 50% 100%, var(--teal-glow) 0%, transparent 70%);
   pointer-events: none;
 }
-.savings-teaser .st-icon {
-  font-size: 2.5rem; margin-bottom: 0.75rem; position: relative;
-}
-.savings-teaser .st-headline {
-  font-size: 1.4rem; font-weight: 800; position: relative;
-  line-height: 1.3; margin-bottom: 0.5rem;
-}
+.savings-teaser .st-icon { font-size: 2.5rem; margin-bottom: 0.75rem; position: relative; }
+.savings-teaser .st-headline { font-size: 1.4rem; font-weight: 800; position: relative; line-height: 1.3; margin-bottom: 0.5rem; }
 .savings-teaser .st-headline .teal { color: var(--teal); }
-.savings-teaser .st-sub {
-  font-size: 0.9rem; color: var(--white-70); position: relative;
-  max-width: 500px; margin: 0 auto 1.5rem; line-height: 1.5;
-}
-.savings-teaser .st-range {
-  font-size: 2.2rem; font-weight: 900; color: var(--teal);
-  position: relative; margin-bottom: 1.5rem; letter-spacing: -0.02em;
-}
-
-/* ===== CTA BUTTONS ===== */
-.cta-group {
-  display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
-  position: relative;
-}
+.savings-teaser .st-sub { font-size: 0.9rem; color: var(--white-70); position: relative; max-width: 500px; margin: 0 auto 1.5rem; line-height: 1.5; }
+.savings-teaser .st-range { font-size: 2.2rem; font-weight: 900; color: var(--teal); position: relative; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.savings-teaser .st-disclaimer { font-size: 0.72rem; color: var(--white-60); position: relative; margin-bottom: 1.5rem; }
+.cta-group { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; position: relative; }
 
 /* ===== BUTTONS ===== */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   gap: 0.4rem; padding: 0.65rem 1.25rem; border: none;
-  border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600;
+  border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 600;
   font-family: inherit; cursor: pointer; transition: all var(--transition);
   text-decoration: none; white-space: nowrap; min-height: 44px;
 }
@@ -390,61 +257,44 @@ section { margin-bottom: 1.75rem; }
 .btn-dark:hover { background: var(--dark-700); }
 .btn-outline { background: var(--white); color: var(--text); border: 1.5px solid var(--surface-border); }
 .btn-outline:hover { background: var(--surface); border-color: #d1d5db; }
-.btn-sm { padding: 0.45rem 0.85rem; font-size: 0.78rem; min-height: 36px; }
+.btn-sm { padding: 0.45rem 0.85rem; font-size: 0.8rem; min-height: 36px; }
 .btn-lg { padding: 0.85rem 2rem; font-size: 1rem; font-weight: 700; }
-.btn-whatsapp { background: #25D366; color: white; }
-.btn-whatsapp:hover { background: #1fb855; }
-
-/* ===== STEP NAV BUTTONS ===== */
-.step-nav {
-  display: flex; justify-content: space-between; margin-top: 1.5rem; gap: 1rem;
-}
+.step-nav { display: flex; justify-content: space-between; margin-top: 1.5rem; gap: 1rem; }
 .step-nav .spacer { flex: 1; }
 
 /* ===== FOOTER ===== */
-footer {
-  background: var(--dark-900); text-align: center;
-  padding: 1.75rem 1.5rem; border-top: 3px solid var(--teal);
-}
+footer { background: var(--dark-900); text-align: center; padding: 1.75rem 1.5rem; border-top: 3px solid var(--teal); }
 .footer-logo { margin-bottom: 0.4rem; }
-.footer-social {
-  display: flex; justify-content: center; gap: 0.85rem; margin: 0.75rem 0;
-}
+.footer-social { display: flex; justify-content: center; gap: 0.85rem; margin: 0.75rem 0; }
 .social-link {
   display: flex; align-items: center; justify-content: center;
   width: 40px; height: 40px; border-radius: 50%;
   background: var(--white-10); color: var(--white-70);
   transition: all var(--transition); text-decoration: none;
 }
-.social-link:hover {
-  background: var(--teal); color: var(--dark-900); transform: translateY(-2px);
-}
-.footer-text { font-size: 0.75rem; color: var(--white-70); }
+.social-link:hover { background: var(--teal); color: var(--dark-900); transform: translateY(-2px); }
+.footer-text { font-size: 0.78rem; color: var(--white-70); }
 .footer-text a { color: var(--teal); text-decoration: none; }
 .footer-text a:hover { text-decoration: underline; }
-.footer-disclaimer { font-size: 0.68rem; color: var(--white-50); margin-top: 0.5rem; max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+.footer-disclaimer { font-size: 0.72rem; color: var(--white-60); margin-top: 0.5rem; max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.5; }
 
 /* ===== TOAST ===== */
 .toast {
   position: fixed; bottom: 1.5rem; right: 1.5rem;
   background: var(--dark-900); color: var(--white);
   padding: 0.75rem 1.1rem; border-radius: var(--radius-sm);
-  font-size: 0.82rem; font-weight: 600; box-shadow: var(--shadow-lg);
-  z-index: 2000; display: none; gap: 0.4rem; align-items: center;
-  border-left: 3px solid var(--teal);
+  font-size: 0.85rem; font-weight: 600; box-shadow: var(--shadow-lg);
+  z-index: 2000; opacity: 0; pointer-events: none;
+  display: flex; gap: 0.4rem; align-items: center;
+  border-left: 3px solid var(--teal); transition: opacity 0.2s ease;
 }
-.toast.show { display: flex; animation: toastIn 0.2s ease; }
-@keyframes toastIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.toast.show { opacity: 1; pointer-events: auto; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .cost-cards { grid-template-columns: 1fr; }
   .annual-grid { grid-template-columns: 1fr; gap: 0.75rem; }
   .input-grid { grid-template-columns: 1fr; }
-  .input-grid-3 { grid-template-columns: 1fr; }
   nav { padding: 0 1rem; }
   .navbar-brand .label { display: none; }
   main { padding: 0 1rem 2.5rem; }
@@ -455,25 +305,20 @@ footer {
   .savings-teaser { padding: 2rem 1.25rem; }
   .cta-group { flex-direction: column; }
   .cta-group .btn { width: 100%; }
-  .steps-bar { gap: 0; }
-  .step-label { font-size: 0.6rem; }
+  .step-label { font-size: 0.68rem; }
 }
 
 /* ===== PRINT ===== */
 @media print {
   body { background: white !important; }
-  nav, .step-nav, .toast, .no-print, .savings-teaser, .steps-bar { display: none !important; }
-  header {
-    background: var(--dark-900) !important;
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
-    padding: 1.25rem;
-  }
+  nav, .step-nav, .toast, .no-print, .steps-bar { display: none !important; }
+  /* Only show step 3 results */
+  #step1, #step2 { display: none !important; }
+  #step3 { display: block !important; }
+  header { background: var(--dark-900) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 1.25rem; }
   main { padding: 1rem; max-width: 100%; }
-  .step-panel { display: block !important; }
   .panel, .cost-card, .results-hero, .annual-spend { box-shadow: none; border: 1px solid #e5e7eb; page-break-inside: avoid; }
-  .results-hero, .cost-card.highlight, footer {
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
-  }
+  .results-hero, .cost-card.highlight, footer, .savings-teaser { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .logo-white { filter: brightness(0) invert(1) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
@@ -483,7 +328,7 @@ footer {
 <!-- Navbar -->
 <nav aria-label="Main navigation">
   <a href="https://www.kline-europe.com" target="_blank" rel="noopener noreferrer" class="navbar-brand" aria-label="K LINE Europe website">
-    <img class="logo" alt="K LINE" style="height:22px;" id="navLogo" src="">
+    <img class="logo" alt="K LINE" style="height:22px;" id="navLogo">
     <div class="sep"></div>
     <span class="label">Cost Discovery Tool</span>
   </a>
@@ -501,44 +346,40 @@ footer {
 <!-- Hero -->
 <header>
   <div class="hero-logo">
-    <img alt="" class="logo-white" style="height:34px;" id="heroLogo" src="">
+    <img alt="" class="logo-white" style="height:34px;" id="heroLogo">
   </div>
   <h1>Aligner <span class="accent">Cost Discovery</span> Tool</h1>
   <p>Discover your true aligner production costs — then see how much you could save</p>
 </header>
 
 <main>
-  <noscript><div style="text-align:center;padding:3rem 2rem;font-size:1.1rem;color:var(--text-light);">This tool requires JavaScript. Please enable JavaScript in your browser.</div></noscript>
+  <noscript><div style="text-align:center;padding:3rem 2rem;font-size:1.1rem;color:var(--text-muted);">This tool requires JavaScript. Please enable JavaScript in your browser.</div></noscript>
 
-  <!-- Steps indicator -->
-  <div class="steps-bar" id="stepsBar">
-    <div class="step-item active" onclick="goToStep(1)">
+  <!-- Steps — accessible buttons with roles -->
+  <div class="steps-bar" role="tablist" aria-label="Calculator steps">
+    <button type="button" class="step-item active" role="tab" aria-selected="true" onclick="goToStep(1)" aria-controls="step1">
       <span class="step-num">1</span>
       <span class="step-label">Your Practice</span>
-      <div class="step-connector"></div>
-    </div>
-    <div class="step-item" onclick="goToStep(2)">
+      <div class="step-connector" aria-hidden="true"></div>
+    </button>
+    <button type="button" class="step-item" role="tab" aria-selected="false" onclick="goToStep(2)" aria-controls="step2">
       <span class="step-num">2</span>
       <span class="step-label">Current Costs</span>
-      <div class="step-connector"></div>
-    </div>
-    <div class="step-item" onclick="goToStep(3)">
+      <div class="step-connector" aria-hidden="true"></div>
+    </button>
+    <button type="button" class="step-item" role="tab" aria-selected="false" onclick="goToStep(3)" aria-controls="step3">
       <span class="step-num">3</span>
       <span class="step-label">Your Results</span>
-    </div>
+    </button>
   </div>
 
-  <!-- ========== STEP 1: Your Practice ========== -->
-  <div class="step-panel active" id="step1">
+  <!-- ========== STEP 1 ========== -->
+  <div class="step-panel active" id="step1" role="tabpanel">
     <div class="onboarding-text">
       Tell us about your aligner volume. This helps us calculate your true costs accurately.
     </div>
-
     <section>
-      <div class="section-header">
-        <h2>Case Volume</h2>
-        <div class="line"></div>
-      </div>
+      <div class="section-header"><h2>Case Volume</h2><div class="line"></div></div>
       <div class="panel">
         <div class="input-grid">
           <div class="field">
@@ -552,43 +393,36 @@ footer {
           </div>
           <div class="field">
             <label for="alignersPerCase">Aligners per Case</label>
-            <input type="number" id="alignersPerCase" value="30" min="1" max="200">
-            <div class="hint">Average number of aligners per case</div>
+            <input type="number" id="alignersPerCase" value="30" min="1" max="200" aria-describedby="hintAPC">
+            <div class="hint" id="hintAPC">Average aligners per case</div>
           </div>
           <div class="field">
             <label for="monthlyCases">Monthly Cases</label>
-            <input type="number" id="monthlyCases" value="10" min="1" max="10000">
-            <div class="hint">How many aligner cases per month?</div>
+            <input type="number" id="monthlyCases" value="10" min="1" max="10000" aria-describedby="hintMC">
+            <div class="hint" id="hintMC">How many aligner cases per month?</div>
           </div>
           <div class="field">
             <label for="clinicName">Clinic Name</label>
-            <input type="text" id="clinicName" placeholder="Your clinic name" maxlength="80">
-            <div class="hint">Optional — for your results report</div>
+            <input type="text" id="clinicName" placeholder="Your clinic name" maxlength="80" aria-describedby="hintCN">
+            <div class="hint" id="hintCN">Optional — for your results report</div>
           </div>
         </div>
       </div>
     </section>
-
     <div class="step-nav">
       <div class="spacer"></div>
-      <button type="button" class="btn btn-teal btn-lg" onclick="goToStep(2)">
-        Next: Your Current Costs →
-      </button>
+      <button type="button" class="btn btn-teal btn-lg" onclick="goToStep(2)">Next: Your Current Costs →</button>
     </div>
   </div>
 
-  <!-- ========== STEP 2: Current Costs ========== -->
-  <div class="step-panel" id="step2">
+  <!-- ========== STEP 2 ========== -->
+  <div class="step-panel" id="step2" role="tabpanel">
     <div class="onboarding-text">
       How do you currently get your aligners? Enter your costs below — we'll calculate the full picture.
     </div>
 
-    <!-- Method Selection -->
     <section>
-      <div class="section-header">
-        <h2>Your Current Method</h2>
-        <div class="line"></div>
-      </div>
+      <div class="section-header"><h2>Your Current Method</h2><div class="line"></div></div>
       <div class="panel">
         <div class="input-grid">
           <div class="field" style="grid-column:1/-1;">
@@ -599,73 +433,71 @@ footer {
               <option value="both">Both — Lab + In-House</option>
             </select>
           </div>
+          <!-- Blended ratio (shown only for "both") -->
+          <div class="field" id="fieldSplitRatio" style="display:none;grid-column:1/-1;">
+            <label for="labSplitPct">% of Cases Sent to External Lab</label>
+            <input type="number" id="labSplitPct" value="70" min="0" max="100" step="5" aria-describedby="hintSplit">
+            <div class="hint" id="hintSplit">e.g. 70 = 70% lab, 30% in-house</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- External Lab Costs -->
+    <!-- External Lab -->
     <section id="sectionLabCost">
-      <div class="section-header">
-        <h2>External Lab Costs</h2>
-        <div class="line"></div>
-      </div>
+      <div class="section-header"><h2>External Lab Costs</h2><div class="line"></div></div>
       <div class="panel">
         <div class="input-grid">
           <div class="field">
             <label for="labName">Lab / Provider Name</label>
-            <input type="text" id="labName" placeholder="e.g. Invisalign, SmileDirectClub" maxlength="40">
-            <div class="hint">Who is your current provider?</div>
+            <input type="text" id="labName" placeholder="e.g. Align Technology, SureSmile" maxlength="40" aria-describedby="hintLab">
+            <div class="hint" id="hintLab">Who is your current provider?</div>
           </div>
           <div class="field">
-            <label for="labCostPerCase">Total Cost per Case</label>
-            <div class="pre" data-symbol="€"><input type="number" id="labCostPerCase" value="360" min="0" max="99999" step="5"></div>
-            <div class="hint">What you pay per complete case</div>
+            <label for="labCostPerCase">Cost per Case</label>
+            <div class="pre" data-symbol="€"><input type="number" id="labCostPerCase" value="250" min="0" max="99999" step="5" aria-describedby="hintLabCost"></div>
+            <div class="hint" id="hintLabCost">Lab fee per complete case (excl. refinements)</div>
           </div>
           <div class="field">
             <label for="labShipping">Shipping per Case</label>
-            <div class="pre" data-symbol="€"><input type="number" id="labShipping" value="25" min="0" max="9999" step="5"></div>
-            <div class="hint">Average shipping / handling fees</div>
+            <div class="pre" data-symbol="€"><input type="number" id="labShipping" value="15" min="0" max="9999" step="5"></div>
           </div>
           <div class="field">
-            <label for="labTurnaround">Turnaround (Business Days)</label>
-            <input type="number" id="labTurnaround" value="14" min="1" max="90">
-            <div class="hint">Average production + delivery time</div>
+            <label for="labRefinements">Avg. Refinement Cost</label>
+            <div class="pre" data-symbol="€"><input type="number" id="labRefinements" value="0" min="0" max="9999" step="5" aria-describedby="hintRef"></div>
+            <div class="hint" id="hintRef">Additional cost if refinements not included</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- In-House Costs -->
+    <!-- In-House -->
     <section id="sectionInHouseCost">
-      <div class="section-header">
-        <h2>In-House Production Costs</h2>
-        <div class="line"></div>
-      </div>
+      <div class="section-header"><h2>In-House Production Costs</h2><div class="line"></div></div>
       <div class="panel">
         <div class="input-grid">
           <div class="divider-row"><span>Labor</span></div>
           <div class="field">
             <label for="doctorRate">Doctor Hourly Rate</label>
             <div class="pre" data-symbol="€"><input type="number" id="doctorRate" value="120" min="0" max="9999" step="5"></div>
-            <div class="hint">Hourly cost to practice</div>
+            <div class="hint">Salary or opportunity cost of chair time</div>
           </div>
           <div class="field">
             <label for="assistantRate">Assistant Hourly Rate</label>
             <div class="pre" data-symbol="€"><input type="number" id="assistantRate" value="22" min="0" max="9999" step="1"></div>
-            <div class="hint">Per hour, before tax</div>
           </div>
           <div class="field">
             <label for="doctorMinutes">Doctor Minutes / Case</label>
             <input type="number" id="doctorMinutes" value="45" min="0" max="600" step="5">
-            <div class="hint">Treatment planning time</div>
+            <div class="hint">Treatment planning + chairside review</div>
           </div>
           <div class="field">
             <label for="assistantMinutes">Assistant Minutes / Case</label>
-            <input type="number" id="assistantMinutes" value="90" min="0" max="600" step="5">
-            <div class="hint">Fabrication & finishing</div>
+            <input type="number" id="assistantMinutes" value="60" min="0" max="600" step="5">
+            <div class="hint">Fabrication, finishing, QC</div>
           </div>
 
-          <div class="divider-row"><span>Materials & Equipment</span></div>
+          <div class="divider-row"><span>Materials &amp; Equipment</span></div>
           <div class="field">
             <label for="materialCostPerAligner">Material Cost / Aligner</label>
             <div class="pre" data-symbol="€"><input type="number" id="materialCostPerAligner" value="3.00" min="0" max="999" step="0.25"></div>
@@ -674,7 +506,6 @@ footer {
           <div class="field">
             <label for="printerCost">3D Printer Investment</label>
             <div class="pre" data-symbol="€"><input type="number" id="printerCost" value="16000" min="0" max="500000" step="500"></div>
-            <div class="hint">Total printer purchase price</div>
           </div>
           <div class="field">
             <label for="printerLifespan">Printer Lifespan (Years)</label>
@@ -683,106 +514,92 @@ footer {
           <div class="field">
             <label for="annualMaintenance">Annual Maintenance</label>
             <div class="pre" data-symbol="€"><input type="number" id="annualMaintenance" value="1000" min="0" max="50000" step="100"></div>
-            <div class="hint">Printer + post-processing upkeep</div>
           </div>
 
-          <div class="divider-row"><span>Software & Overhead</span></div>
+          <div class="divider-row"><span>Software &amp; Overhead</span></div>
           <div class="field">
             <label for="softwareCost">Software Monthly Cost</label>
-            <div class="pre" data-symbol="€"><input type="number" id="softwareCost" value="450" min="0" max="99999" step="25"></div>
+            <div class="pre" data-symbol="€"><input type="number" id="softwareCost" value="350" min="0" max="99999" step="25"></div>
             <div class="hint">Planning software subscription</div>
           </div>
           <div class="field">
             <label for="labRent">Monthly Lab Space Cost</label>
             <div class="pre" data-symbol="€"><input type="number" id="labRent" value="200" min="0" max="50000" step="25"></div>
-            <div class="hint">Proportion used for aligners</div>
           </div>
           <div class="field">
             <label for="consumablesPerAligner">Consumables / Aligner</label>
             <div class="pre" data-symbol="€"><input type="number" id="consumablesPerAligner" value="0.80" min="0" max="100" step="0.10"></div>
-            <div class="hint">Polishing, cutting, washing, etc.</div>
+            <div class="hint">Polishing, cutting, IPA, etc.</div>
           </div>
           <div class="field">
             <label for="postProcessingEquip">Post-Processing Equipment</label>
             <div class="pre" data-symbol="€"><input type="number" id="postProcessingEquip" value="1000" min="0" max="50000" step="100"></div>
             <div class="hint">Wash station, UV curing, thermoformer</div>
           </div>
+          <div class="field">
+            <label for="wasteRate">Failed Print Rate (%)</label>
+            <input type="number" id="wasteRate" value="8" min="0" max="50" step="1" aria-describedby="hintWaste">
+            <div class="hint" id="hintWaste">Typically 5-15% of prints fail</div>
+          </div>
+          <div class="field">
+            <label for="scannerCost">Intraoral Scanner Cost</label>
+            <div class="pre" data-symbol="€"><input type="number" id="scannerCost" value="0" min="0" max="99999" step="500" aria-describedby="hintScan"></div>
+            <div class="hint" id="hintScan">Enter 0 if already owned</div>
+          </div>
         </div>
       </div>
     </section>
 
     <div class="step-nav">
-      <button type="button" class="btn btn-outline btn-lg" onclick="goToStep(1)">
-        ← Back
-      </button>
-      <button type="button" class="btn btn-teal btn-lg" onclick="goToStep(3)">
-        See My Results →
-      </button>
+      <button type="button" class="btn btn-outline btn-lg" onclick="goToStep(1)">← Back</button>
+      <button type="button" class="btn btn-teal btn-lg" onclick="goToStep(3)">See My Results →</button>
     </div>
   </div>
 
-  <!-- ========== STEP 3: Results ========== -->
-  <div class="step-panel" id="step3">
-
-    <!-- Main Result -->
+  <!-- ========== STEP 3 ========== -->
+  <div class="step-panel" id="step3" role="tabpanel">
     <div class="results-hero" id="resultsHero">
       <div class="rh-label">Your Current Cost Per Case</div>
-      <div class="rh-big red" id="resultTotal">€360.00</div>
-      <div class="rh-sub" id="resultSub">30 aligners · External Lab</div>
+      <div class="rh-big red" id="resultTotal">—</div>
+      <div class="rh-sub" id="resultSub">—</div>
     </div>
 
-    <!-- Cost Cards -->
     <div class="cost-cards" id="costCards"></div>
 
-    <!-- Annual Spend -->
     <div class="annual-spend">
-      <div class="section-header" style="margin-bottom:0.75rem;">
-        <h2>Annual Projection</h2>
-        <div class="line"></div>
-      </div>
+      <div class="section-header" style="margin-bottom:0.75rem;"><h2>Annual Projection</h2><div class="line"></div></div>
       <div class="annual-grid" id="annualGrid"></div>
     </div>
 
-    <!-- Breakdown (in-house only) -->
     <div id="breakdownSection" style="display:none;">
       <div class="panel" style="margin-bottom:1.5rem;">
-        <div class="section-header" style="margin-bottom:0.75rem;">
-          <h2>In-House Cost Breakdown</h2>
-          <div class="line"></div>
-        </div>
+        <div class="section-header" style="margin-bottom:0.75rem;"><h2>In-House Cost Breakdown</h2><div class="line"></div></div>
         <div class="stacked-bar-wrap">
-          <div class="stacked-bar" id="stackedBar"></div>
+          <div class="stacked-bar" id="stackedBar" role="img" aria-label="Cost breakdown chart"></div>
           <div class="stacked-bar-legend" id="stackedLegend"></div>
         </div>
       </div>
     </div>
 
-    <!-- Savings Teaser -->
     <div class="savings-teaser" id="savingsTeaser">
-      <div class="st-icon">💡</div>
-      <div class="st-headline">K Line clients <span class="teal">typically save 40–60%</span> per case</div>
+      <div class="st-icon" aria-hidden="true">💡</div>
+      <div class="st-headline">K Line clients report <span class="teal">significant savings</span> per case</div>
       <div class="st-sub">
-        Based on your current costs, switching to K Line could save you a significant amount per case.
-        Get a custom quote to see your exact savings.
+        Based on your current costs, switching to K Line could meaningfully reduce your per-case spend.
+        Request a custom quote to see your exact savings.
       </div>
-      <div class="st-range" id="savingsRange">Save €144 – €216 per case</div>
+      <div class="st-range" id="savingsRange">—</div>
+      <div class="st-disclaimer">*Savings vary by case volume, complexity, and region. Contact K Line for a personalized proposal.</div>
       <div class="cta-group">
         <a href="https://www.kline-europe.com/contact-us" target="_blank" rel="noopener noreferrer" class="btn btn-teal btn-lg">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
           Get Your Custom K Line Quote
         </a>
-        <a href="https://wa.me/message/K_LINE_EUROPE" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Chat on WhatsApp
-        </a>
       </div>
     </div>
 
-    <!-- Action buttons -->
     <div class="step-nav no-print">
-      <button type="button" class="btn btn-outline btn-lg" onclick="goToStep(2)">
-        ← Adjust Costs
-      </button>
+      <button type="button" class="btn btn-outline btn-lg" onclick="goToStep(2)">← Adjust Costs</button>
       <div style="display:flex;gap:0.5rem;">
         <button type="button" class="btn btn-dark" onclick="window.print()">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M14 2v6h6"/></svg>
@@ -795,12 +612,11 @@ footer {
       </div>
     </div>
   </div>
-
 </main>
 
 <!-- Footer -->
 <footer>
-  <div class="footer-logo"><img alt="K LINE" class="logo-white" style="height:16px;" id="footerLogo" src=""></div>
+  <div class="footer-logo"><img alt="K LINE" class="logo-white" style="height:16px;" id="footerLogo"></div>
   <div class="footer-social">
     <a href="https://www.kline-europe.com" target="_blank" rel="noopener noreferrer" title="Website" class="social-link" aria-label="K LINE website">
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
@@ -818,21 +634,27 @@ footer {
   <div class="footer-text">
     Europe's #1 OEM Clear Aligner Provider &mdash;
     <a href="https://www.kline-europe.com" target="_blank" rel="noopener noreferrer">kline-europe.com</a>
-    &mdash; &copy; <script>document.write(new Date().getFullYear())</script>
+    &mdash; &copy; <span id="footerYear"></span>
   </div>
-  <div class="footer-disclaimer">Prices shown are estimates based on your inputs. Actual costs may vary. Savings projections are illustrative ranges — contact K Line Europe for an accurate, personalized quote.</div>
+  <div class="footer-disclaimer">All figures are estimates based on your inputs. Actual costs may vary. Savings projections are illustrative — contact K Line Europe for an accurate, personalized quote. This tool does not constitute financial advice.</div>
 </footer>
 
-<div class="toast" id="toast" role="status"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
+(function() {
+'use strict';
 var $ = function(id) { return document.getElementById(id); };
 
+/* ===== XSS escape ===== */
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
 /* ===== Logo ===== */
-var LOGO_BASE64 = 'data:image/png;base64,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';
-$('navLogo').src = LOGO_BASE64;
-$('heroLogo').src = LOGO_BASE64;
-$('footerLogo').src = LOGO_BASE64;
+var LOGO = 'data:image/png;base64,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';
+$('navLogo').src = LOGO;
+$('heroLogo').src = LOGO;
+$('footerLogo').src = LOGO;
+$('footerYear').textContent = new Date().getFullYear();
 
 /* ===== Currency ===== */
 var currencies = {
@@ -844,9 +666,7 @@ var currencies = {
 var curCurrency = currencies.EUR;
 
 function updateSymbols() {
-  document.querySelectorAll('.pre').forEach(function(el) {
-    el.setAttribute('data-symbol', curCurrency.symbol);
-  });
+  document.querySelectorAll('.pre').forEach(function(el) { el.setAttribute('data-symbol', curCurrency.symbol); });
 }
 
 $('currency').addEventListener('change', function() {
@@ -857,104 +677,103 @@ $('currency').addEventListener('change', function() {
 
 /* ===== Formatting ===== */
 function roundC(n) { return Math.round(n * 100) / 100; }
-
 function fmt(n) {
   if (typeof n !== 'number' || isNaN(n) || !isFinite(n)) return '\u2014';
-  return n.toLocaleString(curCurrency.locale, {
-    style: 'currency', currency: curCurrency.code, minimumFractionDigits: 0, maximumFractionDigits: 0
-  });
+  return n.toLocaleString(curCurrency.locale, { style: 'currency', currency: curCurrency.code, minimumFractionDigits: 0, maximumFractionDigits: 0 });
 }
-
 function fmt2(n) {
   if (typeof n !== 'number' || isNaN(n) || !isFinite(n)) return '\u2014';
-  return n.toLocaleString(curCurrency.locale, {
-    style: 'currency', currency: curCurrency.code, minimumFractionDigits: 2
-  });
+  return n.toLocaleString(curCurrency.locale, { style: 'currency', currency: curCurrency.code, minimumFractionDigits: 2 });
 }
 
-/* ===== Step Navigation ===== */
+/* ===== Steps ===== */
 var currentStep = 1;
-
 function goToStep(step) {
   if (step < 1 || step > 3) return;
   currentStep = step;
-
-  // Update panels
-  document.querySelectorAll('.step-panel').forEach(function(p, i) {
-    p.classList.toggle('active', i === step - 1);
-  });
-
-  // Update step indicators
-  document.querySelectorAll('.step-item').forEach(function(s, i) {
+  document.querySelectorAll('.step-panel').forEach(function(p, i) { p.classList.toggle('active', i === step - 1); });
+  var items = document.querySelectorAll('.step-item');
+  items.forEach(function(s, i) {
     s.classList.remove('active', 'completed');
+    s.setAttribute('aria-selected', i + 1 === step ? 'true' : 'false');
     if (i + 1 === step) s.classList.add('active');
     else if (i + 1 < step) s.classList.add('completed');
   });
-
-  // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // Render results when going to step 3
-  if (step === 3) renderResults();
+  if (step === 3) { renderResults(); updateURL(); }
 }
+// Expose for onclick
+window.goToStep = goToStep;
 
 /* ===== Method Toggle ===== */
 $('currentMethod').addEventListener('change', function() {
   var v = this.value;
   $('sectionLabCost').style.display = (v === 'lab' || v === 'both') ? '' : 'none';
   $('sectionInHouseCost').style.display = (v === 'inhouse' || v === 'both') ? '' : 'none';
+  $('fieldSplitRatio').style.display = v === 'both' ? '' : 'none';
 });
 
 /* ===== Complexity Sync ===== */
 $('complexity').addEventListener('change', function() {
-  if (this.value !== 'custom') {
-    $('alignersPerCase').value = this.value;
-  }
+  if (this.value !== 'custom') $('alignersPerCase').value = this.value;
 });
 $('alignersPerCase').addEventListener('input', function() {
   var v = parseInt(this.value);
   $('complexity').value = v === 14 ? '14' : v === 30 ? '30' : v === 50 ? '50' : 'custom';
 });
 
-/* ===== Calculate Costs ===== */
+/* ===== Input validation — red border ===== */
+document.querySelectorAll('input[type="number"]').forEach(function(inp) {
+  inp.addEventListener('change', function() {
+    var val = parseFloat(this.value);
+    var min = parseFloat(this.min);
+    var max = parseFloat(this.max);
+    this.classList.toggle('invalid', isNaN(val) || (this.min !== '' && val < min) || (this.max !== '' && val > max));
+  });
+});
+
+/* ===== Calculations ===== */
 function calcLabCost() {
   var caseCost = Math.max(0, parseFloat($('labCostPerCase').value) || 0);
   var shipping = Math.max(0, parseFloat($('labShipping').value) || 0);
-  return roundC(caseCost + shipping);
+  var refinements = Math.max(0, parseFloat($('labRefinements').value) || 0);
+  return roundC(caseCost + shipping + refinements);
 }
 
 function calcInHouseCost() {
   var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
   var monthly = Math.max(1, parseInt($('monthlyCases').value) || 10);
   var annual = monthly * 12;
-  var annualAligners = annual * aligners;
-  if (annualAligners === 0) annualAligners = 1;
 
   var drRate = Math.max(0, parseFloat($('doctorRate').value) || 0);
   var asRate = Math.max(0, parseFloat($('assistantRate').value) || 0);
   var drMin = Math.max(0, parseFloat($('doctorMinutes').value) || 0);
   var asMin = Math.max(0, parseFloat($('assistantMinutes').value) || 0);
-
   var laborDoctor = (drRate / 60) * drMin;
   var laborAssistant = (asRate / 60) * asMin;
 
   var matCost = Math.max(0, parseFloat($('materialCostPerAligner').value) || 0) * aligners;
+  var wasteRate = Math.min(50, Math.max(0, parseFloat($('wasteRate').value) || 0)) / 100;
+  matCost = roundC(matCost * (1 + wasteRate));
 
   var pCost = Math.max(0, parseFloat($('printerCost').value) || 0);
   var pLife = Math.max(1, parseInt($('printerLifespan').value) || 5);
   var maint = Math.max(0, parseFloat($('annualMaintenance').value) || 0);
-  var equipPerCase = (pCost / (pLife * annual)) + (maint / annual);
+  var equipPerCase = annual > 0 ? (pCost / (pLife * annual)) + (maint / annual) : 0;
 
   var swCost = Math.max(0, parseFloat($('softwareCost').value) || 0);
-  var softwarePerCase = (swCost * 12) / annual;
+  var softwarePerCase = annual > 0 ? (swCost * 12) / annual : 0;
 
   var rent = Math.max(0, parseFloat($('labRent').value) || 0);
-  var rentPerCase = (rent * 12) / annual;
+  var rentPerCase = annual > 0 ? (rent * 12) / annual : 0;
 
   var consumables = Math.max(0, parseFloat($('consumablesPerAligner').value) || 0) * aligners;
 
   var ppEquip = Math.max(0, parseFloat($('postProcessingEquip').value) || 0);
-  var ppPerCase = ppEquip / (pLife * annual);
+  var ppPerCase = annual > 0 ? ppEquip / (pLife * annual) : 0;
+
+  var scanCost = Math.max(0, parseFloat($('scannerCost').value) || 0);
+  var scanPerCase = annual > 0 ? scanCost / (5 * annual) : 0; /* 5yr amortization */
 
   var costs = {
     labor: roundC(laborDoctor + laborAssistant),
@@ -963,107 +782,154 @@ function calcInHouseCost() {
     software: roundC(softwarePerCase),
     rent: roundC(rentPerCase),
     consumables: roundC(consumables),
-    postProcessing: roundC(ppPerCase)
+    postProcessing: roundC(ppPerCase),
+    scanner: roundC(scanPerCase)
   };
-
-  costs.total = roundC(costs.labor + costs.material + costs.equipment + costs.software + costs.rent + costs.consumables + costs.postProcessing);
+  costs.total = roundC(costs.labor + costs.material + costs.equipment + costs.software + costs.rent + costs.consumables + costs.postProcessing + costs.scanner);
   return costs;
 }
 
-/* ===== Stacked Bar Colors ===== */
-var BAR_COLORS = {
-  labor: '#8b5cf6',
-  material: '#06b0ae',
-  equipment: '#3b82f6',
-  software: '#f59e0b',
-  rent: '#10b981',
-  consumables: '#ef4444',
-  postProcessing: '#f97316'
-};
-var BAR_LABELS = {
-  labor: 'Labor',
-  material: 'Material',
-  equipment: 'Equipment',
-  software: 'Software',
-  rent: 'Lab Space',
-  consumables: 'Consumables',
-  postProcessing: 'Post-Processing'
-};
+/* ===== Bar chart ===== */
+var BAR_COLORS = { labor:'#8b5cf6', material:'#06b0ae', equipment:'#3b82f6', software:'#f59e0b', rent:'#10b981', consumables:'#ef4444', postProcessing:'#f97316', scanner:'#6366f1' };
+var BAR_LABELS = { labor:'Labor', material:'Material (incl. waste)', equipment:'Equipment', software:'Software', rent:'Lab Space', consumables:'Consumables', postProcessing:'Post-Processing', scanner:'Scanner' };
 
-/* ===== Render Results ===== */
+/* ===== Render ===== */
 function renderResults() {
-  var method = $('currentMethod').value;
-  var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
-  var monthly = Math.max(1, parseInt($('monthlyCases').value) || 10);
-  var annual = monthly * 12;
+  try {
+    var method = $('currentMethod').value;
+    var aligners = Math.max(1, parseInt($('alignersPerCase').value) || 30);
+    var monthly = Math.max(1, parseInt($('monthlyCases').value) || 10);
+    var annual = monthly * 12;
+    var labCost = 0, ihCost = null, totalCost = 0, methodLabel = '';
 
-  var labCost = 0, ihCost = null, totalCost = 0;
-  var methodLabel = '';
+    if (method === 'lab') {
+      labCost = calcLabCost();
+      totalCost = labCost;
+      methodLabel = aligners + ' aligners \u00b7 ' + esc($('labName').value.trim() || 'External Lab');
+    } else if (method === 'inhouse') {
+      ihCost = calcInHouseCost();
+      totalCost = ihCost.total;
+      methodLabel = aligners + ' aligners \u00b7 In-House Production';
+    } else {
+      labCost = calcLabCost();
+      ihCost = calcInHouseCost();
+      var split = Math.min(100, Math.max(0, parseInt($('labSplitPct').value) || 70)) / 100;
+      totalCost = roundC(labCost * split + ihCost.total * (1 - split));
+      methodLabel = aligners + ' aligners \u00b7 Blended (' + Math.round(split * 100) + '% lab / ' + Math.round((1 - split) * 100) + '% in-house)';
+    }
 
-  if (method === 'lab') {
-    labCost = calcLabCost();
-    totalCost = labCost;
-    methodLabel = aligners + ' aligners · ' + ($('labName').value.trim() || 'External Lab');
-  } else if (method === 'inhouse') {
-    ihCost = calcInHouseCost();
-    totalCost = ihCost.total;
-    methodLabel = aligners + ' aligners · In-House Production';
-  } else {
-    labCost = calcLabCost();
-    ihCost = calcInHouseCost();
-    totalCost = roundC((labCost + ihCost.total) / 2);
-    methodLabel = aligners + ' aligners · Blended (Lab + In-House)';
+    $('resultTotal').textContent = fmt(totalCost);
+    $('resultSub').textContent = methodLabel;
+
+    /* Cost cards */
+    var ch = '';
+    if (method === 'lab' || method === 'both') {
+      ch += '<div class="cost-card highlight"><div class="cc-label">External Lab / Case</div><div class="cc-val">' + fmt(labCost) + '</div><div class="cc-sub">' + fmt2(labCost / aligners) + ' per aligner</div></div>';
+    }
+    if (method === 'inhouse' || method === 'both') {
+      ch += '<div class="cost-card highlight"><div class="cc-label">In-House / Case</div><div class="cc-val">' + fmt(ihCost.total) + '</div><div class="cc-sub">' + fmt2(ihCost.total / aligners) + ' per aligner</div></div>';
+    }
+    ch += '<div class="cost-card"><div class="cc-label">Monthly Spend</div><div class="cc-val">' + fmt(roundC(totalCost * monthly)) + '</div><div class="cc-sub">' + monthly + ' cases/month</div></div>';
+    ch += '<div class="cost-card"><div class="cc-label">Annual Spend</div><div class="cc-val">' + fmt(roundC(totalCost * annual)) + '</div><div class="cc-sub">' + annual + ' cases/year</div></div>';
+    $('costCards').innerHTML = ch;
+
+    /* Annual projection */
+    var annualSpend = roundC(totalCost * annual);
+    $('annualGrid').innerHTML =
+      '<div class="annual-item"><div class="ai-label">Current Annual Spend</div><div class="ai-val red">' + fmt(annualSpend) + '</div><div class="ai-sub">' + annual + ' cases × ' + fmt(totalCost) + '</div></div>' +
+      '<div class="annual-item"><div class="ai-label">Cases per Year</div><div class="ai-val">' + annual + '</div><div class="ai-sub">' + monthly + ' cases/month</div></div>' +
+      '<div class="annual-item"><div class="ai-label">Cost per Aligner</div><div class="ai-val">' + fmt2(totalCost / aligners) + '</div><div class="ai-sub">' + aligners + ' aligners/case</div></div>';
+
+    /* Breakdown */
+    if (ihCost && (method === 'inhouse' || method === 'both')) {
+      $('breakdownSection').style.display = '';
+      var bar = $('stackedBar'), legend = $('stackedLegend');
+      var bh = '', lh = '', total = ihCost.total;
+      var keys = ['labor','material','equipment','software','rent','consumables','postProcessing','scanner'];
+      var ariaDesc = [];
+      keys.forEach(function(k) {
+        if (ihCost[k] <= 0) return;
+        var pct = total > 0 ? (ihCost[k] / total) * 100 : 0;
+        bh += '<div class="stacked-bar-segment" style="width:' + pct + '%;background:' + BAR_COLORS[k] + ';" title="' + BAR_LABELS[k] + ': ' + Math.round(pct) + '%"></div>';
+        lh += '<div class="legend-item"><div class="legend-dot" style="background:' + BAR_COLORS[k] + ';"></div><span class="legend-label">' + BAR_LABELS[k] + '</span><span class="legend-val">' + Math.round(pct) + '% \u00b7 ' + fmt(ihCost[k]) + '</span></div>';
+        ariaDesc.push(BAR_LABELS[k] + ' ' + Math.round(pct) + '%');
+      });
+      bar.innerHTML = bh;
+      bar.setAttribute('aria-label', 'Cost breakdown: ' + ariaDesc.join(', '));
+      legend.innerHTML = lh;
+    } else {
+      $('breakdownSection').style.display = 'none';
+    }
+
+    /* Savings teaser — show personalized range */
+    $('savingsRange').textContent = 'Request your personalized quote to see exact savings';
+  } catch (err) {
+    console.error('Render error:', err);
   }
+}
+window.renderResults = renderResults;
 
-  // Main result
-  $('resultTotal').textContent = fmt(totalCost);
-  $('resultSub').textContent = methodLabel;
-
-  // Cost cards
-  var cardsHtml = '';
-  if (method === 'lab' || method === 'both') {
-    cardsHtml += '<div class="cost-card highlight"><div class="cc-label">External Lab Cost / Case</div><div class="cc-val">' + fmt(labCost) + '</div><div class="cc-sub">' + fmt2(labCost / aligners) + ' per aligner</div></div>';
+/* ===== URL State ===== */
+function updateURL() {
+  var p = new URLSearchParams();
+  p.set('m', $('currentMethod').value);
+  p.set('a', $('alignersPerCase').value);
+  p.set('mc', $('monthlyCases').value);
+  p.set('cur', curCurrency.code);
+  if ($('currentMethod').value === 'lab' || $('currentMethod').value === 'both') {
+    p.set('lc', $('labCostPerCase').value);
+    p.set('ls', $('labShipping').value);
+    p.set('lr', $('labRefinements').value);
   }
-  if (method === 'inhouse' || method === 'both') {
-    cardsHtml += '<div class="cost-card highlight"><div class="cc-label">In-House Cost / Case</div><div class="cc-val">' + fmt(ihCost.total) + '</div><div class="cc-sub">' + fmt2(ihCost.total / aligners) + ' per aligner</div></div>';
+  if ($('currentMethod').value === 'both') {
+    p.set('sp', $('labSplitPct').value);
   }
-  cardsHtml += '<div class="cost-card"><div class="cc-label">Monthly Spend</div><div class="cc-val">' + fmt(roundC(totalCost * monthly)) + '</div><div class="cc-sub">' + monthly + ' cases/month</div></div>';
-  cardsHtml += '<div class="cost-card"><div class="cc-label">Annual Spend</div><div class="cc-val">' + fmt(roundC(totalCost * annual)) + '</div><div class="cc-sub">' + annual + ' cases/year</div></div>';
-  $('costCards').innerHTML = cardsHtml;
-
-  // Annual projection
-  var annualSpend = roundC(totalCost * annual);
-  var save40 = roundC(annualSpend * 0.40);
-  var save60 = roundC(annualSpend * 0.60);
-  $('annualGrid').innerHTML =
-    '<div class="annual-item"><div class="ai-label">Current Annual Spend</div><div class="ai-val red">' + fmt(annualSpend) + '</div><div class="ai-sub">' + annual + ' cases × ' + fmt(totalCost) + '</div></div>' +
-    '<div class="annual-item"><div class="ai-label">Potential Annual Savings</div><div class="ai-val" style="color:var(--teal);">' + fmt(save40) + ' – ' + fmt(save60) + '</div><div class="ai-sub">Estimated 40–60% savings</div></div>' +
-    '<div class="annual-item"><div class="ai-label">Potential New Cost</div><div class="ai-val" style="color:var(--green);">' + fmt(roundC(annualSpend - save60)) + ' – ' + fmt(roundC(annualSpend - save40)) + '</div><div class="ai-sub">With K Line Europe</div></div>';
-
-  // Breakdown (in-house)
-  if (ihCost && (method === 'inhouse' || method === 'both')) {
-    $('breakdownSection').style.display = '';
-    var bar = $('stackedBar');
-    var legend = $('stackedLegend');
-    var barHtml = '', legendHtml = '';
-    var total = ihCost.total;
-    var keys = ['labor', 'material', 'equipment', 'software', 'rent', 'consumables', 'postProcessing'];
-    keys.forEach(function(k) {
-      if (ihCost[k] <= 0) return;
-      var pct = total > 0 ? (ihCost[k] / total) * 100 : 0;
-      barHtml += '<div class="stacked-bar-segment" style="width:' + pct + '%;background:' + BAR_COLORS[k] + ';" title="' + BAR_LABELS[k] + ': ' + Math.round(pct) + '%"></div>';
-      legendHtml += '<div class="legend-item"><div class="legend-dot" style="background:' + BAR_COLORS[k] + ';"></div><span class="legend-label">' + BAR_LABELS[k] + '</span><span class="legend-val">' + Math.round(pct) + '% · ' + fmt(ihCost[k]) + '</span></div>';
-    });
-    bar.innerHTML = barHtml;
-    legend.innerHTML = legendHtml;
-  } else {
-    $('breakdownSection').style.display = 'none';
+  if ($('currentMethod').value === 'inhouse' || $('currentMethod').value === 'both') {
+    p.set('dr', $('doctorRate').value);
+    p.set('ar', $('assistantRate').value);
+    p.set('dm', $('doctorMinutes').value);
+    p.set('am', $('assistantMinutes').value);
+    p.set('mat', $('materialCostPerAligner').value);
+    p.set('pc', $('printerCost').value);
+    p.set('pl', $('printerLifespan').value);
+    p.set('mn', $('annualMaintenance').value);
+    p.set('sw', $('softwareCost').value);
+    p.set('rn', $('labRent').value);
+    p.set('cn', $('consumablesPerAligner').value);
+    p.set('pp', $('postProcessingEquip').value);
+    p.set('wr', $('wasteRate').value);
+    p.set('sc', $('scannerCost').value);
   }
+  p.set('s', '3');
+  history.replaceState(null, '', location.pathname + '?' + p.toString());
+}
 
-  // Savings teaser
-  var perCaseSave40 = roundC(totalCost * 0.40);
-  var perCaseSave60 = roundC(totalCost * 0.60);
-  $('savingsRange').textContent = 'Save ' + fmt(perCaseSave40) + ' – ' + fmt(perCaseSave60) + ' per case';
+function loadFromURL() {
+  var p = new URLSearchParams(location.search);
+  if (!p.has('m')) return;
+  if (p.has('cur') && currencies[p.get('cur')]) { curCurrency = currencies[p.get('cur')]; $('currency').value = curCurrency.code; }
+  if (p.has('m')) { $('currentMethod').value = p.get('m'); $('currentMethod').dispatchEvent(new Event('change')); }
+  if (p.has('a')) { $('alignersPerCase').value = p.get('a'); var v = parseInt(p.get('a')); $('complexity').value = v === 14 ? '14' : v === 30 ? '30' : v === 50 ? '50' : 'custom'; }
+  if (p.has('mc')) $('monthlyCases').value = p.get('mc');
+  if (p.has('lc')) $('labCostPerCase').value = p.get('lc');
+  if (p.has('ls')) $('labShipping').value = p.get('ls');
+  if (p.has('lr')) $('labRefinements').value = p.get('lr');
+  if (p.has('sp')) $('labSplitPct').value = p.get('sp');
+  if (p.has('dr')) $('doctorRate').value = p.get('dr');
+  if (p.has('ar')) $('assistantRate').value = p.get('ar');
+  if (p.has('dm')) $('doctorMinutes').value = p.get('dm');
+  if (p.has('am')) $('assistantMinutes').value = p.get('am');
+  if (p.has('mat')) $('materialCostPerAligner').value = p.get('mat');
+  if (p.has('pc')) $('printerCost').value = p.get('pc');
+  if (p.has('pl')) $('printerLifespan').value = p.get('pl');
+  if (p.has('mn')) $('annualMaintenance').value = p.get('mn');
+  if (p.has('sw')) $('softwareCost').value = p.get('sw');
+  if (p.has('rn')) $('labRent').value = p.get('rn');
+  if (p.has('cn')) $('consumablesPerAligner').value = p.get('cn');
+  if (p.has('pp')) $('postProcessingEquip').value = p.get('pp');
+  if (p.has('wr')) $('wasteRate').value = p.get('wr');
+  if (p.has('sc')) $('scannerCost').value = p.get('sc');
+  if (p.get('s') === '3') goToStep(3);
 }
 
 /* ===== Toast ===== */
@@ -1076,25 +942,23 @@ function showToast(msg) {
   toastTimer = setTimeout(function() { t.classList.remove('show'); }, 3000);
 }
 
-/* ===== Copy Link ===== */
-function copyLink() {
-  navigator.clipboard.writeText(location.href).then(function() {
-    showToast('Link copied!');
-  }).catch(function() {
-    showToast('Please copy the URL manually.');
-  });
-}
+/* ===== Actions ===== */
+window.copyLink = function() {
+  updateURL();
+  navigator.clipboard.writeText(location.href).then(function() { showToast('Link copied!'); })
+    .catch(function() { showToast('Please copy the URL manually.'); });
+};
 
-/* ===== Reset ===== */
-function resetAll() {
+window.resetAll = function() {
   if (!confirm('Reset all values to defaults?')) return;
   location.href = location.pathname;
-}
+};
 
 /* ===== Init ===== */
 updateSymbols();
-// Set initial visibility
 $('sectionInHouseCost').style.display = 'none';
+loadFromURL();
+})();
 </script>
 </body>
 </html>
