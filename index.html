@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>K LINE — Aligner Cost Discovery Tool</title>
 <meta name="description" content="Discover your true aligner production costs. Calculate in-house and external lab expenses, then see how much you could save with K Line Europe.">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <link rel="icon" href="https://www.kline-europe.com/favicon.ico">
 <meta property="og:title" content="K LINE — Aligner Cost Discovery Tool">
 <meta property="og:description" content="Discover your true aligner costs. See how much you could save with K Line Europe.">
@@ -191,7 +191,7 @@ section { margin-bottom: 1.75rem; }
   font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--white-60); margin-bottom: 0.5rem;
 }
-.results-hero .rh-big { font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+.results-hero .rh-big { font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1; overflow-wrap: break-word; max-width: 100%; }
 .results-hero .rh-big.red { color: var(--red-text); }
 .results-hero .rh-sub { font-size: 0.9rem; color: var(--white-70); margin-top: 0.4rem; }
 
@@ -216,7 +216,7 @@ section { margin-bottom: 1.75rem; }
 .stacked-bar-wrap { margin: 1.25rem 0; }
 .stacked-bar-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; }
 .stacked-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; background: var(--surface); }
-.stacked-bar-segment { height: 100%; transition: width 0.3s ease; min-width: 3px; }
+.stacked-bar-segment { height: 100%; transition: width 0.3s ease; min-width: 4px; }
 .stacked-bar-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1rem; width: 100%; margin-top: 0.75rem; }
 .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; }
 .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
@@ -294,7 +294,7 @@ footer { background: var(--dark-900); text-align: center; padding: 1.75rem 1.5re
 
 /* ===== CUSTOM ITEMS ===== */
 .custom-item {
-  display: grid; grid-template-columns: 1fr auto 1fr auto; gap: 0.5rem;
+  display: grid; grid-template-columns: 1fr auto 1fr auto auto; gap: 0.5rem;
   align-items: center; margin-bottom: 0.5rem;
   padding: 0.5rem 0.65rem; background: var(--surface); border-radius: var(--radius-sm);
   border: 1px solid var(--surface-border);
@@ -324,6 +324,7 @@ footer { background: var(--dark-900); text-align: center; padding: 1.75rem 1.5re
   .custom-item { grid-template-columns: 1fr auto; }
   .custom-item input[type="text"] { grid-column: 1 / -1; }
   .custom-item select { grid-column: 1; }
+  .custom-item .ci-amort { grid-column: 1; }
   .custom-item .pre { grid-column: 1; }
   .custom-item .remove-btn { grid-row: 2; grid-column: 2; }
 }
@@ -369,10 +370,62 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
   .step-label { font-size: 0.68rem; }
 }
 
+/* ===== SKIP TO CONTENT ===== */
+.skip-to-content {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--teal); color: var(--dark-900);
+  padding: 0.65rem 1.25rem; border: none; border-radius: var(--radius-sm);
+  font-size: 0.88rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+}
+.skip-to-content:focus { left: 1rem; top: 0.5rem; }
+
+/* ===== LOADING ANIMATION ===== */
+@keyframes calcPulse {
+  0% { opacity: 0.4; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.4; transform: scale(0.98); }
+}
+.calc-loading { animation: calcPulse 0.6s ease-in-out; }
+
+/* ===== EMAIL CAPTURE ===== */
+.email-capture {
+  background: var(--teal-subtle); border: 1.5px solid var(--teal); border-radius: var(--radius);
+  padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: center;
+}
+.email-capture p { font-size: 0.88rem; color: var(--text); margin-bottom: 0.75rem; line-height: 1.5; }
+.email-capture-row { display: flex; gap: 0.5rem; max-width: 460px; margin: 0 auto; }
+.email-capture-row input[type="email"] {
+  flex: 1; padding: 0.6rem 0.75rem; border: 1.5px solid var(--surface-border);
+  border-radius: var(--radius-sm); font-size: 0.9rem; font-family: inherit; color: var(--text);
+  background: var(--white); min-width: 0;
+}
+.email-capture-row input[type="email"]:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow); }
+.email-capture .skip-link { display: inline-block; margin-top: 0.5rem; font-size: 0.78rem; color: var(--text-muted); cursor: pointer; background: none; border: none; font-family: inherit; text-decoration: underline; }
+.email-capture.success { border-color: var(--green); background: var(--green-soft); }
+.email-capture.success p { color: var(--green); font-weight: 600; }
+
+/* ===== CLINIC NAME STEP 3 ===== */
+.clinic-name-step3 { margin-bottom: 1rem; }
+.clinic-name-step3 label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem; }
+.clinic-name-step3 input[type="text"] {
+  width: 100%; max-width: 400px; padding: 0.6rem 0.75rem;
+  border: 1.5px solid var(--surface-border); border-radius: var(--radius-sm);
+  font-size: 0.9rem; font-family: inherit; color: var(--text);
+  background: var(--white); transition: border-color var(--transition), box-shadow var(--transition);
+}
+.clinic-name-step3 input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow); }
+
+/* ===== RESPONSIVE ADDITIONS ===== */
+@media (max-width: 768px) {
+  .stacked-bar-legend { grid-template-columns: 1fr; }
+  .email-capture-row { flex-direction: column; }
+}
+
 /* ===== PRINT ===== */
 @media print {
   body { background: white !important; }
-  nav, .step-nav, .toast, .no-print, .steps-bar { display: none !important; }
+  nav, .step-nav, .toast, .no-print, .steps-bar, .email-capture { display: none !important; }
   /* Only show step 3 results */
   .step-panel { display: none !important; }
   #step3 { display: block !important; }
@@ -383,11 +436,13 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
   .logo-white { filter: brightness(0) invert(1) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .cta-group, .savings-teaser .cta-group, #ctaLink, #ctaDownload { display: none !important; }
   .no-print { display: none !important; }
+  .print-clinic-header { display: block !important; text-align: center; font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; padding: 0.5rem 0; border-bottom: 2px solid var(--teal); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+.print-clinic-header { display: none; }
 </style>
 </head>
 <body>
-<a href="#main-content" class="btn" style="position:absolute;left:-9999px;top:0;z-index:999;background:var(--teal);color:var(--dark-900);" onfocus="this.style.left='1rem';this.style.top='0.5rem';" onblur="this.style.left='-9999px';">Skip to content</a>
+<a href="#main-content" class="skip-to-content">Skip to content</a>
 
 <!-- Navbar -->
 <nav aria-label="Main navigation">
@@ -427,7 +482,20 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
 </header>
 
 <main id="main-content">
-  <noscript><div style="text-align:center;padding:3rem 2rem;font-size:1.1rem;color:var(--text-muted);">This tool requires JavaScript. Please enable JavaScript in your browser.</div></noscript>
+  <div id="noJsMsg" style="text-align:center;padding:3rem 2rem;font-size:1.1rem;color:var(--text-muted);">This tool requires JavaScript. Please enable JavaScript in your browser.</div>
+  <script>
+  /* Localize no-JS message then hide it (since JS is clearly running) */
+  (function(){
+    var nsMsgs = {en:'This tool requires JavaScript. Please enable JavaScript in your browser.',fr:'Cet outil n\u00e9cessite JavaScript. Veuillez activer JavaScript.',es:'Esta herramienta requiere JavaScript. Por favor active JavaScript.',it:'Questo strumento richiede JavaScript. Attivi JavaScript.',pt:'Esta ferramenta requer JavaScript. Ative JavaScript.',de:'Dieses Tool erfordert JavaScript. Bitte aktivieren Sie JavaScript.',zh:'\u6b64\u5de5\u5177\u9700\u8981JavaScript\u3002',ar:'\u0647\u0630\u0647 \u0627\u0644\u0623\u062f\u0627\u0629 \u062a\u062a\u0637\u0644\u0628 JavaScript.'};
+    var el = document.getElementById('noJsMsg');
+    if (el) {
+      var lang = (navigator.language||'').split('-')[0].toLowerCase();
+      try { var p = new URLSearchParams(location.search); if (p.has('lang')) lang = p.get('lang'); } catch(e) {}
+      el.textContent = nsMsgs[lang] || nsMsgs.en;
+      el.style.display = 'none';
+    }
+  })();
+  </script>
 
   <!-- Steps — accessible buttons with roles -->
   <div class="steps-bar" role="tablist" aria-label="Calculator steps">
@@ -459,7 +527,7 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
           <div class="field">
             <label for="complexity">Case Complexity</label>
             <select id="complexity">
-              <option value="14">Mild (14 aligners)</option>
+              <option value="10">Mild (10 aligners)</option>
               <option value="30" selected>Moderate (30 aligners)</option>
               <option value="50">Complex (50 aligners)</option>
               <option value="custom">Custom</option>
@@ -481,11 +549,6 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
             <label for="monthlyCases">Monthly Cases</label>
             <input type="number" id="monthlyCases" value="10" min="1" max="10000" aria-describedby="hintMC">
             <div class="hint" id="hintMC">How many aligner cases per month?</div>
-          </div>
-          <div class="field">
-            <label for="clinicName">Clinic Name</label>
-            <input type="text" id="clinicName" placeholder="Your clinic name" maxlength="80" aria-describedby="hintCN">
-            <div class="hint" id="hintCN">Optional — for your results report</div>
           </div>
         </div>
       </div>
@@ -537,7 +600,7 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
           <div class="field">
             <label for="labCostPerCase">Cost per Case</label>
             <div class="pre" data-symbol="€"><input type="number" id="labCostPerCase" value="250" min="0" max="99999" step="5" aria-describedby="hintLabCost"></div>
-            <div class="hint" id="hintLabCost">Lab fee per complete case (excl. refinements)</div>
+            <div class="hint" id="hintLabCost">Lab fee per complete case (excl. refinements). Typical: €150-400/case</div>
           </div>
           <div class="field">
             <label for="labShipping">Shipping per Case</label>
@@ -570,19 +633,19 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
           <div class="field">
             <label for="doctorMinutes">Doctor Minutes / Case</label>
             <input type="number" id="doctorMinutes" value="45" min="0" max="600" step="5">
-            <div class="hint">Treatment planning + chairside review</div>
+            <div class="hint">Per full case: planning, monitoring, adjustments</div>
           </div>
           <div class="field">
             <label for="assistantMinutes">Assistant Minutes / Case</label>
             <input type="number" id="assistantMinutes" value="60" min="0" max="600" step="5">
-            <div class="hint">Fabrication, finishing, QC</div>
+            <div class="hint">Per full case: fabrication, finishing, QC, packaging</div>
           </div>
 
           <div class="divider-row"><span>Materials &amp; Equipment</span></div>
           <div class="field">
             <label for="materialCostPerAligner">Material Cost / Aligner</label>
             <div class="pre" data-symbol="€"><input type="number" id="materialCostPerAligner" value="3.00" min="0" max="999" step="0.25"></div>
-            <div class="hint">Resin, sheets, or other material</div>
+            <div class="hint">Typical: €1-5/aligner. Resin: €1-2 | Thermoform sheets: €3-5</div>
           </div>
           <div class="field">
             <label for="printerCost">3D Printer Investment</label>
@@ -601,7 +664,7 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
           <div class="field">
             <label for="softwareCost">Software Monthly Cost</label>
             <div class="pre" data-symbol="€"><input type="number" id="softwareCost" value="350" min="0" max="99999" step="25"></div>
-            <div class="hint">Planning software subscription</div>
+            <div class="hint">Planning software subscription. Typical: €200-500/month</div>
           </div>
           <div class="field">
             <label for="labRent">Monthly Lab Space Cost</label>
@@ -648,7 +711,7 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
               Add Custom Cost
             </button>
-            <div class="hint" style="margin-top:0.35rem;">Add any unlisted materials, equipment, or costs</div>
+            <div class="hint" style="margin-top:0.35rem;">Add any unlisted materials, equipment, or costs (one-time purchases amortized over chosen period)</div>
           </div>
         </div>
       </div>
@@ -662,6 +725,12 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
 
   <!-- ========== STEP 3 ========== -->
   <div class="step-panel" id="step3" role="tabpanel">
+    <div class="print-clinic-header" id="printClinicHeader"></div>
+    <div class="clinic-name-step3 no-print" id="clinicNameStep3">
+      <label for="clinicName">Clinic Name</label>
+      <input type="text" id="clinicName" placeholder="Your clinic name" maxlength="80" aria-describedby="hintCN">
+      <div class="hint" id="hintCN" style="font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;">Optional — appears on your results report</div>
+    </div>
     <div class="results-hero" id="resultsHero">
       <div class="rh-label">Your Current Cost Per Case</div>
       <div class="rh-big red" id="resultTotal">—</div>
@@ -685,6 +754,15 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
       </div>
     </div>
 
+    <div class="email-capture no-print" id="emailCapture">
+      <p id="emailCaptureText">Enter your email to save your results and get your personalized quote</p>
+      <div class="email-capture-row" id="emailCaptureRow">
+        <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
+        <button type="button" class="btn btn-teal" id="emailSubmitBtn" onclick="submitEmail()">Send My Results</button>
+      </div>
+      <button type="button" class="skip-link" id="emailSkipBtn" onclick="skipEmail()">Skip for now</button>
+    </div>
+
     <div class="savings-teaser" id="savingsTeaser">
       <div class="st-icon" aria-hidden="true">💡</div>
       <div class="st-headline">K Line clients report <span class="teal">significant savings</span> per case</div>
@@ -695,7 +773,7 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
       <div class="st-range" id="savingsRange">—</div>
       <div class="st-disclaimer">*Savings vary by case volume, complexity, and region. Contact K Line for a personalized proposal.</div>
       <div class="cta-group">
-        <a href="https://www.kline-europe.com/contact-us?utm_source=calculator&utm_medium=tool&utm_campaign=cost_discovery" target="_blank" rel="noopener noreferrer" class="btn btn-teal btn-lg" id="ctaLink">
+        <a href="https://www.kline-europe.com/contact-us?utm_source=calculator&utm_medium=tool&utm_campaign=cost_discovery" target="_blank" rel="noopener noreferrer" class="btn btn-teal btn-lg" id="ctaLink" onclick="dlPush({event:'cta_quote_click'})">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
           Get Your Custom K Line Quote
         </a>
@@ -716,6 +794,10 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
         <button type="button" class="btn btn-outline" onclick="copyLink()">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
           Copy Link
+        </button>
+        <button type="button" class="btn btn-outline" onclick="shareColleague()" id="btnShareColleague">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share with a Colleague
         </button>
       </div>
     </div>
@@ -754,6 +836,10 @@ html[dir="rtl"] .footer-disclaimer { text-align: right; }
 'use strict';
 var $ = function(id) { return document.getElementById(id); };
 
+/* ===== dataLayer ===== */
+window.dataLayer = window.dataLayer || [];
+function dlPush(obj) { window.dataLayer.push(obj); }
+
 /* ===== XSS escape ===== */
 function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
@@ -778,7 +864,7 @@ var T = {
     onboard2: 'How do you currently get your aligners? Enter your costs below — we\'ll calculate the full picture.',
     secCaseVol: 'Case Volume',
     lblComplexity: 'Case Complexity',
-    optMild: 'Mild (14 aligners)',
+    optMild: 'Mild (10 aligners)',
     optModerate: 'Moderate (30 aligners)',
     optComplex: 'Complex (50 aligners)',
     optCustom: 'Custom',
@@ -787,7 +873,7 @@ var T = {
     lblMonthlyCases: 'Monthly Cases',
     hintMC: 'How many aligner cases per month?',
     lblClinicName: 'Clinic Name',
-    hintCN: 'Optional — for your results report',
+    hintCN: 'Optional — appears on your results report',
     phClinic: 'Your clinic name',
     btnNext: 'Next: Your Current Costs →',
     secMethod: 'Your Current Method',
@@ -802,7 +888,7 @@ var T = {
     phLabName: 'e.g. K Line, Align Technology, SureSmile',
     hintLab: 'Who is your current provider?',
     lblLabCostCase: 'Cost per Case',
-    hintLabCost: 'Lab fee per complete case (excl. refinements)',
+    hintLabCost: 'Lab fee per complete case (excl. refinements). Typical: €150-400/case',
     lblShipping: 'Shipping per Case',
     lblRefinements: 'Avg. Refinement Cost',
     hintRef: 'Additional cost if refinements not included',
@@ -812,18 +898,18 @@ var T = {
     hintDoctorRate: 'Salary or opportunity cost of chair time',
     lblAssistantRate: 'Assistant Hourly Rate',
     lblDoctorMin: 'Doctor Minutes / Case',
-    hintDoctorMin: 'Treatment planning + chairside review',
+    hintDoctorMin: 'Per full case: planning, monitoring, adjustments',
     lblAssistantMin: 'Assistant Minutes / Case',
-    hintAssistantMin: 'Fabrication, finishing, QC',
+    hintAssistantMin: 'Per full case: fabrication, finishing, QC, packaging',
     divMaterials: 'Materials & Equipment',
     lblMatCost: 'Material Cost / Aligner',
-    hintMatCost: 'Resin, sheets, or other material',
+    hintMatCost: 'Typical: €1-5/aligner. Resin: €1-2 | Thermoform sheets: €3-5',
     lblPrinterCost: '3D Printer Investment',
     lblPrinterLife: 'Printer Lifespan (Years)',
     lblMaintenance: 'Annual Maintenance',
     divSoftware: 'Software & Overhead',
     lblSoftware: 'Software Monthly Cost',
-    hintSoftware: 'Planning software subscription',
+    hintSoftware: 'Planning software subscription. Typical: €200-500/month',
     lblRent: 'Monthly Lab Space Cost',
     lblConsumables: 'Consumables / Aligner',
     hintConsumables: 'Polishing, cutting, IPA, etc.',
@@ -873,7 +959,7 @@ var T = {
     barRetainer: 'Retainers', barCustom: 'Custom Items',
     divCustom: 'Custom Cost Items',
     btnAddCustom: 'Add Custom Cost',
-    hintCustom: 'Add any unlisted materials, equipment, or costs (one-time purchases amortized over 5 years)',
+    hintCustom: 'Add any unlisted materials, equipment, or costs (one-time purchases amortized over chosen period)',
     phCustomName: 'Item name (e.g. UV lamp)',
     optPerCase: 'Per Case',
     optPerAligner: 'Per Aligner',
@@ -888,7 +974,18 @@ var T = {
     blended: 'Blended', lab: 'lab', inhouse: 'in-house',
     noJS: 'This tool requires JavaScript. Please enable JavaScript in your browser.',
     perCaseStar: '/ case*',
-    savingsIcon: '💡'
+    savingsIcon: '💡',
+    emailCaptureText: 'Enter your email to save your results and get your personalized quote',
+    emailCaptureBtn: 'Send My Results',
+    emailCaptureSuccess: 'Thanks! Your results have been saved.',
+    emailCapturePh: 'your@email.com',
+    emailSkip: 'Skip for now',
+    shareColleague: 'Share with a Colleague',
+    optAmort3: '3 years',
+    optAmort5: '5 years',
+    optAmort7: '7 years',
+    optAmort10: '10 years',
+    pageTitle: 'K LINE — Aligner Cost Discovery Tool'
   },
   fr: {
     toolLabel: 'Outil de Découverte des Coûts',
@@ -902,7 +999,7 @@ var T = {
     onboard2: 'Comment obtenez-vous actuellement vos aligneurs ? Entrez vos coûts ci-dessous — nous calculerons le tableau complet.',
     secCaseVol: 'Volume de Cas',
     lblComplexity: 'Complexité du Cas',
-    optMild: 'Simple (14 aligneurs)',
+    optMild: 'Simple (10 aligneurs)',
     optModerate: 'Modéré (30 aligneurs)',
     optComplex: 'Complexe (50 aligneurs)',
     optCustom: 'Personnalisé',
@@ -926,7 +1023,7 @@ var T = {
     phLabName: 'ex: K Line, Align Technology, SureSmile',
     hintLab: 'Quel est votre fournisseur actuel ?',
     lblLabCostCase: 'Coût par Cas',
-    hintLabCost: 'Frais de labo par cas complet (hors ajustements)',
+    hintLabCost: 'Frais de labo par cas complet (hors ajustements). Typique : 150-400 €/cas',
     lblShipping: 'Livraison par Cas',
     lblRefinements: 'Coût Moyen de Retouche',
     hintRef: 'Coût supplémentaire si ajustements non inclus',
@@ -936,18 +1033,18 @@ var T = {
     hintDoctorRate: 'Salaire ou coût d\'opportunité du fauteuil',
     lblAssistantRate: 'Taux Horaire de l\'Assistant',
     lblDoctorMin: 'Minutes Médecin / Cas',
-    hintDoctorMin: 'Planification + révision au fauteuil',
+    hintDoctorMin: 'Par cas complet : planification, suivi, ajustements',
     lblAssistantMin: 'Minutes Assistant / Cas',
-    hintAssistantMin: 'Fabrication, finition, CQ',
+    hintAssistantMin: 'Par cas complet : fabrication, finition, CQ, emballage',
     divMaterials: 'Matériaux et Équipement',
     lblMatCost: 'Coût Matériau / Aligneur',
-    hintMatCost: 'Résine, feuilles ou autre matériau',
+    hintMatCost: 'Résine : 1-2 € | Feuilles thermoformage : 3-5 €',
     lblPrinterCost: 'Investissement Imprimante 3D',
     lblPrinterLife: 'Durée de Vie Imprimante (Années)',
     lblMaintenance: 'Maintenance Annuelle',
     divSoftware: 'Logiciel et Frais Généraux',
     lblSoftware: 'Coût Logiciel Mensuel',
-    hintSoftware: 'Abonnement logiciel de planification',
+    hintSoftware: 'Abonnement logiciel de planification. Typique : 200-500 €/mois',
     lblRent: 'Loyer Mensuel du Labo',
     lblConsumables: 'Consommables / Aligneur',
     hintConsumables: 'Polissage, découpe, IPA, etc.',
@@ -996,7 +1093,7 @@ var T = {
     barRetainer: 'Contention', barCustom: 'Éléments personnalisés',
     divCustom: 'Coûts personnalisés',
     btnAddCustom: 'Ajouter un coût',
-    hintCustom: 'Ajoutez tout matériau, équipement ou coût non listé (achats uniques amortis sur 5 ans)',
+    hintCustom: 'Ajoutez tout matériau, équipement ou coût non listé (achats uniques amortis sur la période choisie)',
     phCustomName: 'Nom (ex: lampe UV)',
     optPerCase: 'Par cas',
     optPerAligner: 'Par aligneur',
@@ -1011,7 +1108,18 @@ var T = {
     blended: 'Mixte', lab: 'labo', inhouse: 'interne',
     noJS: 'Cet outil nécessite JavaScript. Veuillez activer JavaScript dans votre navigateur.',
     perCaseStar: '/ cas*',
-    savingsIcon: '💡'
+    savingsIcon: '💡',
+    emailCaptureText: 'Entrez votre email pour sauvegarder vos résultats et recevoir votre devis personnalisé',
+    emailCaptureBtn: 'Envoyer mes résultats',
+    emailCaptureSuccess: 'Merci ! Vos résultats ont été sauvegardés.',
+    emailCapturePh: 'votre@email.com',
+    emailSkip: 'Passer pour l\'instant',
+    shareColleague: 'Partager avec un collègue',
+    optAmort3: '3 ans',
+    optAmort5: '5 ans',
+    optAmort7: '7 ans',
+    optAmort10: '10 ans',
+    pageTitle: 'K LINE — Outil de Découverte des Coûts d\'Aligneurs'
   },
   es: {
     toolLabel: 'Herramienta de Análisis de Costes',
@@ -1025,7 +1133,7 @@ var T = {
     onboard2: '¿Cómo obtiene actualmente sus alineadores? Ingrese sus costes abajo — calcularemos el panorama completo.',
     secCaseVol: 'Volumen de Casos',
     lblComplexity: 'Complejidad del Caso',
-    optMild: 'Leve (14 alineadores)',
+    optMild: 'Leve (10 alineadores)',
     optModerate: 'Moderado (30 alineadores)',
     optComplex: 'Complejo (50 alineadores)',
     optCustom: 'Personalizado',
@@ -1049,7 +1157,7 @@ var T = {
     phLabName: 'ej: K Line, Align Technology, SureSmile',
     hintLab: '¿Quién es su proveedor actual?',
     lblLabCostCase: 'Coste por Caso',
-    hintLabCost: 'Tarifa del lab por caso completo (sin refinamientos)',
+    hintLabCost: 'Tarifa del lab por caso completo (sin refinamientos). Típico: 150-400 €/caso',
     lblShipping: 'Envío por Caso',
     lblRefinements: 'Coste Medio de Refinamiento',
     hintRef: 'Coste adicional si los refinamientos no están incluidos',
@@ -1059,18 +1167,18 @@ var T = {
     hintDoctorRate: 'Salario o coste de oportunidad del sillón',
     lblAssistantRate: 'Tarifa Horaria del Asistente',
     lblDoctorMin: 'Minutos Doctor / Caso',
-    hintDoctorMin: 'Planificación + revisión en sillón',
+    hintDoctorMin: 'Por caso completo: planificación, seguimiento, ajustes',
     lblAssistantMin: 'Minutos Asistente / Caso',
-    hintAssistantMin: 'Fabricación, acabado, CC',
+    hintAssistantMin: 'Por caso completo: fabricación, acabado, CC, embalaje',
     divMaterials: 'Materiales y Equipos',
     lblMatCost: 'Coste Material / Alineador',
-    hintMatCost: 'Resina, láminas u otro material',
+    hintMatCost: 'Resina: 1-2 € | Láminas termoformado: 3-5 €',
     lblPrinterCost: 'Inversión Impresora 3D',
     lblPrinterLife: 'Vida Útil Impresora (Años)',
     lblMaintenance: 'Mantenimiento Anual',
     divSoftware: 'Software y Gastos Generales',
     lblSoftware: 'Coste Mensual Software',
-    hintSoftware: 'Suscripción software de planificación',
+    hintSoftware: 'Suscripción software de planificación. Típico: 200-500 €/mes',
     lblRent: 'Alquiler Mensual del Lab',
     lblConsumables: 'Consumibles / Alineador',
     hintConsumables: 'Pulido, corte, IPA, etc.',
@@ -1119,7 +1227,7 @@ var T = {
     barRetainer: 'Retención', barCustom: 'Elementos personalizados',
     divCustom: 'Costes personalizados',
     btnAddCustom: 'Añadir coste',
-    hintCustom: 'Añada cualquier material, equipo o coste no listado (compras únicas amortizadas a 5 años)',
+    hintCustom: 'Añada cualquier material, equipo o coste no listado (compras únicas amortizadas en el período elegido)',
     phCustomName: 'Nombre (ej: lámpara UV)',
     optPerCase: 'Por caso',
     optPerAligner: 'Por alineador',
@@ -1134,7 +1242,18 @@ var T = {
     blended: 'Mixto', lab: 'lab', inhouse: 'propio',
     noJS: 'Esta herramienta requiere JavaScript. Por favor active JavaScript en su navegador.',
     perCaseStar: '/ caso*',
-    savingsIcon: '💡'
+    savingsIcon: '💡',
+    emailCaptureText: 'Ingrese su email para guardar sus resultados y recibir su presupuesto personalizado',
+    emailCaptureBtn: 'Enviar mis resultados',
+    emailCaptureSuccess: '¡Gracias! Sus resultados han sido guardados.',
+    emailCapturePh: 'su@email.com',
+    emailSkip: 'Saltar por ahora',
+    shareColleague: 'Compartir con un colega',
+    optAmort3: '3 años',
+    optAmort5: '5 años',
+    optAmort7: '7 años',
+    optAmort10: '10 años',
+    pageTitle: 'K LINE — Herramienta de Análisis de Costes de Alineadores'
   },
   it: {
     toolLabel: 'Strumento Analisi Costi',
@@ -1148,7 +1267,7 @@ var T = {
     onboard2: 'Come ottiene attualmente i Suoi allineatori? Inserisca i Suoi costi qui sotto — calcoleremo il quadro completo.',
     secCaseVol: 'Volume Casi',
     lblComplexity: 'Complessità del Caso',
-    optMild: 'Lieve (14 allineatori)',
+    optMild: 'Lieve (10 allineatori)',
     optModerate: 'Moderato (30 allineatori)',
     optComplex: 'Complesso (50 allineatori)',
     optCustom: 'Personalizzato',
@@ -1172,7 +1291,7 @@ var T = {
     phLabName: 'es: K Line, Align Technology, SureSmile',
     hintLab: 'Chi è il Suo fornitore attuale?',
     lblLabCostCase: 'Costo per Caso',
-    hintLabCost: 'Tariffa lab per caso completo (esclusi ritocchi)',
+    hintLabCost: 'Tariffa lab per caso completo (esclusi ritocchi). Tipico: 150-400 €/caso',
     lblShipping: 'Spedizione per Caso',
     lblRefinements: 'Costo Medio Ritocchi',
     hintRef: 'Costo aggiuntivo se ritocchi non inclusi',
@@ -1182,18 +1301,18 @@ var T = {
     hintDoctorRate: 'Stipendio o costo opportunità della poltrona',
     lblAssistantRate: 'Tariffa Oraria Assistente',
     lblDoctorMin: 'Minuti Dottore / Caso',
-    hintDoctorMin: 'Pianificazione + revisione alla poltrona',
+    hintDoctorMin: 'Per caso completo: pianificazione, monitoraggio, aggiustamenti',
     lblAssistantMin: 'Minuti Assistente / Caso',
-    hintAssistantMin: 'Fabbricazione, finitura, CQ',
+    hintAssistantMin: 'Per caso completo: fabbricazione, finitura, CQ, imballaggio',
     divMaterials: 'Materiali e Attrezzature',
     lblMatCost: 'Costo Materiale / Allineatore',
-    hintMatCost: 'Resina, fogli o altro materiale',
+    hintMatCost: 'Resina: 1-2 € | Fogli termoformatura: 3-5 €',
     lblPrinterCost: 'Investimento Stampante 3D',
     lblPrinterLife: 'Durata Stampante (Anni)',
     lblMaintenance: 'Manutenzione Annuale',
     divSoftware: 'Software e Spese Generali',
     lblSoftware: 'Costo Mensile Software',
-    hintSoftware: 'Abbonamento software di pianificazione',
+    hintSoftware: 'Abbonamento software di pianificazione. Tipico: 200-500 €/mese',
     lblRent: 'Affitto Mensile Laboratorio',
     lblConsumables: 'Consumabili / Allineatore',
     hintConsumables: 'Lucidatura, taglio, IPA, ecc.',
@@ -1242,7 +1361,7 @@ var T = {
     barRetainer: 'Contenzione', barCustom: 'Elementi personalizzati',
     divCustom: 'Costi personalizzati',
     btnAddCustom: 'Aggiungi costo',
-    hintCustom: 'Aggiunga qualsiasi materiale, attrezzatura o costo non elencato (acquisti unici ammortizzati su 5 anni)',
+    hintCustom: 'Aggiunga qualsiasi materiale, attrezzatura o costo non elencato (acquisti unici ammortizzati nel periodo scelto)',
     phCustomName: 'Nome (es: lampada UV)',
     optPerCase: 'Per caso',
     optPerAligner: 'Per allineatore',
@@ -1257,7 +1376,18 @@ var T = {
     blended: 'Misto', lab: 'lab', inhouse: 'interno',
     noJS: 'Questo strumento richiede JavaScript. Attivi JavaScript nel Suo browser.',
     perCaseStar: '/ caso*',
-    savingsIcon: '💡'
+    savingsIcon: '💡',
+    emailCaptureText: 'Inserisca la Sua email per salvare i risultati e ricevere il Suo preventivo personalizzato',
+    emailCaptureBtn: 'Invia i miei risultati',
+    emailCaptureSuccess: 'Grazie! I Suoi risultati sono stati salvati.',
+    emailCapturePh: 'la-sua@email.com',
+    emailSkip: 'Salta per ora',
+    shareColleague: 'Condividi con un collega',
+    optAmort3: '3 anni',
+    optAmort5: '5 anni',
+    optAmort7: '7 anni',
+    optAmort10: '10 anni',
+    pageTitle: 'K LINE — Strumento di Analisi dei Costi degli Allineatori'
   },
   pt: {
     toolLabel: 'Ferramenta de Análise de Custos',
@@ -1271,7 +1401,7 @@ var T = {
     onboard2: 'Como obtém atualmente os seus alinhadores? Insira os seus custos abaixo — calcularemos o quadro completo.',
     secCaseVol: 'Volume de Casos',
     lblComplexity: 'Complexidade do Caso',
-    optMild: 'Leve (14 alinhadores)',
+    optMild: 'Leve (10 alinhadores)',
     optModerate: 'Moderado (30 alinhadores)',
     optComplex: 'Complexo (50 alinhadores)',
     optCustom: 'Personalizado',
@@ -1295,7 +1425,7 @@ var T = {
     phLabName: 'ex: K Line, Align Technology, SureSmile',
     hintLab: 'Quem é o seu fornecedor atual?',
     lblLabCostCase: 'Custo por Caso',
-    hintLabCost: 'Taxa do lab por caso completo (excl. refinamentos)',
+    hintLabCost: 'Taxa do lab por caso completo (excl. refinamentos). Típico: 150-400 €/caso',
     lblShipping: 'Envio por Caso',
     lblRefinements: 'Custo Médio de Refinamento',
     hintRef: 'Custo adicional se refinamentos não incluídos',
@@ -1305,18 +1435,18 @@ var T = {
     hintDoctorRate: 'Salário ou custo de oportunidade da cadeira',
     lblAssistantRate: 'Taxa Horária do Assistente',
     lblDoctorMin: 'Minutos Médico / Caso',
-    hintDoctorMin: 'Planejamento + revisão na cadeira',
+    hintDoctorMin: 'Por caso completo: planejamento, monitoramento, ajustes',
     lblAssistantMin: 'Minutos Assistente / Caso',
-    hintAssistantMin: 'Fabricação, acabamento, CQ',
+    hintAssistantMin: 'Por caso completo: fabricação, acabamento, CQ, embalagem',
     divMaterials: 'Materiais e Equipamentos',
     lblMatCost: 'Custo Material / Alinhador',
-    hintMatCost: 'Resina, folhas ou outro material',
+    hintMatCost: 'Resina: 1-2 € | Folhas termoformagem: 3-5 €',
     lblPrinterCost: 'Investimento Impressora 3D',
     lblPrinterLife: 'Vida Útil Impressora (Anos)',
     lblMaintenance: 'Manutenção Anual',
     divSoftware: 'Software e Despesas Gerais',
     lblSoftware: 'Custo Mensal Software',
-    hintSoftware: 'Assinatura software de planejamento',
+    hintSoftware: 'Assinatura software de planejamento. Típico: 200-500 €/mês',
     lblRent: 'Aluguel Mensal do Lab',
     lblConsumables: 'Consumíveis / Alinhador',
     hintConsumables: 'Polimento, corte, IPA, etc.',
@@ -1365,7 +1495,7 @@ var T = {
     barRetainer: 'Contenção', barCustom: 'Itens personalizados',
     divCustom: 'Custos personalizados',
     btnAddCustom: 'Adicionar custo',
-    hintCustom: 'Adicione qualquer material, equipamento ou custo não listado (compras únicas amortizadas em 5 anos)',
+    hintCustom: 'Adicione qualquer material, equipamento ou custo não listado (compras únicas amortizadas no período escolhido)',
     phCustomName: 'Nome (ex: lâmpada UV)',
     optPerCase: 'Por caso',
     optPerAligner: 'Por alinhador',
@@ -1380,7 +1510,18 @@ var T = {
     blended: 'Misto', lab: 'lab', inhouse: 'próprio',
     noJS: 'Esta ferramenta requer JavaScript. Por favor ative JavaScript no seu navegador.',
     perCaseStar: '/ caso*',
-    savingsIcon: '💡'
+    savingsIcon: '💡',
+    emailCaptureText: 'Insira seu email para salvar seus resultados e receber seu orçamento personalizado',
+    emailCaptureBtn: 'Enviar meus resultados',
+    emailCaptureSuccess: 'Obrigado! Seus resultados foram salvos.',
+    emailCapturePh: 'seu@email.com',
+    emailSkip: 'Pular por agora',
+    shareColleague: 'Partilhar com um colega',
+    optAmort3: '3 anos',
+    optAmort5: '5 anos',
+    optAmort7: '7 anos',
+    optAmort10: '10 anos',
+    pageTitle: 'K LINE — Ferramenta de Análise de Custos de Alinhadores'
   },
   de: {
     toolLabel: 'Kostenanalyse-Tool',
@@ -1394,7 +1535,7 @@ var T = {
     onboard2: 'Wie beziehen Sie derzeit Ihre Aligner? Geben Sie Ihre Kosten unten ein — wir berechnen das Gesamtbild.',
     secCaseVol: 'Fallvolumen',
     lblComplexity: 'Fallkomplexität',
-    optMild: 'Leicht (14 Aligner)',
+    optMild: 'Leicht (10 Aligner)',
     optModerate: 'Mittel (30 Aligner)',
     optComplex: 'Komplex (50 Aligner)',
     optCustom: 'Benutzerdefiniert',
@@ -1418,7 +1559,7 @@ var T = {
     phLabName: 'z.B. K Line, Align Technology, SureSmile',
     hintLab: 'Wer ist Ihr aktueller Anbieter?',
     lblLabCostCase: 'Kosten pro Fall',
-    hintLabCost: 'Laborgebühr pro komplettem Fall (ohne Nachbesserungen)',
+    hintLabCost: 'Laborgebühr pro komplettem Fall (ohne Nachbesserungen). Typisch: 150-400 €/Fall',
     lblShipping: 'Versand pro Fall',
     lblRefinements: 'Durchschn. Nachbesserungskosten',
     hintRef: 'Zusatzkosten falls Nachbesserungen nicht enthalten',
@@ -1428,18 +1569,18 @@ var T = {
     hintDoctorRate: 'Gehalt oder Opportunitätskosten der Behandlungszeit',
     lblAssistantRate: 'Stundensatz Assistent/in',
     lblDoctorMin: 'Arzt-Minuten / Fall',
-    hintDoctorMin: 'Behandlungsplanung + Kontrolle am Stuhl',
+    hintDoctorMin: 'Pro Fall: Planung, Monitoring, Anpassungen',
     lblAssistantMin: 'Assistenz-Minuten / Fall',
-    hintAssistantMin: 'Herstellung, Nachbearbeitung, QK',
+    hintAssistantMin: 'Pro Fall: Herstellung, Nachbearbeitung, QK, Verpackung',
     divMaterials: 'Material & Ausrüstung',
     lblMatCost: 'Materialkosten / Aligner',
-    hintMatCost: 'Kunstharz, Folien oder anderes Material',
+    hintMatCost: 'Kunstharz: 1-2 € | Tiefziehfolien: 3-5 €',
     lblPrinterCost: '3D-Drucker-Investition',
     lblPrinterLife: 'Drucker-Lebensdauer (Jahre)',
     lblMaintenance: 'Jährliche Wartung',
     divSoftware: 'Software & Gemeinkosten',
     lblSoftware: 'Monatliche Softwarekosten',
-    hintSoftware: 'Planungssoftware-Abonnement',
+    hintSoftware: 'Planungssoftware-Abonnement. Typisch: 200-500 €/Monat',
     lblRent: 'Monatliche Laborraumkosten',
     lblConsumables: 'Verbrauchsmaterial / Aligner',
     hintConsumables: 'Polieren, Schneiden, IPA usw.',
@@ -1488,7 +1629,7 @@ var T = {
     barRetainer: 'Retainer', barCustom: 'Benutzerdefinierte Posten',
     divCustom: 'Benutzerdefinierte Kosten',
     btnAddCustom: 'Kosten hinzufügen',
-    hintCustom: 'Fügen Sie nicht aufgeführte Materialien, Geräte oder Kosten hinzu (Einmalkäufe über 5 Jahre amortisiert)',
+    hintCustom: 'Fügen Sie nicht aufgeführte Materialien, Geräte oder Kosten hinzu (Einmalkäufe über den gewählten Zeitraum amortisiert)',
     phCustomName: 'Name (z.B. UV-Lampe)',
     optPerCase: 'Pro Fall',
     optPerAligner: 'Pro Aligner',
@@ -1503,7 +1644,18 @@ var T = {
     blended: 'Gemischt', lab: 'Labor', inhouse: 'eigen',
     noJS: 'Dieses Tool erfordert JavaScript. Bitte aktivieren Sie JavaScript in Ihrem Browser.',
     perCaseStar: '/ Fall*',
-    savingsIcon: '💡'
+    savingsIcon: '💡',
+    emailCaptureText: 'Geben Sie Ihre E-Mail ein, um Ihre Ergebnisse zu speichern und Ihr individuelles Angebot zu erhalten',
+    emailCaptureBtn: 'Ergebnisse senden',
+    emailCaptureSuccess: 'Danke! Ihre Ergebnisse wurden gespeichert.',
+    emailCapturePh: 'ihre@email.com',
+    emailSkip: 'Jetzt überspringen',
+    shareColleague: 'Mit Kollegen teilen',
+    optAmort3: '3 Jahre',
+    optAmort5: '5 Jahre',
+    optAmort7: '7 Jahre',
+    optAmort10: '10 Jahre',
+    pageTitle: 'K LINE — Aligner Kostenanalyse-Tool'
   },
   zh: {
     toolLabel: '成本分析工具',
@@ -1517,7 +1669,7 @@ var T = {
     onboard2: '您目前如何获取矫治器？在下方输入您的成本 — 我们将计算完整图景。',
     secCaseVol: '病例量',
     lblComplexity: '病例复杂度',
-    optMild: '简单 (14副矫治器)',
+    optMild: '简单 (10副矫治器)',
     optModerate: '中等 (30副矫治器)',
     optComplex: '复杂 (50副矫治器)',
     optCustom: '自定义',
@@ -1541,7 +1693,7 @@ var T = {
     phLabName: '例：K Line, Align Technology, SureSmile',
     hintLab: '您当前的供应商是谁？',
     lblLabCostCase: '每例成本',
-    hintLabCost: '每个完整病例的实验室费用（不含修正）',
+    hintLabCost: '每个完整病例的实验室费用（不含修正）。典型：150-400 €/例',
     lblShipping: '每例运费',
     lblRefinements: '平均修正成本',
     hintRef: '如果修正不包含在内的额外费用',
@@ -1551,18 +1703,18 @@ var T = {
     hintDoctorRate: '工资或椅旁时间的机会成本',
     lblAssistantRate: '助手时薪',
     lblDoctorMin: '医生每例分钟数',
-    hintDoctorMin: '治疗计划 + 椅旁审查',
+    hintDoctorMin: '每完整病例：规划、监测、调整',
     lblAssistantMin: '助手每例分钟数',
-    hintAssistantMin: '制作、精修、质检',
+    hintAssistantMin: '每完整病例：制作、精修、质检、包装',
     divMaterials: '材料与设备',
     lblMatCost: '每副矫治器材料成本',
-    hintMatCost: '树脂、膜片或其他材料',
+    hintMatCost: '树脂：1-2 € | 热成型膜片：3-5 €',
     lblPrinterCost: '3D打印机投资',
     lblPrinterLife: '打印机使用寿命（年）',
     lblMaintenance: '年度维护',
     divSoftware: '软件与间接费用',
     lblSoftware: '月度软件成本',
-    hintSoftware: '规划软件订阅',
+    hintSoftware: '规划软件订阅。典型：200-500 €/月',
     lblRent: '月度实验室空间成本',
     lblConsumables: '每副矫治器消耗品',
     hintConsumables: '抛光、切割、IPA等',
@@ -1611,7 +1763,7 @@ var T = {
     barRetainer: '保持器', barCustom: '自定义项目',
     divCustom: '自定义成本项目',
     btnAddCustom: '添加自定义成本',
-    hintCustom: '添加任何未列出的材料、设备或成本（一次性购买按5年摊销）',
+    hintCustom: '添加任何未列出的材料、设备或成本（一次性购买按所选期限摊销）',
     phCustomName: '项目名称（例：UV灯）',
     optPerCase: '每例',
     optPerAligner: '每副矫治器',
@@ -1626,7 +1778,18 @@ var T = {
     blended: '混合', lab: '外部', inhouse: '自主',
     noJS: '此工具需要JavaScript。请在浏览器中启用JavaScript。',
     perCaseStar: '/ 每例*',
-    savingsIcon: '💡'
+    savingsIcon: '💡',
+    emailCaptureText: '输入您的电子邮件以保存结果并获取个性化报价',
+    emailCaptureBtn: '发送我的结果',
+    emailCaptureSuccess: '谢谢！您的结果已保存。',
+    emailCapturePh: '您的@邮箱.com',
+    emailSkip: '暂时跳过',
+    shareColleague: '分享给同事',
+    optAmort3: '3年',
+    optAmort5: '5年',
+    optAmort7: '7年',
+    optAmort10: '10年',
+    pageTitle: 'K LINE — 矫治器成本分析工具'
   },
   ar: {
     toolLabel: 'أداة تحليل التكاليف',
@@ -1640,7 +1803,7 @@ var T = {
     onboard2: 'كيف تحصل حالياً على المصففات؟ أدخل تكاليفك أدناه — سنحسب الصورة الكاملة.',
     secCaseVol: 'حجم الحالات',
     lblComplexity: 'تعقيد الحالة',
-    optMild: 'بسيطة (14 مصفف)',
+    optMild: 'بسيطة (10 مصفف)',
     optModerate: 'متوسطة (30 مصفف)',
     optComplex: 'معقدة (50 مصفف)',
     optCustom: 'مخصص',
@@ -1664,7 +1827,7 @@ var T = {
     phLabName: 'مثال: K Line, Align Technology, SureSmile',
     hintLab: 'من هو موردك الحالي؟',
     lblLabCostCase: 'التكلفة لكل حالة',
-    hintLabCost: 'رسوم المختبر لكل حالة كاملة (بدون التعديلات)',
+    hintLabCost: 'رسوم المختبر لكل حالة كاملة (بدون التعديلات). نموذجي: 150-400 €/حالة',
     lblShipping: 'الشحن لكل حالة',
     lblRefinements: 'متوسط تكلفة التعديلات',
     hintRef: 'تكلفة إضافية إذا لم تكن التعديلات مشمولة',
@@ -1674,18 +1837,18 @@ var T = {
     hintDoctorRate: 'الراتب أو تكلفة الفرصة البديلة للكرسي',
     lblAssistantRate: 'أجر المساعد بالساعة',
     lblDoctorMin: 'دقائق الطبيب / حالة',
-    hintDoctorMin: 'تخطيط العلاج + مراجعة على الكرسي',
+    hintDoctorMin: 'لكل حالة كاملة: التخطيط، المتابعة، التعديلات',
     lblAssistantMin: 'دقائق المساعد / حالة',
-    hintAssistantMin: 'التصنيع، التشطيب، مراقبة الجودة',
+    hintAssistantMin: 'لكل حالة كاملة: التصنيع، التشطيب، مراقبة الجودة، التغليف',
     divMaterials: 'المواد والمعدات',
     lblMatCost: 'تكلفة المواد / مصفف',
-    hintMatCost: 'الراتنج، الألواح أو مواد أخرى',
+    hintMatCost: 'الراتنج: 1-2 € | ألواح التشكيل الحراري: 3-5 €',
     lblPrinterCost: 'استثمار الطابعة ثلاثية الأبعاد',
     lblPrinterLife: 'عمر الطابعة (سنوات)',
     lblMaintenance: 'الصيانة السنوية',
     divSoftware: 'البرمجيات والنفقات العامة',
     lblSoftware: 'تكلفة البرمجيات الشهرية',
-    hintSoftware: 'اشتراك برنامج التخطيط',
+    hintSoftware: 'اشتراك برنامج التخطيط. نموذجي: 200-500 €/شهر',
     lblRent: 'إيجار مساحة المختبر الشهري',
     lblConsumables: 'المستهلكات / مصفف',
     hintConsumables: 'التلميع، القطع، IPA، إلخ.',
@@ -1734,7 +1897,7 @@ var T = {
     barRetainer: 'المثبتات', barCustom: 'عناصر مخصصة',
     divCustom: 'تكاليف مخصصة',
     btnAddCustom: 'إضافة تكلفة',
-    hintCustom: 'أضف أي مواد أو معدات أو تكاليف غير مدرجة (المشتريات لمرة واحدة مستهلكة على 5 سنوات)',
+    hintCustom: 'أضف أي مواد أو معدات أو تكاليف غير مدرجة (المشتريات لمرة واحدة مستهلكة على الفترة المختارة)',
     phCustomName: 'اسم العنصر (مثال: مصباح UV)',
     optPerCase: 'لكل حالة',
     optPerAligner: 'لكل مصفف',
@@ -1749,7 +1912,18 @@ var T = {
     blended: 'مختلط', lab: 'مختبر', inhouse: 'داخلي',
     noJS: 'هذه الأداة تتطلب JavaScript. يرجى تفعيل JavaScript في متصفحك.',
     perCaseStar: '/ حالة*',
-    savingsIcon: '💡'
+    savingsIcon: '💡',
+    emailCaptureText: 'أدخل بريدك الإلكتروني لحفظ نتائجك والحصول على عرض أسعار مخصص',
+    emailCaptureBtn: 'أرسل نتائجي',
+    emailCaptureSuccess: 'شكراً! تم حفظ نتائجك.',
+    emailCapturePh: 'بريدك@الإلكتروني.com',
+    emailSkip: 'تخطي الآن',
+    shareColleague: 'مشاركة مع زميل',
+    optAmort3: '3 سنوات',
+    optAmort5: '5 سنوات',
+    optAmort7: '7 سنوات',
+    optAmort10: '10 سنوات',
+    pageTitle: 'K LINE — أداة تحليل تكاليف المصففات'
   }
 };
 
@@ -1799,7 +1973,7 @@ function applyLanguage(lang) {
   /* Labels — by for attribute */
   var lblMap = {
     complexity: 'lblComplexity', alignersPerCase: 'lblAlignersCase',
-    monthlyCases: 'lblMonthlyCases', clinicName: 'lblClinicName',
+    monthlyCases: 'lblMonthlyCases',
     currentMethod: 'lblMethod', labSplitPct: 'lblSplitPct',
     labName: 'lblLabName', labCostPerCase: 'lblLabCostCase',
     labShipping: 'lblShipping', labRefinements: 'lblRefinements',
@@ -1955,6 +2129,36 @@ function applyLanguage(lang) {
   var customHint = document.querySelector('#sectionInHouseCost #customItems + button + .hint');
   if (customHint) customHint.textContent = t('hintCustom');
 
+  /* Dynamic page title */
+  document.title = t('pageTitle');
+
+  /* Email capture */
+  var ecText = $('emailCaptureText');
+  if (ecText && !$('emailCapture').classList.contains('success')) ecText.textContent = t('emailCaptureText');
+  var ecBtn = $('emailSubmitBtn');
+  if (ecBtn) ecBtn.textContent = t('emailCaptureBtn');
+  var ecPh = $('emailInput');
+  if (ecPh) ecPh.placeholder = t('emailCapturePh');
+  var ecSkip = $('emailSkipBtn');
+  if (ecSkip) ecSkip.textContent = t('emailSkip');
+
+  /* Share colleague button */
+  var shareBtn = $('btnShareColleague');
+  if (shareBtn) {
+    var shareSvg = shareBtn.querySelector('svg');
+    shareBtn.innerHTML = (shareSvg ? shareSvg.outerHTML : '') + ' ' + t('shareColleague');
+  }
+
+  /* Clinic name in step 3 */
+  var cnLabel = document.querySelector('#clinicNameStep3 label');
+  if (cnLabel) cnLabel.textContent = t('lblClinicName');
+  var cnHint = $('hintCN');
+  if (cnHint) cnHint.textContent = t('hintCN');
+
+  /* Noscript localization */
+  var ns = document.querySelector('noscript');
+  /* Cannot update noscript dynamically — handled at init */
+
   /* Re-render results if on step 3 */
   if (currentStep === 3) renderResults();
 }
@@ -1962,6 +2166,7 @@ function applyLanguage(lang) {
 /* Language selector */
 $('langSelect').addEventListener('change', function() {
   applyLanguage(this.value);
+  dlPush({ event: 'language_change', language: this.value });
 });
 
 /* ===== Currency ===== */
@@ -1982,6 +2187,7 @@ $('currency').addEventListener('change', function() {
   updateSymbols();
   if (currentStep === 3) renderResults();
   showToast(t('currencyNote'));
+  dlPush({ event: 'currency_change', currency: this.value });
 });
 
 /* ===== Formatting ===== */
@@ -2009,10 +2215,21 @@ function goToStep(step) {
     else if (i + 1 < step) s.classList.add('completed');
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (step === 3) { renderResults(); updateURL(); }
+  if (step === 3) {
+    /* Loading animation */
+    var hero = $('resultsHero');
+    if (hero) { hero.classList.add('calc-loading'); setTimeout(function() { hero.classList.remove('calc-loading'); }, 600); }
+    renderResults();
+    updateURL();
+    /* Show/hide email capture based on localStorage */
+    var ec = $('emailCapture');
+    if (ec) { ec.style.display = localStorage.getItem('kline_email') ? 'none' : ''; }
+  }
   /* Focus management — move focus to active panel */
   var activePanel = document.querySelector('.step-panel.active');
   if (activePanel) { activePanel.setAttribute('tabindex', '-1'); activePanel.focus({ preventScroll: true }); }
+  /* dataLayer tracking */
+  dlPush({ event: 'step_transition', step: step, stepName: step === 1 ? 'practice' : step === 2 ? 'costs' : 'results' });
 }
 // Expose for onclick
 window.goToStep = goToStep;
@@ -2025,23 +2242,33 @@ $('currentMethod').addEventListener('change', function() {
   $('fieldSplitRatio').style.display = v === 'both' ? '' : 'none';
 });
 
+/* ===== Debounce helper ===== */
+function debounce(fn, ms) {
+  var timer;
+  return function() {
+    var ctx = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() { fn.apply(ctx, args); }, ms);
+  };
+}
+
 /* ===== Complexity Sync ===== */
 $('complexity').addEventListener('change', function() {
   if (this.value !== 'custom') $('alignersPerCase').value = this.value;
 });
-$('alignersPerCase').addEventListener('input', function() {
+$('alignersPerCase').addEventListener('input', debounce(function() {
   var v = parseInt(this.value);
-  $('complexity').value = v === 14 ? '14' : v === 30 ? '30' : v === 50 ? '50' : 'custom';
-});
+  $('complexity').value = v === 10 ? '10' : v === 30 ? '30' : v === 50 ? '50' : 'custom';
+}, 150));
 
-/* ===== Input validation — red border ===== */
+/* ===== Input validation — red border (debounced) ===== */
 document.querySelectorAll('input[type="number"]').forEach(function(inp) {
-  inp.addEventListener('change', function() {
+  inp.addEventListener('change', debounce(function() {
     var val = parseFloat(this.value);
     var min = parseFloat(this.min);
     var max = parseFloat(this.max);
     this.classList.toggle('invalid', isNaN(val) || (this.min !== '' && val < min) || (this.max !== '' && val > max));
-  });
+  }, 150));
 });
 
 /* ===== Calculations ===== */
@@ -2187,14 +2414,22 @@ function renderResults() {
       $('breakdownSection').style.display = 'none';
     }
 
-    /* Savings teaser — show personalized range */
-    /* Personalized savings range — show 30-60% estimate */
-    var lowSave = roundC(totalCost * 0.30);
+    /* Savings teaser — show personalized range (up to 40-60%) */
+    var lowSave = roundC(totalCost * 0.40);
     var highSave = roundC(totalCost * 0.60);
     if (totalCost > 0) {
       $('savingsRange').textContent = fmt(lowSave) + ' — ' + fmt(highSave) + ' ' + t('perCaseStar');
+      /* Add softer "up to" qualifier via the disclaimer */
     } else {
       $('savingsRange').textContent = t('savingsRangeText');
+    }
+
+    /* Print clinic header */
+    var pcHeader = $('printClinicHeader');
+    if (pcHeader) {
+      var cn = $('clinicName').value.trim();
+      pcHeader.textContent = cn || '';
+      pcHeader.style.display = cn ? '' : 'none';
     }
   } catch (err) {
     console.error('Render error:', err);
@@ -2259,7 +2494,7 @@ function loadFromURL() {
   if (p.has('cur') && currencies[p.get('cur')]) { curCurrency = currencies[p.get('cur')]; $('currency').value = curCurrency.code; }
   var validMethods = ['lab','inhouse','both'];
   if (p.has('m') && validMethods.indexOf(p.get('m')) !== -1) { $('currentMethod').value = p.get('m'); $('currentMethod').dispatchEvent(new Event('change')); }
-  if (p.has('a')) { setFromURL($('alignersPerCase'), p.get('a'), 1, 200); var v = parseInt($('alignersPerCase').value); $('complexity').value = v === 14 ? '14' : v === 30 ? '30' : v === 50 ? '50' : 'custom'; }
+  if (p.has('a')) { setFromURL($('alignersPerCase'), p.get('a'), 1, 200); var v = parseInt($('alignersPerCase').value); $('complexity').value = v === 10 ? '10' : v === 30 ? '30' : v === 50 ? '50' : 'custom'; }
   if (p.has('mc')) setFromURL($('monthlyCases'), p.get('mc'), 1, 10000);
   if (p.has('lc')) setFromURL($('labCostPerCase'), p.get('lc'), 0, 99999);
   if (p.has('ls')) setFromURL($('labShipping'), p.get('ls'), 0, 9999);
@@ -2297,10 +2532,51 @@ function showToast(msg) {
 }
 
 /* ===== Actions ===== */
-window.copyLink = function() {
+function getShareURL() {
   updateURL();
-  navigator.clipboard.writeText(location.href).then(function() { showToast(t('toastCopied')); })
+  var url = new URL(location.href);
+  url.searchParams.set('utm_source', 'calculator');
+  url.searchParams.set('utm_medium', 'share');
+  url.searchParams.set('utm_campaign', 'cost_discovery');
+  return url.toString();
+}
+
+function clipboardCopy(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+  /* Fallback for HTTP contexts */
+  return new Promise(function(resolve, reject) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      ok ? resolve() : reject();
+    } catch (e) {
+      document.body.removeChild(ta);
+      reject(e);
+    }
+  });
+}
+
+window.copyLink = function() {
+  var url = getShareURL();
+  clipboardCopy(url).then(function() { showToast(t('toastCopied')); })
     .catch(function() { showToast(t('toastCopyFail')); });
+  dlPush({ event: 'copy_link' });
+};
+
+window.shareColleague = function() {
+  var url = getShareURL();
+  var subject = encodeURIComponent(t('pageTitle'));
+  var body = encodeURIComponent(url);
+  window.open('mailto:?subject=' + subject + '&body=' + body, '_self');
+  dlPush({ event: 'share_colleague' });
 };
 
 /* ===== Custom Cost Items ===== */
@@ -2315,17 +2591,30 @@ window.addCustomItem = function() {
   div.id = id;
   div.innerHTML =
     '<input type="text" placeholder="' + esc(t('phCustomName')) + '" class="ci-name" maxlength="40">' +
-    '<select class="ci-type">' +
+    '<select class="ci-type" onchange="toggleAmortSelect(this)">' +
       '<option value="perCase">' + esc(t('optPerCase')) + '</option>' +
       '<option value="perAligner">' + esc(t('optPerAligner')) + '</option>' +
       '<option value="monthly">' + esc(t('optMonthly')) + '</option>' +
       '<option value="oneTime">' + esc(t('optOneTime')) + '</option>' +
     '</select>' +
     '<div class="pre" data-symbol="' + curCurrency.symbol + '"><input type="number" class="ci-cost" value="0" min="0" max="99999" step="1"></div>' +
+    '<select class="ci-amort" style="display:none;max-width:90px;">' +
+      '<option value="3">' + esc(t('optAmort3')) + '</option>' +
+      '<option value="5" selected>' + esc(t('optAmort5')) + '</option>' +
+      '<option value="7">' + esc(t('optAmort7')) + '</option>' +
+      '<option value="10">' + esc(t('optAmort10')) + '</option>' +
+    '</select>' +
     '<button type="button" class="remove-btn" onclick="removeCustomItem(\'' + id + '\')" aria-label="Remove">' +
       '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
     '</button>';
   container.appendChild(div);
+  dlPush({ event: 'custom_item_added' });
+};
+
+window.toggleAmortSelect = function(sel) {
+  var row = sel.closest('.custom-item');
+  var amort = row.querySelector('.ci-amort');
+  if (amort) amort.style.display = sel.value === 'oneTime' ? '' : 'none';
 };
 
 window.removeCustomItem = function(id) {
@@ -2345,13 +2634,18 @@ function calcCustomItems() {
     if (type === 'perCase') total += cost;
     else if (type === 'perAligner') total += cost * aligners;
     else if (type === 'monthly') total += annual > 0 ? (cost * 12) / annual : 0;
-    else if (type === 'oneTime') total += annual > 0 ? cost / (5 * annual) : 0; /* 5yr amortize */
+    else if (type === 'oneTime') {
+      var amortSel = item.querySelector('.ci-amort');
+      var amortYears = amortSel ? Math.max(1, parseInt(amortSel.value) || 5) : 5;
+      total += annual > 0 ? cost / (amortYears * annual) : 0;
+    }
   });
   return { total: roundC(total), count: items.length };
 }
 
 window.printResults = function() {
   renderResults();
+  dlPush({ event: 'download_pdf' });
   setTimeout(function() { window.print(); }, 100);
 };
 
@@ -2360,11 +2654,47 @@ window.resetAll = function() {
   location.href = location.pathname;
 };
 
+/* ===== Email Capture ===== */
+window.submitEmail = function() {
+  var input = $('emailInput');
+  var email = (input.value || '').trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    input.classList.add('invalid');
+    return;
+  }
+  input.classList.remove('invalid');
+  localStorage.setItem('kline_email', email);
+  dlPush({ event: 'email_capture', email: email });
+  var ec = $('emailCapture');
+  ec.classList.add('success');
+  var ecText = $('emailCaptureText');
+  ecText.textContent = t('emailCaptureSuccess');
+  $('emailCaptureRow').style.display = 'none';
+  $('emailSkipBtn').style.display = 'none';
+  setTimeout(function() { ec.style.display = 'none'; }, 3000);
+};
+
+window.skipEmail = function() {
+  var ec = $('emailCapture');
+  if (ec) ec.style.display = 'none';
+  dlPush({ event: 'email_skip' });
+};
+
+/* ===== Clinic name listener for live update ===== */
+$('clinicName').addEventListener('input', debounce(function() {
+  if (currentStep === 3) renderResults();
+}, 300));
+
 /* Currency warning is now handled in the main currency change listener */
 
 /* ===== Init ===== */
 updateSymbols();
 $('sectionInHouseCost').style.display = 'none';
+/* Hide email capture if already submitted */
+if (localStorage.getItem('kline_email')) {
+  var ec = $('emailCapture');
+  if (ec) ec.style.display = 'none';
+}
 
 /* Auto-detect browser language if no URL lang param */
 var urlP = new URLSearchParams(location.search);
